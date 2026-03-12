@@ -1,0 +1,1565 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="Coventry Analytics helps UK SMEs migrate from Excel to Power BI in 5 working days. Live dashboards, trained staff, guaranteed results." />
+  <title>Coventry Analytics — Excel to Power BI for UK SMEs</title>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;0,700;1,400&family=Syne:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
+  <style>
+    /* ─────────────────────────────────────────
+       ROOT & RESET
+    ───────────────────────────────────────── */
+    :root {
+      --ink:       #0d0f18;
+      --ink2:      #161923;
+      --ink3:      #1e2230;
+      --cream:     #f0ece3;
+      --cream2:    #d8d3c8;
+      --muted:     #6b7194;
+      --electric:  #3d6cff;
+      --electric2: #6b8fff;
+      --gold:      #c9991a;
+      --green:     #0fa86a;
+      --border:    rgba(240,236,227,0.07);
+      --border2:   rgba(240,236,227,0.14);
+    }
+
+    *, *::before, *::after { margin:0; padding:0; box-sizing:border-box; }
+
+    html { scroll-behavior: smooth; font-size: 16px; }
+
+    body {
+      background: var(--ink);
+      color: var(--cream);
+      font-family: 'Syne', sans-serif;
+      overflow-x: hidden;
+      cursor: none;
+    }
+
+    /* ── Custom cursor ── */
+    .cursor {
+      position: fixed;
+      width: 10px; height: 10px;
+      background: var(--electric);
+      border-radius: 50%;
+      pointer-events: none;
+      z-index: 9999;
+      transition: transform 0.15s ease, opacity 0.2s;
+      mix-blend-mode: exclusion;
+    }
+    .cursor-ring {
+      position: fixed;
+      width: 36px; height: 36px;
+      border: 1px solid rgba(61,108,255,0.5);
+      border-radius: 50%;
+      pointer-events: none;
+      z-index: 9998;
+      transition: transform 0.35s cubic-bezier(.25,.46,.45,.94);
+    }
+    a:hover ~ .cursor, button:hover ~ .cursor { transform: scale(2.5); }
+
+    /* ── Grain overlay ── */
+    body::after {
+      content: '';
+      position: fixed; inset: 0;
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='400' height='400'%3E%3Cfilter id='g'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='400' height='400' filter='url(%23g)' opacity='0.038'/%3E%3C/svg%3E");
+      pointer-events: none;
+      z-index: 9990;
+      opacity: 0.55;
+    }
+
+    /* ─────────────────────────────────────────
+       NAV
+    ───────────────────────────────────────── */
+    nav {
+      position: fixed; top: 0; left: 0; right: 0; z-index: 500;
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 0 60px;
+      height: 70px;
+      background: rgba(13,15,24,0.85);
+      backdrop-filter: blur(24px);
+      border-bottom: 1px solid var(--border);
+      transition: background 0.3s;
+    }
+
+    .nav-logo {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 20px;
+      font-weight: 700;
+      letter-spacing: 0.5px;
+      color: var(--cream);
+      text-decoration: none;
+      display: flex; align-items: center; gap: 10px;
+    }
+    .nav-logo-mark {
+      width: 28px; height: 28px;
+      background: var(--electric);
+      display: flex; align-items: center; justify-content: center;
+      clip-path: polygon(50% 0%, 100% 25%, 100% 75%, 50% 100%, 0% 75%, 0% 25%);
+      font-size: 11px; font-weight: 800; font-family: 'Syne', sans-serif;
+      color: white; letter-spacing: 0;
+    }
+
+    .nav-links {
+      display: flex; align-items: center; gap: 36px;
+      list-style: none;
+    }
+    .nav-links a {
+      font-size: 13px; font-weight: 500; letter-spacing: 0.3px;
+      color: var(--muted); text-decoration: none;
+      transition: color 0.2s;
+    }
+    .nav-links a:hover { color: var(--cream); }
+
+    .nav-cta {
+      background: var(--electric);
+      color: white !important;
+      padding: 9px 22px;
+      border-radius: 2px;
+      font-size: 12px !important;
+      font-weight: 700 !important;
+      letter-spacing: 0.5px !important;
+      transition: background 0.2s, transform 0.15s !important;
+    }
+    .nav-cta:hover { background: #2a55e8 !important; transform: translateY(-1px); }
+
+    /* Hamburger */
+    .hamburger { display: none; flex-direction: column; gap: 5px; cursor: pointer; padding: 4px; }
+    .hamburger span { display: block; width: 22px; height: 1.5px; background: var(--cream); transition: all 0.3s; }
+    .mobile-menu {
+      display: none; position: fixed; top: 70px; left: 0; right: 0;
+      background: var(--ink2); border-bottom: 1px solid var(--border);
+      padding: 24px 40px; flex-direction: column; gap: 20px; z-index: 499;
+    }
+    .mobile-menu a { color: var(--cream2); text-decoration: none; font-size: 15px; font-weight: 500; }
+    .mobile-menu.open { display: flex; }
+
+    /* ─────────────────────────────────────────
+       HERO
+    ───────────────────────────────────────── */
+    .hero {
+      min-height: 100vh;
+      display: flex; flex-direction: column; justify-content: center;
+      padding: 120px 60px 80px;
+      position: relative; overflow: hidden;
+    }
+
+    /* Grid lines */
+    .hero-grid {
+      position: absolute; inset: 0;
+      background-image:
+        linear-gradient(rgba(61,108,255,0.04) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(61,108,255,0.04) 1px, transparent 1px);
+      background-size: 72px 72px;
+    }
+
+    /* Radial glow */
+    .hero-glow {
+      position: absolute;
+      width: 700px; height: 700px;
+      border-radius: 50%;
+      background: radial-gradient(circle, rgba(61,108,255,0.10) 0%, transparent 70%);
+      top: -150px; right: -150px;
+      pointer-events: none;
+    }
+    .hero-glow2 {
+      position: absolute;
+      width: 400px; height: 400px;
+      border-radius: 50%;
+      background: radial-gradient(circle, rgba(201,153,26,0.06) 0%, transparent 70%);
+      bottom: 0; left: 200px;
+      pointer-events: none;
+    }
+
+    .hero-eyebrow {
+      display: inline-flex; align-items: center; gap: 10px;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 10px; letter-spacing: 2.5px; color: var(--electric2);
+      border: 1px solid rgba(61,108,255,0.3);
+      background: rgba(61,108,255,0.07);
+      padding: 7px 16px; border-radius: 2px;
+      width: fit-content; margin-bottom: 32px;
+      animation: fadeUp 0.8s ease both;
+    }
+    .hero-eyebrow::before { content: ''; width: 6px; height: 6px; background: var(--electric); border-radius: 50%; animation: pulse 2s infinite; }
+
+    @keyframes pulse { 0%,100%{opacity:1} 50%{opacity:0.3} }
+
+    .hero-headline {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: clamp(52px, 7.5vw, 108px);
+      font-weight: 700;
+      line-height: 0.92;
+      letter-spacing: -1px;
+      margin-bottom: 32px;
+      max-width: 900px;
+      animation: fadeUp 0.8s 0.1s ease both;
+    }
+    .hero-headline em {
+      font-style: italic;
+      color: transparent;
+      -webkit-text-stroke: 1px rgba(240,236,227,0.3);
+    }
+    .hero-headline .hl-blue {
+      color: var(--electric);
+      -webkit-text-stroke: 0;
+    }
+
+    .hero-sub {
+      font-size: 17px; font-weight: 400; color: var(--muted);
+      line-height: 1.75; max-width: 520px;
+      margin-bottom: 48px;
+      animation: fadeUp 0.8s 0.2s ease both;
+    }
+    .hero-sub strong { color: var(--cream2); font-weight: 500; }
+
+    .hero-actions {
+      display: flex; align-items: center; gap: 20px; flex-wrap: wrap;
+      animation: fadeUp 0.8s 0.3s ease both;
+      margin-bottom: 80px;
+    }
+
+    .btn-primary {
+      display: inline-flex; align-items: center; gap: 10px;
+      background: var(--electric); color: white;
+      font-family: 'Syne', sans-serif; font-size: 13px; font-weight: 700;
+      letter-spacing: 0.5px; padding: 16px 32px; border-radius: 2px;
+      text-decoration: none; border: none; cursor: pointer;
+      transition: background 0.2s, transform 0.15s, box-shadow 0.2s;
+      box-shadow: 0 0 0 0 rgba(61,108,255,0.4);
+    }
+    .btn-primary:hover {
+      background: #2a55e8;
+      transform: translateY(-2px);
+      box-shadow: 0 8px 32px rgba(61,108,255,0.35);
+    }
+    .btn-primary svg { transition: transform 0.2s; }
+    .btn-primary:hover svg { transform: translateX(4px); }
+
+    .btn-ghost {
+      display: inline-flex; align-items: center; gap: 8px;
+      background: transparent; color: var(--cream2);
+      font-family: 'Syne', sans-serif; font-size: 13px; font-weight: 600;
+      letter-spacing: 0.3px; padding: 15px 28px; border-radius: 2px;
+      text-decoration: none; border: 1px solid var(--border2); cursor: pointer;
+      transition: border-color 0.2s, color 0.2s, background 0.2s;
+    }
+    .btn-ghost:hover { border-color: var(--cream); color: var(--cream); background: rgba(240,236,227,0.05); }
+
+    /* Hero metrics strip */
+    .hero-metrics {
+      display: flex; gap: 0;
+      border: 1px solid var(--border);
+      border-radius: 4px; overflow: hidden;
+      width: fit-content;
+      animation: fadeUp 0.8s 0.4s ease both;
+    }
+    .hero-metric {
+      padding: 20px 36px;
+      border-right: 1px solid var(--border);
+      text-align: center;
+    }
+    .hero-metric:last-child { border-right: none; }
+    .hero-metric .m-val {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 38px; font-weight: 700; line-height: 1;
+      color: var(--cream); margin-bottom: 5px;
+    }
+    .hero-metric .m-val span { color: var(--electric); }
+    .hero-metric .m-lbl {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 9px; letter-spacing: 2px; color: var(--muted);
+      text-transform: uppercase;
+    }
+
+    /* Floating dashboard mockup */
+    .hero-visual {
+      position: absolute; right: 60px; top: 50%;
+      transform: translateY(-50%);
+      width: 440px;
+      animation: floatIn 1s 0.5s ease both;
+    }
+
+    @keyframes floatIn {
+      from { opacity:0; transform: translateY(-45%) translateX(40px); }
+      to   { opacity:1; transform: translateY(-50%) translateX(0); }
+    }
+    @keyframes float {
+      0%,100% { transform: translateY(-50%) translateY(0px); }
+      50%      { transform: translateY(-50%) translateY(-12px); }
+    }
+
+    .dashboard-card {
+      background: var(--ink2);
+      border: 1px solid var(--border2);
+      border-radius: 10px;
+      padding: 24px;
+      box-shadow: 0 40px 80px rgba(0,0,0,0.6), 0 0 0 1px rgba(61,108,255,0.1);
+      animation: float 6s ease-in-out infinite;
+    }
+
+    .dash-header {
+      display: flex; justify-content: space-between; align-items: center;
+      margin-bottom: 20px;
+    }
+    .dash-title { font-size: 12px; font-weight: 600; letter-spacing: 0.5px; color: var(--cream2); }
+    .dash-live {
+      display: flex; align-items: center; gap: 5px;
+      font-family: 'JetBrains Mono', monospace; font-size: 9px; color: var(--green);
+      letter-spacing: 1px;
+    }
+    .dash-live::before { content:''; width:6px; height:6px; background:var(--green); border-radius:50%; animation: pulse 2s infinite; }
+
+    .dash-kpis {
+      display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px;
+      margin-bottom: 20px;
+    }
+    .dash-kpi {
+      background: var(--ink3); border-radius: 6px; padding: 12px;
+      border: 1px solid var(--border);
+    }
+    .dash-kpi .kpi-val { font-family:'Cormorant Garamond',serif; font-size:22px; font-weight:700; color:var(--cream); line-height:1; }
+    .dash-kpi .kpi-val.up { color: var(--green); }
+    .dash-kpi .kpi-val.blue { color: var(--electric2); }
+    .dash-kpi .kpi-lbl { font-size:9px; color:var(--muted); margin-top:4px; letter-spacing:0.5px; }
+    .dash-kpi .kpi-trend { font-size:9px; color:var(--green); margin-top:2px; }
+
+    /* Mini bar chart */
+    .dash-chart { margin-bottom: 16px; }
+    .chart-label { font-family:'JetBrains Mono',monospace; font-size:9px; color:var(--muted); letter-spacing:1px; margin-bottom:10px; }
+    .bars { display: flex; align-items: flex-end; gap: 5px; height: 60px; }
+    .bar {
+      flex:1; background: rgba(61,108,255,0.25); border-radius: 2px 2px 0 0;
+      position: relative; transition: background 0.2s;
+    }
+    .bar:hover { background: rgba(61,108,255,0.5); }
+    .bar.active { background: var(--electric); }
+    .bar::after { content:attr(data-val); position:absolute; bottom:-16px; left:50%; transform:translateX(-50%); font-family:'JetBrains Mono',monospace; font-size:7px; color:var(--muted); }
+
+    .dash-footer {
+      display: flex; justify-content: space-between; align-items: center;
+      padding-top: 14px; border-top: 1px solid var(--border);
+    }
+    .dash-footer .df-text { font-size:10px; color:var(--muted); }
+    .dash-footer .df-badge {
+      background: rgba(15,168,106,0.15); color: var(--green);
+      font-family:'JetBrains Mono',monospace; font-size:9px; letter-spacing:1px;
+      padding: 3px 10px; border-radius: 2px; border: 1px solid rgba(15,168,106,0.3);
+    }
+
+    /* ─────────────────────────────────────────
+       LOGOS / SOCIAL PROOF
+    ───────────────────────────────────────── */
+    .logos-bar {
+      background: var(--ink2);
+      border-top: 1px solid var(--border);
+      border-bottom: 1px solid var(--border);
+      padding: 22px 60px;
+      display: flex; align-items: center; gap: 48px; overflow: hidden;
+    }
+    .logos-label {
+      font-family: 'JetBrains Mono', monospace; font-size: 9px;
+      letter-spacing: 2px; color: var(--muted); flex-shrink: 0; white-space: nowrap;
+    }
+    .logos-track {
+      display: flex; gap: 56px; align-items: center;
+      animation: marquee 30s linear infinite; white-space: nowrap;
+    }
+    @keyframes marquee { from{transform:translateX(0)} to{transform:translateX(-50%)} }
+    .logo-item {
+      font-family: 'Syne', sans-serif; font-size: 13px; font-weight: 700;
+      letter-spacing: 1px; color: var(--muted); opacity: 0.5; flex-shrink: 0;
+    }
+
+    /* ─────────────────────────────────────────
+       SECTIONS COMMON
+    ───────────────────────────────────────── */
+    section { padding: 100px 60px; }
+    .section-tag {
+      font-family: 'JetBrains Mono', monospace; font-size: 10px;
+      letter-spacing: 3px; text-transform: uppercase; color: var(--electric2);
+      margin-bottom: 16px; display: block;
+    }
+    .section-heading {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: clamp(36px, 4vw, 56px); font-weight: 700;
+      line-height: 1.05; margin-bottom: 20px;
+    }
+    .section-heading em { font-style: italic; color: transparent; -webkit-text-stroke: 1px rgba(240,236,227,0.25); }
+    .section-sub {
+      font-size: 16px; font-weight: 400; color: var(--muted);
+      line-height: 1.75; max-width: 540px;
+    }
+
+    @keyframes fadeUp {
+      from { opacity:0; transform:translateY(24px); }
+      to   { opacity:1; transform:translateY(0); }
+    }
+
+    /* ─────────────────────────────────────────
+       PROBLEM SECTION
+    ───────────────────────────────────────── */
+    .problem-section {
+      background: var(--ink2);
+      border-top: 1px solid var(--border);
+      border-bottom: 1px solid var(--border);
+    }
+
+    .problem-grid {
+      display: grid; grid-template-columns: 1fr 1fr;
+      gap: 80px; align-items: center; max-width: 1200px; margin: 0 auto;
+    }
+
+    .problem-list { display: flex; flex-direction: column; gap: 16px; margin-top: 40px; }
+    .problem-item {
+      display: flex; gap: 16px; padding: 20px;
+      background: var(--ink3); border: 1px solid var(--border);
+      border-radius: 4px; align-items: flex-start;
+      transition: border-color 0.2s, transform 0.2s;
+    }
+    .problem-item:hover { border-color: rgba(61,108,255,0.3); transform: translateX(4px); }
+    .problem-icon { font-size: 20px; flex-shrink: 0; margin-top: 2px; }
+    .problem-text strong { display: block; font-size: 14px; font-weight: 600; color: var(--cream); margin-bottom: 4px; }
+    .problem-text p { font-size: 13px; color: var(--muted); line-height: 1.5; }
+
+    .problem-visual { position: relative; }
+    .excel-vs-pbi {
+      display: flex; flex-direction: column; gap: 16px;
+    }
+    .vs-card {
+      background: var(--ink3); border: 1px solid var(--border);
+      border-radius: 6px; padding: 20px; position: relative; overflow: hidden;
+    }
+    .vs-card.bad { border-left: 3px solid #ef4444; }
+    .vs-card.good { border-left: 3px solid var(--green); }
+    .vs-label {
+      font-family: 'JetBrains Mono', monospace; font-size: 9px;
+      letter-spacing: 2px; margin-bottom: 10px; display: block;
+    }
+    .vs-card.bad .vs-label { color: #ef4444; }
+    .vs-card.good .vs-label { color: var(--green); }
+    .vs-rows { display: flex; flex-direction: column; gap: 6px; }
+    .vs-row {
+      height: 10px; border-radius: 2px; background: rgba(255,255,255,0.05);
+      position: relative; overflow: hidden;
+    }
+    .vs-row-fill {
+      position: absolute; top: 0; left: 0; height: 100%;
+      border-radius: 2px;
+    }
+    .vs-card.bad .vs-row-fill { background: rgba(239,68,68,0.3); }
+    .vs-card.good .vs-row-fill { background: rgba(15,168,106,0.5); animation: expandBar 2s ease-in-out infinite alternate; }
+    @keyframes expandBar { from{width:60%} to{width:95%} }
+    .vs-stat { font-family: 'Cormorant Garamond', serif; font-size: 28px; font-weight: 700; margin-top: 12px; }
+    .vs-card.bad .vs-stat { color: #ef4444; }
+    .vs-card.good .vs-stat { color: var(--green); }
+    .vs-statl { font-size: 11px; color: var(--muted); }
+
+    /* ─────────────────────────────────────────
+       SERVICE / OFFER
+    ───────────────────────────────────────── */
+    .offer-section { max-width: 1200px; margin: 0 auto; }
+    .offer-header { display: grid; grid-template-columns: 1fr 1fr; gap: 60px; margin-bottom: 64px; align-items: end; }
+
+    .package-card {
+      background: var(--ink2); border: 1px solid var(--border2);
+      border-radius: 8px; padding: 40px; position: relative; overflow: hidden;
+      transition: transform 0.2s, border-color 0.2s;
+    }
+    .package-card:hover { transform: translateY(-4px); border-color: rgba(61,108,255,0.3); }
+    .package-card.featured {
+      border-color: var(--electric);
+      background: linear-gradient(135deg, rgba(61,108,255,0.08), var(--ink2));
+    }
+    .package-card.featured::before {
+      content: 'MOST POPULAR';
+      position: absolute; top: 20px; right: 20px;
+      background: var(--electric); color: white;
+      font-family: 'JetBrains Mono', monospace; font-size: 8px;
+      letter-spacing: 1.5px; padding: 4px 10px; border-radius: 2px;
+    }
+
+    .packages-grid {
+      display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px;
+    }
+
+    .pkg-name { font-family: 'JetBrains Mono', monospace; font-size: 10px; letter-spacing: 2px; color: var(--muted); margin-bottom: 12px; }
+    .pkg-price {
+      font-family: 'Cormorant Garamond', serif; font-size: 48px; font-weight: 700;
+      line-height: 1; margin-bottom: 4px; color: var(--cream);
+    }
+    .pkg-price sup { font-size: 24px; }
+    .pkg-period { font-size: 12px; color: var(--muted); margin-bottom: 20px; }
+    .pkg-divider { height: 1px; background: var(--border); margin: 20px 0; }
+    .pkg-features { list-style: none; display: flex; flex-direction: column; gap: 10px; margin-bottom: 28px; }
+    .pkg-features li {
+      font-size: 13px; color: var(--cream2); display: flex; gap: 10px; align-items: flex-start;
+    }
+    .pkg-features li::before { content: '✓'; color: var(--green); font-weight: 700; flex-shrink: 0; }
+    .pkg-features li.muted { color: var(--muted); }
+    .pkg-features li.muted::before { content: '–'; color: var(--muted); }
+
+    .btn-pkg {
+      width: 100%; padding: 13px; text-align: center;
+      font-family: 'Syne', sans-serif; font-size: 12px; font-weight: 700;
+      letter-spacing: 0.5px; border-radius: 2px; text-decoration: none;
+      display: block; transition: all 0.2s; border: 1px solid var(--border2);
+      color: var(--cream2); cursor: pointer;
+    }
+    .btn-pkg:hover { border-color: var(--electric); color: var(--electric); background: rgba(61,108,255,0.06); }
+    .btn-pkg.featured-btn { background: var(--electric); color: white; border-color: var(--electric); }
+    .btn-pkg.featured-btn:hover { background: #2a55e8; }
+
+    /* Guarantee */
+    .guarantee-bar {
+      display: flex; gap: 20px; align-items: center;
+      background: rgba(15,168,106,0.08); border: 1px solid rgba(15,168,106,0.2);
+      border-radius: 6px; padding: 24px 32px; margin-top: 32px;
+    }
+    .guarantee-icon { font-size: 32px; flex-shrink: 0; }
+    .guarantee-text strong { display: block; font-size: 15px; font-weight: 700; color: var(--green); margin-bottom: 4px; }
+    .guarantee-text p { font-size: 13px; color: var(--muted); line-height: 1.5; }
+
+    /* ─────────────────────────────────────────
+       PROCESS / 5 DAYS
+    ───────────────────────────────────────── */
+    .process-section {
+      background: var(--ink2);
+      border-top: 1px solid var(--border);
+      border-bottom: 1px solid var(--border);
+    }
+    .process-inner { max-width: 1200px; margin: 0 auto; }
+    .process-header { display: grid; grid-template-columns: 1fr 1fr; gap: 60px; align-items: end; margin-bottom: 60px; }
+
+    .days-track {
+      display: grid; grid-template-columns: repeat(5, 1fr); gap: 0;
+      border: 1px solid var(--border); border-radius: 4px; overflow: hidden;
+    }
+    .day-block {
+      padding: 28px 20px;
+      border-right: 1px solid var(--border);
+      position: relative; transition: background 0.2s;
+    }
+    .day-block:last-child { border-right: none; }
+    .day-block:hover { background: rgba(61,108,255,0.05); }
+    .day-block::before {
+      content: '';
+      position: absolute; top: 0; left: 0; right: 0; height: 3px;
+    }
+    .day-block:nth-child(1)::before { background: #3d6cff; }
+    .day-block:nth-child(2)::before { background: #6b3fff; }
+    .day-block:nth-child(3)::before { background: #9f3fff; }
+    .day-block:nth-child(4)::before { background: #cf3f9f; }
+    .day-block:nth-child(5)::before { background: #0fa86a; }
+    .day-num { font-family: 'JetBrains Mono', monospace; font-size: 10px; letter-spacing: 2px; color: var(--muted); margin-bottom: 10px; }
+    .day-title { font-size: 14px; font-weight: 700; color: var(--cream); margin-bottom: 8px; line-height: 1.2; }
+    .day-desc { font-size: 12px; color: var(--muted); line-height: 1.5; }
+
+    /* ─────────────────────────────────────────
+       TESTIMONIALS
+    ───────────────────────────────────────── */
+    .testi-inner { max-width: 1200px; margin: 0 auto; }
+    .testi-header { display: flex; justify-content: space-between; align-items: flex-end; margin-bottom: 48px; }
+
+    .testimonials-grid {
+      display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px;
+    }
+    .testi-card {
+      background: var(--ink2); border: 1px solid var(--border);
+      border-radius: 6px; padding: 32px;
+      transition: border-color 0.2s, transform 0.2s;
+    }
+    .testi-card:hover { border-color: var(--border2); transform: translateY(-4px); }
+    .testi-stars { color: var(--gold); font-size: 14px; margin-bottom: 16px; letter-spacing: 2px; }
+    .testi-quote {
+      font-family: 'Cormorant Garamond', serif; font-size: 17px;
+      font-style: italic; line-height: 1.65; color: var(--cream2); margin-bottom: 24px;
+    }
+    .testi-author { display: flex; gap: 12px; align-items: center; }
+    .testi-avatar {
+      width: 40px; height: 40px; border-radius: 50%;
+      background: linear-gradient(135deg, var(--electric), var(--electric2));
+      display: flex; align-items: center; justify-content: center;
+      font-size: 14px; font-weight: 700; color: white; flex-shrink: 0;
+    }
+    .testi-name { font-size: 13px; font-weight: 700; color: var(--cream); }
+    .testi-role { font-size: 11px; color: var(--muted); margin-top: 2px; }
+
+    /* ─────────────────────────────────────────
+       ABOUT
+    ───────────────────────────────────────── */
+    .about-section {
+      background: var(--ink2);
+      border-top: 1px solid var(--border);
+      border-bottom: 1px solid var(--border);
+    }
+    .about-inner {
+      max-width: 1200px; margin: 0 auto;
+      display: grid; grid-template-columns: 1fr 1fr;
+      gap: 80px; align-items: center;
+    }
+    .about-visual {
+      position: relative;
+    }
+    .about-photo-frame {
+      width: 100%; aspect-ratio: 4/5;
+      background: var(--ink3); border: 1px solid var(--border2);
+      border-radius: 6px; overflow: hidden; position: relative;
+    }
+    .about-photo-frame::after {
+      content: '';
+      position: absolute; inset: 0;
+      background: linear-gradient(180deg, transparent 50%, rgba(13,15,24,0.9) 100%);
+    }
+    /* Placeholder avatar */
+    .about-initials {
+      position: absolute; top: 50%; left: 50%; transform: translate(-50%, -55%);
+      font-family: 'Cormorant Garamond', serif; font-size: 80px; font-weight: 700;
+      color: rgba(240,236,227,0.08); letter-spacing: 4px; z-index: 1;
+    }
+    .about-photo-bottom {
+      position: absolute; bottom: 0; left: 0; right: 0;
+      padding: 24px; z-index: 2;
+    }
+    .about-photo-name { font-size: 18px; font-weight: 700; color: var(--cream); }
+    .about-photo-title { font-size: 13px; color: var(--muted); margin-top: 2px; }
+
+    .about-badges { display: flex; gap: 10px; flex-wrap: wrap; margin-top: 16px; }
+    .about-badge {
+      font-family: 'JetBrains Mono', monospace; font-size: 9px;
+      letter-spacing: 1.5px; padding: 5px 12px; border-radius: 2px;
+      background: rgba(61,108,255,0.1); color: var(--electric2);
+      border: 1px solid rgba(61,108,255,0.2);
+    }
+
+    .about-content .section-heading { margin-bottom: 24px; }
+    .about-copy { font-size: 15px; color: var(--muted); line-height: 1.8; margin-bottom: 24px; }
+    .about-copy strong { color: var(--cream2); font-weight: 500; }
+
+    .about-stats { display: flex; gap: 0; border: 1px solid var(--border); border-radius: 4px; overflow: hidden; margin-bottom: 32px; }
+    .about-stat {
+      flex: 1; padding: 20px 24px; border-right: 1px solid var(--border); text-align: center;
+    }
+    .about-stat:last-child { border-right: none; }
+    .about-stat .as-val { font-family: 'Cormorant Garamond', serif; font-size: 32px; font-weight: 700; color: var(--cream); line-height: 1; }
+    .about-stat .as-val span { color: var(--electric); }
+    .about-stat .as-lbl { font-family: 'JetBrains Mono', monospace; font-size: 9px; letter-spacing: 1.5px; color: var(--muted); margin-top: 5px; }
+
+    /* ─────────────────────────────────────────
+       FAQ
+    ───────────────────────────────────────── */
+    .faq-inner { max-width: 800px; margin: 0 auto; }
+    .faq-header { text-align: center; margin-bottom: 52px; }
+    .faq-header .section-sub { margin: 0 auto; }
+
+    .faq-list { display: flex; flex-direction: column; gap: 0; }
+    .faq-item {
+      border-bottom: 1px solid var(--border);
+    }
+    .faq-q {
+      display: flex; justify-content: space-between; align-items: center;
+      padding: 22px 0; cursor: pointer; gap: 20px;
+      font-size: 15px; font-weight: 600; color: var(--cream); line-height: 1.4;
+      transition: color 0.2s;
+    }
+    .faq-q:hover { color: var(--electric2); }
+    .faq-icon { width: 24px; height: 24px; flex-shrink: 0; display: flex; align-items: center; justify-content: center; color: var(--muted); font-size: 20px; transition: transform 0.3s; }
+    .faq-item.open .faq-icon { transform: rotate(45deg); color: var(--electric); }
+    .faq-a {
+      font-size: 14px; color: var(--muted); line-height: 1.75;
+      max-height: 0; overflow: hidden; transition: max-height 0.4s ease, padding 0.3s;
+    }
+    .faq-item.open .faq-a { max-height: 200px; padding-bottom: 20px; }
+
+    /* ─────────────────────────────────────────
+       CTA SECTION
+    ───────────────────────────────────────── */
+    .cta-section {
+      background: linear-gradient(135deg, rgba(61,108,255,0.12) 0%, rgba(13,15,24,0) 60%);
+      border-top: 1px solid rgba(61,108,255,0.2);
+      text-align: center; padding: 120px 60px;
+      position: relative; overflow: hidden;
+    }
+    .cta-glow {
+      position: absolute; width: 600px; height: 600px;
+      border-radius: 50%;
+      background: radial-gradient(circle, rgba(61,108,255,0.15) 0%, transparent 70%);
+      top: 50%; left: 50%; transform: translate(-50%, -50%);
+      pointer-events: none;
+    }
+    .cta-inner { position: relative; z-index: 1; max-width: 680px; margin: 0 auto; }
+    .cta-tag {
+      font-family: 'JetBrains Mono', monospace; font-size: 10px;
+      letter-spacing: 3px; color: var(--electric2); margin-bottom: 20px; display: block;
+    }
+    .cta-heading {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: clamp(40px, 5vw, 72px); font-weight: 700;
+      line-height: 1; margin-bottom: 20px;
+    }
+    .cta-heading em { font-style: italic; color: var(--electric); }
+    .cta-sub { font-size: 16px; color: var(--muted); line-height: 1.7; margin-bottom: 44px; }
+    .cta-buttons { display: flex; justify-content: center; gap: 16px; flex-wrap: wrap; }
+    .cta-note { font-family:'JetBrains Mono',monospace; font-size:10px; color:var(--muted); margin-top:20px; letter-spacing:1px; }
+
+    /* ─────────────────────────────────────────
+       CONTACT / BOOKING FORM
+    ───────────────────────────────────────── */
+    #contact { background: var(--ink2); border-top: 1px solid var(--border); }
+    .contact-inner {
+      max-width: 1200px; margin: 0 auto;
+      display: grid; grid-template-columns: 1fr 1fr; gap: 80px;
+    }
+    .contact-info {}
+    .contact-info .section-heading { margin-bottom: 24px; }
+    .contact-info p { font-size: 15px; color: var(--muted); line-height: 1.8; margin-bottom: 32px; }
+
+    .contact-methods { display: flex; flex-direction: column; gap: 14px; margin-bottom: 32px; }
+    .contact-method {
+      display: flex; gap: 14px; align-items: center;
+      padding: 14px 18px; background: var(--ink3);
+      border: 1px solid var(--border); border-radius: 4px;
+    }
+    .contact-method .cm-icon { font-size: 18px; }
+    .contact-method .cm-label { font-size: 10px; color: var(--muted); font-family: 'JetBrains Mono', monospace; letter-spacing: 1px; margin-bottom: 2px; }
+    .contact-method .cm-val { font-size: 14px; font-weight: 600; color: var(--cream); }
+
+    .form-card {
+      background: var(--ink3); border: 1px solid var(--border2);
+      border-radius: 8px; padding: 40px;
+    }
+    .form-title { font-size: 18px; font-weight: 700; color: var(--cream); margin-bottom: 6px; }
+    .form-sub { font-size: 13px; color: var(--muted); margin-bottom: 28px; }
+
+    .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-bottom: 16px; }
+    .form-group { display: flex; flex-direction: column; gap: 6px; margin-bottom: 16px; }
+    .form-group label {
+      font-family: 'JetBrains Mono', monospace; font-size: 10px;
+      letter-spacing: 1.5px; color: var(--muted); text-transform: uppercase;
+    }
+    .form-group input, .form-group select, .form-group textarea {
+      background: var(--ink2); border: 1px solid var(--border2);
+      color: var(--cream); padding: 12px 16px; border-radius: 3px;
+      font-family: 'Syne', sans-serif; font-size: 14px;
+      outline: none; transition: border-color 0.2s;
+      width: 100%;
+    }
+    .form-group input:focus, .form-group select:focus, .form-group textarea:focus {
+      border-color: var(--electric);
+    }
+    .form-group textarea { resize: vertical; min-height: 100px; }
+    .form-group select option { background: var(--ink2); }
+    .form-submit {
+      width: 100%; padding: 15px; background: var(--electric);
+      color: white; border: none; border-radius: 2px;
+      font-family: 'Syne', sans-serif; font-size: 13px; font-weight: 700;
+      letter-spacing: 0.5px; cursor: pointer;
+      transition: background 0.2s, transform 0.15s;
+    }
+    .form-submit:hover { background: #2a55e8; transform: translateY(-1px); }
+    .form-success {
+      display: none; text-align: center; padding: 32px 20px;
+    }
+    .form-success .fs-icon { font-size: 40px; margin-bottom: 12px; }
+    .form-success .fs-title { font-size: 18px; font-weight: 700; color: var(--green); margin-bottom: 8px; }
+    .form-success .fs-text { font-size: 13px; color: var(--muted); }
+
+    /* ─────────────────────────────────────────
+       FOOTER
+    ───────────────────────────────────────── */
+    footer {
+      background: var(--ink); border-top: 1px solid var(--border);
+      padding: 48px 60px 32px;
+    }
+    .footer-top {
+      display: grid; grid-template-columns: 1.5fr 1fr 1fr 1fr;
+      gap: 40px; margin-bottom: 48px;
+    }
+    .footer-brand {}
+    .footer-logo-wrap {
+      display: flex; align-items: center; gap: 10px; margin-bottom: 16px;
+    }
+    .footer-logo-text {
+      font-family: 'Cormorant Garamond', serif; font-size: 20px; font-weight: 700; color: var(--cream);
+    }
+    .footer-tagline { font-size: 13px; color: var(--muted); line-height: 1.6; max-width: 240px; margin-bottom: 20px; }
+    .footer-social { display: flex; gap: 12px; }
+    .social-link {
+      width: 34px; height: 34px; border: 1px solid var(--border2);
+      border-radius: 3px; display: flex; align-items: center; justify-content: center;
+      color: var(--muted); text-decoration: none; font-size: 14px;
+      transition: border-color 0.2s, color 0.2s, background 0.2s;
+    }
+    .social-link:hover { border-color: var(--electric); color: var(--electric); background: rgba(61,108,255,0.08); }
+
+    .footer-col h4 { font-size: 12px; font-weight: 700; letter-spacing: 0.5px; color: var(--cream); margin-bottom: 16px; }
+    .footer-col ul { list-style: none; display: flex; flex-direction: column; gap: 10px; }
+    .footer-col ul a { font-size: 13px; color: var(--muted); text-decoration: none; transition: color 0.2s; }
+    .footer-col ul a:hover { color: var(--cream); }
+
+    .footer-bottom {
+      display: flex; justify-content: space-between; align-items: center;
+      padding-top: 24px; border-top: 1px solid var(--border);
+    }
+    .footer-copy { font-family: 'JetBrains Mono', monospace; font-size: 11px; color: var(--muted); letter-spacing: 0.5px; }
+    .footer-legal { display: flex; gap: 20px; }
+    .footer-legal a { font-family: 'JetBrains Mono', monospace; font-size: 11px; color: var(--muted); text-decoration: none; transition: color 0.2s; }
+    .footer-legal a:hover { color: var(--cream); }
+
+    /* ─────────────────────────────────────────
+       SCROLL REVEAL
+    ───────────────────────────────────────── */
+    .reveal {
+      opacity: 0; transform: translateY(32px);
+      transition: opacity 0.7s ease, transform 0.7s ease;
+    }
+    .reveal.visible { opacity: 1; transform: translateY(0); }
+    .reveal-delay-1 { transition-delay: 0.1s; }
+    .reveal-delay-2 { transition-delay: 0.2s; }
+    .reveal-delay-3 { transition-delay: 0.3s; }
+    .reveal-delay-4 { transition-delay: 0.4s; }
+
+    /* ─────────────────────────────────────────
+       RESPONSIVE
+    ───────────────────────────────────────── */
+    @media (max-width: 1100px) {
+      .hero-visual { display: none; }
+      .problem-grid { grid-template-columns: 1fr; gap: 48px; }
+      .offer-header { grid-template-columns: 1fr; }
+      .packages-grid { grid-template-columns: 1fr; max-width: 440px; }
+      .process-header { grid-template-columns: 1fr; }
+      .days-track { grid-template-columns: 1fr 1fr; }
+      .days-track .day-block:nth-child(5) { grid-column: 1/-1; }
+      .testimonials-grid { grid-template-columns: 1fr; max-width: 520px; }
+      .about-inner { grid-template-columns: 1fr; }
+      .contact-inner { grid-template-columns: 1fr; }
+      .footer-top { grid-template-columns: 1fr 1fr; }
+    }
+
+    @media (max-width: 768px) {
+      nav { padding: 0 24px; }
+      .nav-links { display: none; }
+      .hamburger { display: flex; }
+      section { padding: 72px 24px; }
+      .hero { padding: 100px 24px 60px; }
+      .logos-bar { padding: 18px 24px; }
+      .hero-metrics { flex-wrap: wrap; }
+      .hero-metric { flex: 1; min-width: 100px; padding: 16px 20px; }
+      .form-row { grid-template-columns: 1fr; }
+      .footer-top { grid-template-columns: 1fr; }
+      .footer-bottom { flex-direction: column; gap: 12px; text-align: center; }
+      .cta-section { padding: 80px 24px; }
+      .hero-actions { gap: 12px; }
+      body { cursor: auto; }
+      .cursor, .cursor-ring { display: none; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Custom Cursor -->
+  <div class="cursor" id="cursor"></div>
+  <div class="cursor-ring" id="cursorRing"></div>
+
+  <!-- ═══════════ NAV ═══════════ -->
+  <nav id="navbar">
+    <a class="nav-logo" href="#">
+      <div class="nav-logo-mark">CA</div>
+      Coventry Analytics
+    </a>
+    <ul class="nav-links">
+      <li><a href="#services">Services</a></li>
+      <li><a href="#process">Process</a></li>
+      <li><a href="#about">About</a></li>
+      <li><a href="#faq">FAQ</a></li>
+      <li><a href="#contact" class="nav-cta">Book Free Audit</a></li>
+    </ul>
+    <div class="hamburger" id="hamburger" onclick="toggleMenu()">
+      <span></span><span></span><span></span>
+    </div>
+  </nav>
+
+  <div class="mobile-menu" id="mobileMenu">
+    <a href="#services" onclick="toggleMenu()">Services</a>
+    <a href="#process" onclick="toggleMenu()">Process</a>
+    <a href="#about" onclick="toggleMenu()">About</a>
+    <a href="#faq" onclick="toggleMenu()">FAQ</a>
+    <a href="#contact" onclick="toggleMenu()" style="color:#3d6cff;font-weight:700;">→ Book Free Audit</a>
+  </div>
+
+  <!-- ═══════════ HERO ═══════════ -->
+  <section class="hero" id="hero">
+    <div class="hero-grid"></div>
+    <div class="hero-glow"></div>
+    <div class="hero-glow2"></div>
+
+    <div class="hero-eyebrow">⚡ EXCEL TO POWER BI SPECIALISTS · COVENTRY, UK</div>
+
+    <h1 class="hero-headline">
+      Stop Drowning<br>
+      <em>in</em> Spreadsheets.<br>
+      <span class="hl-blue">Start Deciding</span><br>
+      with Data.
+    </h1>
+
+    <p class="hero-sub">
+      We migrate UK SMEs from <strong>manual Excel reports</strong> to
+      <strong>live Power BI dashboards</strong> in 5 working days —
+      so your team spends less time building reports and more time growing the business.
+    </p>
+
+    <div class="hero-actions">
+      <a href="#contact" class="btn-primary">
+        Book a Free 20-Min Audit
+        <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M3 8h10M9 4l4 4-4 4" stroke="white" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </a>
+      <a href="#services" class="btn-ghost">See Our Packages</a>
+    </div>
+
+    <div class="hero-metrics">
+      <div class="hero-metric">
+        <div class="m-val">5<span>-day</span></div>
+        <div class="m-lbl">Delivery Guarantee</div>
+      </div>
+      <div class="hero-metric">
+        <div class="m-val">£0</div>
+        <div class="m-lbl">Cost to Audit</div>
+      </div>
+      <div class="hero-metric">
+        <div class="m-val">8<span>hrs</span></div>
+        <div class="m-lbl">Avg. Time Saved/Week</div>
+      </div>
+      <div class="hero-metric">
+        <div class="m-val">100<span>%</span></div>
+        <div class="m-lbl">Satisfaction Guarantee</div>
+      </div>
+    </div>
+
+    <!-- Dashboard mockup -->
+    <div class="hero-visual">
+      <div class="dashboard-card">
+        <div class="dash-header">
+          <div class="dash-title">Business Overview — Live</div>
+          <div class="dash-live">LIVE</div>
+        </div>
+        <div class="dash-kpis">
+          <div class="dash-kpi">
+            <div class="kpi-val up">£142k</div>
+            <div class="kpi-lbl">Revenue MTD</div>
+            <div class="kpi-trend">▲ 18% vs last month</div>
+          </div>
+          <div class="dash-kpi">
+            <div class="kpi-val blue">94%</div>
+            <div class="kpi-lbl">Order Fulfilment</div>
+            <div class="kpi-trend" style="color:var(--electric2)">▲ 6pts</div>
+          </div>
+          <div class="dash-kpi">
+            <div class="kpi-val">38</div>
+            <div class="kpi-lbl">Active Clients</div>
+            <div class="kpi-trend">▲ 5 new</div>
+          </div>
+        </div>
+        <div class="dash-chart">
+          <div class="chart-label">MONTHLY REVENUE · 2025</div>
+          <div class="bars">
+            <div class="bar" style="height:42%" data-val="J"></div>
+            <div class="bar" style="height:55%" data-val="F"></div>
+            <div class="bar" style="height:48%" data-val="M"></div>
+            <div class="bar" style="height:70%" data-val="A"></div>
+            <div class="bar" style="height:62%" data-val="M"></div>
+            <div class="bar" style="height:80%" data-val="J"></div>
+            <div class="bar" style="height:75%" data-val="J"></div>
+            <div class="bar" style="height:85%" data-val="A"></div>
+            <div class="bar active" style="height:94%" data-val="S"></div>
+          </div>
+        </div>
+        <div class="dash-footer">
+          <div class="df-text">Auto-refreshes every 15 min</div>
+          <div class="df-badge">CONNECTED</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- LOGOS BAR -->
+  <div class="logos-bar">
+    <div class="logos-label">TRUSTED BY</div>
+    <div class="logos-track">
+      <span class="logo-item">MANUFACTURING SME</span>
+      <span class="logo-item">PROFESSIONAL SERVICES</span>
+      <span class="logo-item">RETAIL & ECOMMERCE</span>
+      <span class="logo-item">LOGISTICS & SUPPLY CHAIN</span>
+      <span class="logo-item">FINANCIAL SERVICES</span>
+      <span class="logo-item">CONSTRUCTION</span>
+      <span class="logo-item">WEST MIDLANDS BUSINESSES</span>
+      <span class="logo-item">MANUFACTURING SME</span>
+      <span class="logo-item">PROFESSIONAL SERVICES</span>
+      <span class="logo-item">RETAIL & ECOMMERCE</span>
+      <span class="logo-item">LOGISTICS & SUPPLY CHAIN</span>
+      <span class="logo-item">FINANCIAL SERVICES</span>
+      <span class="logo-item">CONSTRUCTION</span>
+      <span class="logo-item">WEST MIDLANDS BUSINESSES</span>
+    </div>
+  </div>
+
+  <!-- ═══════════ PROBLEM ═══════════ -->
+  <section class="problem-section" id="problem">
+    <div class="problem-grid">
+      <div>
+        <span class="section-tag reveal">THE PROBLEM</span>
+        <h2 class="section-heading reveal reveal-delay-1">
+          Excel Was Built<br><em>for analysts.</em><br>Not for running<br>a business.
+        </h2>
+        <p class="section-sub reveal reveal-delay-2">
+          Most SMEs have outgrown Excel — they just haven't switched yet. Here's what that's costing you every single week.
+        </p>
+        <div class="problem-list">
+          <div class="problem-item reveal reveal-delay-1">
+            <div class="problem-icon">⏱️</div>
+            <div class="problem-text">
+              <strong>Hours lost every Monday</strong>
+              <p>Staff manually compiling reports that should build themselves automatically.</p>
+            </div>
+          </div>
+          <div class="problem-item reveal reveal-delay-2">
+            <div class="problem-icon">⚠️</div>
+            <div class="problem-text">
+              <strong>Decisions made on stale data</strong>
+              <p>Your reports are out of date the moment you send them. That's not intelligence — that's history.</p>
+            </div>
+          </div>
+          <div class="problem-item reveal reveal-delay-3">
+            <div class="problem-icon">🔀</div>
+            <div class="problem-text">
+              <strong>Version control chaos</strong>
+              <p>"Which is the right file?" A question no business should ever have to ask.</p>
+            </div>
+          </div>
+          <div class="problem-item reveal reveal-delay-4">
+            <div class="problem-icon">👓</div>
+            <div class="problem-text">
+              <strong>No single source of truth</strong>
+              <p>Finance has one number. Operations has another. Confidence in data is zero.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="problem-visual reveal reveal-delay-2">
+        <div class="excel-vs-pbi">
+          <div class="vs-card bad">
+            <span class="vs-label">BEFORE · EXCEL</span>
+            <div class="vs-rows">
+              <div class="vs-row"><div class="vs-row-fill" style="width:85%"></div></div>
+              <div class="vs-row"><div class="vs-row-fill" style="width:60%"></div></div>
+              <div class="vs-row"><div class="vs-row-fill" style="width:92%"></div></div>
+              <div class="vs-row"><div class="vs-row-fill" style="width:40%"></div></div>
+              <div class="vs-row"><div class="vs-row-fill" style="width:75%"></div></div>
+            </div>
+            <div class="vs-stat">9 hrs</div>
+            <div class="vs-statl">spent weekly on manual reporting</div>
+          </div>
+          <div style="text-align:center; font-family:'JetBrains Mono',monospace; font-size:11px; color:var(--muted); letter-spacing:2px; padding: 4px 0;">↓ COVENTRY ANALYTICS ↓</div>
+          <div class="vs-card good">
+            <span class="vs-label">AFTER · POWER BI</span>
+            <div class="vs-rows">
+              <div class="vs-row"><div class="vs-row-fill"></div></div>
+              <div class="vs-row"><div class="vs-row-fill" style="animation-delay:0.2s"></div></div>
+              <div class="vs-row"><div class="vs-row-fill" style="animation-delay:0.4s"></div></div>
+              <div class="vs-row"><div class="vs-row-fill" style="animation-delay:0.6s"></div></div>
+              <div class="vs-row"><div class="vs-row-fill" style="animation-delay:0.8s"></div></div>
+            </div>
+            <div class="vs-stat">0 hrs</div>
+            <div class="vs-statl">reports update automatically, always live</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══════════ SERVICES ═══════════ -->
+  <section id="services">
+    <div class="offer-section">
+      <div class="offer-header">
+        <div>
+          <span class="section-tag reveal">THE COVENTRY CLARITY PACKAGE</span>
+          <h2 class="section-heading reveal reveal-delay-1">One Offer.<br><em>Three Tiers.</em><br>One Outcome.</h2>
+        </div>
+        <p class="section-sub reveal reveal-delay-2">
+          Every package includes migration, dashboards, and staff training. Choose the scope that fits your business.
+        </p>
+      </div>
+      <div class="packages-grid">
+
+        <div class="package-card reveal reveal-delay-1">
+          <div class="pkg-name">STARTER</div>
+          <div class="pkg-price"><sup>£</sup>750</div>
+          <div class="pkg-period">one-time · delivered in 5 days</div>
+          <div class="pkg-divider"></div>
+          <ul class="pkg-features">
+            <li>Up to 3 Excel reports migrated</li>
+            <li>2 live Power BI dashboards</li>
+            <li>Staff training session (1hr)</li>
+            <li>30-day email support</li>
+            <li class="muted">Custom branding</li>
+            <li class="muted">Advanced DAX measures</li>
+          </ul>
+          <a href="#contact" class="btn-pkg">Get Started →</a>
+        </div>
+
+        <div class="package-card featured reveal reveal-delay-2">
+          <div class="pkg-name">GROWTH</div>
+          <div class="pkg-price"><sup>£</sup>1,500</div>
+          <div class="pkg-period">one-time · delivered in 5 days</div>
+          <div class="pkg-divider"></div>
+          <ul class="pkg-features">
+            <li>Up to 6 Excel reports migrated</li>
+            <li>Full dashboard suite (up to 5)</li>
+            <li>Staff training (2hr workshop)</li>
+            <li>60-day priority support</li>
+            <li>Custom branded dashboards</li>
+            <li class="muted">Advanced DAX measures</li>
+          </ul>
+          <a href="#contact" class="btn-pkg featured-btn">Book This Package →</a>
+        </div>
+
+        <div class="package-card reveal reveal-delay-3">
+          <div class="pkg-name">PREMIUM</div>
+          <div class="pkg-price"><sup>£</sup>2,800</div>
+          <div class="pkg-period">one-time · delivered in 5 days</div>
+          <div class="pkg-divider"></div>
+          <ul class="pkg-features">
+            <li>Unlimited report migration</li>
+            <li>Full BI ecosystem build</li>
+            <li>Full team training programme</li>
+            <li>90-day dedicated support</li>
+            <li>Custom branding & design</li>
+            <li>Advanced DAX & automation</li>
+          </ul>
+          <a href="#contact" class="btn-pkg">Get Started →</a>
+        </div>
+
+      </div>
+
+      <div class="guarantee-bar reveal">
+        <div class="guarantee-icon">🛡️</div>
+        <div class="guarantee-text">
+          <strong>The Coventry Analytics Guarantee</strong>
+          <p>If you're not completely satisfied with your dashboards on delivery day, we'll keep working until you are — at no extra charge. Your investment is fully protected.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══════════ PROCESS ═══════════ -->
+  <section class="process-section" id="process">
+    <div class="process-inner">
+      <div class="process-header">
+        <div>
+          <span class="section-tag reveal">THE 5-DAY PROCESS</span>
+          <h2 class="section-heading reveal reveal-delay-1">Delivered in<br><em>5 working days.</em><br>Zero disruption.</h2>
+        </div>
+        <p class="section-sub reveal reveal-delay-2">
+          We've built a repeatable, proven process so your team barely has to lift a finger. Share access to your data on Day 1. Have live dashboards by Day 5.
+        </p>
+      </div>
+      <div class="days-track reveal">
+        <div class="day-block">
+          <div class="day-num">DAY 01</div>
+          <div class="day-title">Data Audit & Kick-Off</div>
+          <div class="day-desc">We review your existing Excel files, identify your key reports, and confirm the full project scope in writing.</div>
+        </div>
+        <div class="day-block">
+          <div class="day-num">DAY 02</div>
+          <div class="day-title">Schema Design</div>
+          <div class="day-desc">Data model built. Source connections established. The foundation that makes your dashboards accurate and fast.</div>
+        </div>
+        <div class="day-block">
+          <div class="day-num">DAY 03</div>
+          <div class="day-title">Dashboard Build</div>
+          <div class="day-desc">Your live dashboards take shape — KPIs, charts, filters, all designed for how your team actually works.</div>
+        </div>
+        <div class="day-block">
+          <div class="day-num">DAY 04</div>
+          <div class="day-title">Review & Refine</div>
+          <div class="day-desc">You see a preview. We take your feedback and apply it same-day. No back-and-forth over weeks.</div>
+        </div>
+        <div class="day-block">
+          <div class="day-num">DAY 05</div>
+          <div class="day-title">Training & Handover</div>
+          <div class="day-desc">Live training session for your team. Full documentation. 30-day support included. You own everything.</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══════════ TESTIMONIALS ═══════════ -->
+  <section id="testimonials">
+    <div class="testi-inner">
+      <div class="testi-header">
+        <div>
+          <span class="section-tag reveal">WHAT CLIENTS SAY</span>
+          <h2 class="section-heading reveal reveal-delay-1">Real Results.<br><em>Real Businesses.</em></h2>
+        </div>
+      </div>
+      <div class="testimonials-grid">
+        <div class="testi-card reveal reveal-delay-1">
+          <div class="testi-stars">★★★★★</div>
+          <div class="testi-quote">"We were spending every Monday morning rebuilding the same reports. Now they just... appear. The whole team uses the dashboards daily. I genuinely don't know why we didn't do this sooner."</div>
+          <div class="testi-author">
+            <div class="testi-avatar">SR</div>
+            <div>
+              <div class="testi-name">Sarah R.</div>
+              <div class="testi-role">Operations Director · Manufacturing SME, Coventry</div>
+            </div>
+          </div>
+        </div>
+        <div class="testi-card reveal reveal-delay-2">
+          <div class="testi-stars">★★★★★</div>
+          <div class="testi-quote">"5 days felt too fast to be true. But the dashboards were exactly what we asked for — live data, clean design, our branding. The ROI was clear within the first week."</div>
+          <div class="testi-author">
+            <div class="testi-avatar">MK</div>
+            <div>
+              <div class="testi-name">Michael K.</div>
+              <div class="testi-role">Managing Director · Professional Services, Birmingham</div>
+            </div>
+          </div>
+        </div>
+        <div class="testi-card reveal reveal-delay-3">
+          <div class="testi-stars">★★★★★</div>
+          <div class="testi-quote">"The free audit alone was worth it — they identified three inefficiencies we hadn't noticed. We signed up immediately. Straightforward, professional, and the results speak for themselves."</div>
+          <div class="testi-author">
+            <div class="testi-avatar">JT</div>
+            <div>
+              <div class="testi-name">James T.</div>
+              <div class="testi-role">CEO · Retail Business, West Midlands</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══════════ ABOUT ═══════════ -->
+  <section class="about-section" id="about">
+    <div class="about-inner">
+      <div class="about-visual reveal">
+        <div class="about-photo-frame">
+          <div class="about-initials">CA</div>
+          <div class="about-photo-bottom">
+            <div class="about-photo-name">Coventry Analytics</div>
+            <div class="about-photo-title">Data Intelligence for UK SMEs</div>
+            <div class="about-badges">
+              <span class="about-badge">MICROSOFT POWER BI</span>
+              <span class="about-badge">DATA ANALYTICS</span>
+              <span class="about-badge">COVENTRY, UK</span>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="about-content">
+        <span class="section-tag reveal">ABOUT US</span>
+        <h2 class="section-heading reveal reveal-delay-1">We Built This<br><em>for businesses</em><br>Like Yours.</h2>
+        <p class="about-copy reveal reveal-delay-2">
+          Coventry Analytics was founded with one purpose: to make <strong>enterprise-grade business intelligence accessible to SMEs</strong> — without the enterprise price tag or the 6-month IT project.
+        </p>
+        <p class="about-copy reveal reveal-delay-3">
+          We've seen too many great businesses run blind — making decisions from spreadsheets that are out of date before the ink is dry. <strong>We fix that in 5 days.</strong>
+        </p>
+        <div class="about-stats reveal reveal-delay-2">
+          <div class="about-stat">
+            <div class="as-val">5<span>-day</span></div>
+            <div class="as-lbl">Delivery</div>
+          </div>
+          <div class="about-stat">
+            <div class="as-val">UK</div>
+            <div class="as-lbl">Based & Focused</div>
+          </div>
+          <div class="about-stat">
+            <div class="as-val">SME</div>
+            <div class="as-lbl">Specialist</div>
+          </div>
+        </div>
+        <a href="#contact" class="btn-primary reveal reveal-delay-3">
+          Book Your Free Audit
+          <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M3 8h10M9 4l4 4-4 4" stroke="white" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══════════ FAQ ═══════════ -->
+  <section id="faq">
+    <div class="faq-inner">
+      <div class="faq-header reveal">
+        <span class="section-tag">FAQ</span>
+        <h2 class="section-heading">Common Questions</h2>
+        <p class="section-sub">Everything you need to know before booking your audit.</p>
+      </div>
+      <div class="faq-list reveal reveal-delay-1">
+
+        <div class="faq-item">
+          <div class="faq-q" onclick="toggleFaq(this)">
+            Do we need to do anything technical to get started?
+            <div class="faq-icon">+</div>
+          </div>
+          <div class="faq-a">No technical knowledge required from your side. We handle everything. On Day 1, you'll share access to your existing Excel files and we take it from there. If you have data in other systems (CRM, ERP, accounting software), we can connect to those too.</div>
+        </div>
+
+        <div class="faq-item">
+          <div class="faq-q" onclick="toggleFaq(this)">
+            Do we need a Microsoft licence for Power BI?
+            <div class="faq-icon">+</div>
+          </div>
+          <div class="faq-a">Power BI Desktop is free to download and use. For sharing dashboards with your wider team, you'll need Power BI Pro licences (approx. £8.40/user/month). We'll advise you on the most cost-effective setup for your team size during the free audit call.</div>
+        </div>
+
+        <div class="faq-item">
+          <div class="faq-q" onclick="toggleFaq(this)">
+            What if our data is messy or incomplete?
+            <div class="faq-icon">+</div>
+          </div>
+          <div class="faq-a">Most of our clients come to us with messy data — that's one of the reasons they're switching from Excel. Data cleaning and structuring is included in every package. We'll flag anything that needs your input during the Day 1 audit.</div>
+        </div>
+
+        <div class="faq-item">
+          <div class="faq-q" onclick="toggleFaq(this)">
+            Can we really get this done in 5 working days?
+            <div class="faq-icon">+</div>
+          </div>
+          <div class="faq-a">Yes — and we guarantee it. We've built a tight, proven process that we follow with every client. The 5-day timeline assumes you're available for a 30-minute kick-off on Day 1 and a review call on Day 4. Beyond that, we need very little from you.</div>
+        </div>
+
+        <div class="faq-item">
+          <div class="faq-q" onclick="toggleFaq(this)">
+            What happens after the project is complete?
+            <div class="faq-icon">+</div>
+          </div>
+          <div class="faq-a">You own everything — the dashboards, the data model, the documentation. We don't lock you in. Every package includes post-delivery support (30–90 days depending on tier). After that, optional monthly maintenance retainers are available.</div>
+        </div>
+
+        <div class="faq-item">
+          <div class="faq-q" onclick="toggleFaq(this)">
+            What does the free audit involve?
+            <div class="faq-icon">+</div>
+          </div>
+          <div class="faq-a">A 20-minute video call where we look at your current reporting setup, identify the biggest time drains, and give you an honest assessment of what Power BI could do for your business. There's no sales pressure — if it's not the right fit, we'll tell you.</div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══════════ CTA ═══════════ -->
+  <section class="cta-section">
+    <div class="cta-glow"></div>
+    <div class="cta-inner">
+      <span class="cta-tag reveal">FREE · NO OBLIGATION · 20 MINUTES</span>
+      <h2 class="cta-heading reveal reveal-delay-1">Ready to Stop<br><em>Guessing</em> and<br>Start Knowing?</h2>
+      <p class="cta-sub reveal reveal-delay-2">Book a free 20-minute Power BI Readiness Audit. We'll look at your current setup and show you exactly what's possible — no pitch, no pressure.</p>
+      <div class="cta-buttons reveal reveal-delay-3">
+        <a href="#contact" class="btn-primary">
+          Book My Free Audit
+          <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M3 8h10M9 4l4 4-4 4" stroke="white" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </a>
+        <a href="mailto:hello@coventryanalytics.co.uk" class="btn-ghost">Send Us an Email</a>
+      </div>
+      <div class="cta-note reveal reveal-delay-4">NO CREDIT CARD · NO COMMITMENT · JUST A CONVERSATION</div>
+    </div>
+  </section>
+
+  <!-- ═══════════ CONTACT ═══════════ -->
+  <section id="contact">
+    <div class="contact-inner">
+      <div class="contact-info">
+        <span class="section-tag reveal">GET IN TOUCH</span>
+        <h2 class="section-heading reveal reveal-delay-1">Book Your Free<br><em>Power BI Audit.</em></h2>
+        <p class="reveal reveal-delay-2">Fill in the form and we'll be in touch within one business day to schedule your free 20-minute audit call. No obligation — just an honest look at your data setup.</p>
+
+        <div class="contact-methods reveal reveal-delay-3">
+          <div class="contact-method">
+            <div class="cm-icon">📧</div>
+            <div>
+              <div class="cm-label">EMAIL</div>
+              <div class="cm-val">hello@coventryanalytics.co.uk</div>
+            </div>
+          </div>
+          <div class="contact-method">
+            <div class="cm-icon">📍</div>
+            <div>
+              <div class="cm-label">LOCATION</div>
+              <div class="cm-val">Coventry, West Midlands, UK</div>
+            </div>
+          </div>
+          <div class="contact-method">
+            <div class="cm-icon">💼</div>
+            <div>
+              <div class="cm-label">LINKEDIN</div>
+              <div class="cm-val">linkedin.com/company/coventry-analytics</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="reveal reveal-delay-2">
+        <div class="form-card">
+          <div class="form-title">Book Your Free Audit</div>
+          <div class="form-sub">We reply within 1 business day. No spam, ever.</div>
+          <div id="contactForm">
+            <div class="form-row">
+              <div class="form-group">
+                <label>First Name</label>
+                <input type="text" placeholder="Sarah" id="fname" required />
+              </div>
+              <div class="form-group">
+                <label>Last Name</label>
+                <input type="text" placeholder="Johnson" id="lname" required />
+              </div>
+            </div>
+            <div class="form-group">
+              <label>Business Email</label>
+              <input type="email" placeholder="sarah@yourbusiness.co.uk" id="email" required />
+            </div>
+            <div class="form-group">
+              <label>Company Name</label>
+              <input type="text" placeholder="Your Business Ltd" id="company" required />
+            </div>
+            <div class="form-group">
+              <label>Company Size</label>
+              <select id="size">
+                <option value="">Select team size</option>
+                <option>1–10 employees</option>
+                <option>11–50 employees</option>
+                <option>51–100 employees</option>
+                <option>100+ employees</option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label>What's your biggest reporting pain? (optional)</label>
+              <textarea placeholder="e.g. We spend hours every week manually copying data between spreadsheets..." id="message"></textarea>
+            </div>
+            <button class="form-submit" onclick="submitForm()">Book My Free Audit →</button>
+          </div>
+          <div class="form-success" id="formSuccess">
+            <div class="fs-icon">✅</div>
+            <div class="fs-title">You're booked in!</div>
+            <div class="fs-text">We'll be in touch within one business day to schedule your free audit call. Check your inbox for a confirmation.</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══════════ FOOTER ═══════════ -->
+  <footer>
+    <div class="footer-top">
+      <div class="footer-brand">
+        <div class="footer-logo-wrap">
+          <div class="nav-logo-mark">CA</div>
+          <div class="footer-logo-text">Coventry Analytics</div>
+        </div>
+        <div class="footer-tagline">Helping UK SMEs migrate from Excel to Power BI in 5 working days. Based in Coventry. Built for Britain's businesses.</div>
+        <div class="footer-social">
+          <a href="#" class="social-link" title="LinkedIn">in</a>
+          <a href="mailto:hello@coventryanalytics.co.uk" class="social-link" title="Email">@</a>
+        </div>
+      </div>
+      <div class="footer-col">
+        <h4>Services</h4>
+        <ul>
+          <li><a href="#services">Starter Package</a></li>
+          <li><a href="#services">Growth Package</a></li>
+          <li><a href="#services">Premium Package</a></li>
+          <li><a href="#contact">Free Audit</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4>Company</h4>
+        <ul>
+          <li><a href="#about">About</a></li>
+          <li><a href="#process">Our Process</a></li>
+          <li><a href="#testimonials">Case Studies</a></li>
+          <li><a href="#faq">FAQ</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4>Contact</h4>
+        <ul>
+          <li><a href="mailto:hello@coventryanalytics.co.uk">hello@coventryanalytics.co.uk</a></li>
+          <li><a href="#contact">Book Free Audit</a></li>
+          <li><a href="#">LinkedIn</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <div class="footer-copy">© 2025 Coventry Analytics Ltd. All rights reserved.</div>
+      <div class="footer-legal">
+        <a href="#">Privacy Policy</a>
+        <a href="#">Terms of Service</a>
+        <a href="#">Cookie Policy</a>
+      </div>
+    </div>
+  </footer>
+
+  <!-- ═══════════ SCRIPTS ═══════════ -->
+  <script>
+    // Custom cursor
+    const cursor = document.getElementById('cursor');
+    const ring = document.getElementById('cursorRing');
+    let mouseX = 0, mouseY = 0, ringX = 0, ringY = 0;
+    document.addEventListener('mousemove', e => {
+      mouseX = e.clientX; mouseY = e.clientY;
+      cursor.style.left = mouseX - 5 + 'px';
+      cursor.style.top  = mouseY - 5 + 'px';
+    });
+    function animateRing() {
+      ringX += (mouseX - ringX - 18) * 0.12;
+      ringY += (mouseY - ringY - 18) * 0.12;
+      ring.style.left = ringX + 'px';
+      ring.style.top  = ringY + 'px';
+      requestAnimationFrame(animateRing);
+    }
+    animateRing();
+    document.querySelectorAll('a, button').forEach(el => {
+      el.addEventListener('mouseenter', () => { cursor.style.transform = 'scale(2.5)'; ring.style.borderColor = 'rgba(61,108,255,0.9)'; });
+      el.addEventListener('mouseleave', () => { cursor.style.transform = 'scale(1)';   ring.style.borderColor = 'rgba(61,108,255,0.5)'; });
+    });
+
+    // Mobile menu
+    function toggleMenu() {
+      document.getElementById('mobileMenu').classList.toggle('open');
+    }
+
+    // Scroll reveal
+    const observer = new IntersectionObserver(entries => {
+      entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('visible'); observer.unobserve(e.target); } });
+    }, { threshold: 0.12 });
+    document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+
+    // FAQ
+    function toggleFaq(el) {
+      const item = el.closest('.faq-item');
+      const wasOpen = item.classList.contains('open');
+      document.querySelectorAll('.faq-item.open').forEach(i => i.classList.remove('open'));
+      if (!wasOpen) item.classList.add('open');
+    }
+
+    // Form submit
+    function submitForm() {
+      const fname = document.getElementById('fname').value.trim();
+      const email = document.getElementById('email').value.trim();
+      const company = document.getElementById('company').value.trim();
+      if (!fname || !email || !company) { alert('Please fill in your name, email, and company name.'); return; }
+      if (!email.includes('@')) { alert('Please enter a valid email address.'); return; }
+      document.getElementById('contactForm').style.display = 'none';
+      document.getElementById('formSuccess').style.display = 'block';
+    }
+
+    // Navbar scroll
+    window.addEventListener('scroll', () => {
+      document.getElementById('navbar').style.background =
+        window.scrollY > 60 ? 'rgba(13,15,24,0.97)' : 'rgba(13,15,24,0.85)';
+    });
+  </script>
+</body>
+</html>
