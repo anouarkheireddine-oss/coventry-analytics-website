@@ -1613,15 +1613,52 @@
       if (!wasOpen) item.classList.add('open');
     }
 
-    // Form submit
+    // ─── FORMSPREE — replace YOUR_FORM_ID with your ID from formspree.io ───
+    const FORMSPREE_ENDPOINT = 'https://formspree.io/f/https://formspree.io/f/xpqyenwv';
+
     function submitForm() {
-      const fname = document.getElementById('fname').value.trim();
-      const email = document.getElementById('email').value.trim();
+      const fname   = document.getElementById('fname').value.trim();
+      const lname   = document.getElementById('lname').value.trim();
+      const email   = document.getElementById('email').value.trim();
       const company = document.getElementById('company').value.trim();
+      const size    = document.getElementById('size').value;
+      const message = document.getElementById('message').value.trim();
+
       if (!fname || !email || !company) { alert('Please fill in your name, email, and company name.'); return; }
       if (!email.includes('@')) { alert('Please enter a valid email address.'); return; }
-      document.getElementById('contactForm').style.display = 'none';
-      document.getElementById('formSuccess').style.display = 'block';
+
+      const btn = document.querySelector('.form-submit');
+      btn.textContent = 'Sending...';
+      btn.disabled = true;
+
+      fetch(FORMSPREE_ENDPOINT, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
+        body: JSON.stringify({
+          'First Name':   fname,
+          'Last Name':    lname,
+          'Email':        email,
+          'Company':      company,
+          'Company Size': size,
+          'Message':      message || 'No message provided',
+          '_subject':     'New Audit Booking — ' + company
+        })
+      })
+      .then(res => {
+        if (res.ok) {
+          document.getElementById('contactForm').style.display = 'none';
+          document.getElementById('formSuccess').style.display = 'block';
+        } else {
+          btn.textContent = 'Book My Free Audit →';
+          btn.disabled = false;
+          alert('Something went wrong. Please email us at info.coventryanalytics@gmail.com');
+        }
+      })
+      .catch(() => {
+        btn.textContent = 'Book My Free Audit →';
+        btn.disabled = false;
+        alert('Connection error. Please email us at info.coventryanalytics@gmail.com');
+      });
     }
 
     // Navbar scroll
