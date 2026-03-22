@@ -5,6 +5,47 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <meta name="description" content="Coventry Analytics helps UK SMEs migrate from Excel to Power BI in 5 working days. Live dashboards, trained staff, guaranteed results." />
   <title>Coventry Analytics — Excel to Power BI for UK SMEs</title>
+
+  <!-- ═══════════════════════════════════════════════
+       GOOGLE ANALYTICS 4
+       SETUP: Replace GA_MEASUREMENT_ID below with your
+       real ID from analytics.google.com
+       Format: G-XXXXXXXXXX
+  ════════════════════════════════════════════════ -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-34S09WPQB1'"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-34S09WPQB1', {
+      page_title: document.title,
+      page_location: window.location.href
+    });
+
+    // Custom event tracker — call this anywhere to log events
+    function trackEvent(action, category, label, value) {
+      gtag('event', action, {
+        event_category: category,
+        event_label: label,
+        value: value
+      });
+    }
+  </script>
+
+  <!-- ═══════════════════════════════════════════════
+       MICROSOFT CLARITY — Heatmaps + Session Recordings
+       SETUP: Replace CLARITY_PROJECT_ID below with your
+       real ID from clarity.microsoft.com (free)
+       Format: a string like "abc123xyz"
+  ════════════════════════════════════════════════ -->
+  <script type="text/javascript">
+    (function(c,l,a,r,i,t,y){
+      c[a]=c[a]||function(){(c[a].q=c[a].q||[]).push(arguments)};
+      t=l.createElement(r);t.async=1;t.src="https://www.clarity.ms/tag/"+i;
+      y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y);
+    })(window, document, "clarity", "script", "vznmg5klu6");
+  </script>
+
   <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;0,700;1,400&family=Syne:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
   <style>
     /* ─────────────────────────────────────────
@@ -1390,7 +1431,7 @@
           Book My Free Audit
           <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M3 8h10M9 4l4 4-4 4" stroke="white" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
         </a>
-        <a href="mailto:info.coventryanalytics@gmail.com" class="btn-ghost">Send Us an Email</a>
+        <a href="/cdn-cgi/l/email-protection#cea7a0a8a1e0ada1b8aba0babcb7afa0afa2b7baa7adbd8ea9a3afa7a2e0ada1a3" class="btn-ghost">Send Us an Email</a>
       </div>
       <div class="cta-note reveal reveal-delay-4">NO CREDIT CARD · NO COMMITMENT · JUST A CONVERSATION</div>
     </div>
@@ -1409,7 +1450,7 @@
             <div class="cm-icon">📧</div>
             <div>
               <div class="cm-label">EMAIL</div>
-              <div class="cm-val">info.coventryanalytics@gmail.com</div>
+              <div class="cm-val"><a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="026b6c646d2c616d74676c76707b636c636e7b766b617142656f636b6e2c616d6f">[email&#160;protected]</a></div>
             </div>
           </div>
           <div class="contact-method">
@@ -1489,7 +1530,7 @@
         <div class="footer-tagline">Helping UK SMEs migrate from Excel to Power BI in 5 working days. Based in Coventry. Built for Britain's businesses.</div>
         <div class="footer-social">
           <a href="#" class="social-link" title="LinkedIn">in</a>
-          <a href="mailto:info.coventryanalytics@gmail.com" class="social-link" title="Email">@</a>
+          <a href="/cdn-cgi/l/email-protection#b8d1d6ded796dbd7ceddd6cccac1d9d6d9d4c1ccd1dbcbf8dfd5d9d1d496dbd7d5" class="social-link" title="Email">@</a>
         </div>
       </div>
       <div class="footer-col">
@@ -1513,7 +1554,7 @@
       <div class="footer-col">
         <h4>Contact</h4>
         <ul>
-          <li><a href="mailto:info.coventryanalytics@gmail.com">info.coventryanalytics@gmail.com</a></li>
+          <li><a href="/cdn-cgi/l/email-protection#771e19111859141801121903050e1619161b0e031e140437101a161e1b5914181a"><span class="__cf_email__" data-cfemail="7d14131b12531e120b1813090f041c131c110409141e0e3d1a101c1411531e1210">[email&#160;protected]</span></a></li>
           <li><a href="#contact">Book Free Audit</a></li>
           <li><a href="#">LinkedIn</a></li>
         </ul>
@@ -1530,7 +1571,7 @@
   </footer>
 
   <!-- ═══════════ SCRIPTS ═══════════ -->
-  <script>
+  <script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
     // Custom cursor
     const cursor = document.getElementById('cursor');
     const ring = document.getElementById('cursorRing');
@@ -1594,17 +1635,306 @@
 
     // Dark / light mode toggle
     function toggleTheme() {
-      const isLight = document.body.classList.toggle('light');
-      document.getElementById('themeToggle').textContent = isLight ? '☀️' : '🌙';
-      localStorage.setItem('theme', isLight ? 'light' : 'dark');
+      document.body.classList.toggle('light');
+      const btn = document.getElementById('themeBtn');
+      if (btn) btn.textContent = document.body.classList.contains('light') ? '🌙' : '☀️';
       updateNavBg();
     }
-    // Restore saved preference
-    if (localStorage.getItem('theme') === 'light') {
-      document.body.classList.add('light');
-      document.getElementById('themeToggle').textContent = '☀️';
-      updateNavBg();
+
+  </script>
+
+  <!-- ═══════════════════════════════════════════════
+       GA4 — CONVERSION EVENT TRACKING
+       Fires events for: CTA clicks, form submissions,
+       package clicks, FAQ opens, scroll depth
+  ════════════════════════════════════════════════ -->
+  <script>
+    document.addEventListener('DOMContentLoaded', function() {
+
+      // Track CTA button clicks
+      document.querySelectorAll('a[href="#contact"], .btn-primary, .btn-pkg, .nav-cta').forEach(el => {
+        el.addEventListener('click', function() {
+          trackEvent('cta_click', 'engagement', this.textContent.trim().substring(0, 50));
+        });
+      });
+
+      // Track package card clicks
+      document.querySelectorAll('.package-card').forEach(el => {
+        el.addEventListener('click', function() {
+          const pkg = this.querySelector('.pkg-name');
+          if (pkg) trackEvent('package_click', 'engagement', pkg.textContent.trim());
+        });
+      });
+
+      // Track FAQ opens
+      document.querySelectorAll('.faq-q').forEach(el => {
+        el.addEventListener('click', function() {
+          const q = this.textContent.trim().substring(0, 60);
+          trackEvent('faq_open', 'engagement', q);
+        });
+      });
+
+      // Track scroll depth — 25%, 50%, 75%, 100%
+      const depths = {25: false, 50: false, 75: false, 100: false};
+      window.addEventListener('scroll', function() {
+        const pct = Math.round((window.scrollY / (document.body.scrollHeight - window.innerHeight)) * 100);
+        [25, 50, 75, 100].forEach(d => {
+          if (pct >= d && !depths[d]) {
+            depths[d] = true;
+            trackEvent('scroll_depth', 'engagement', d + '%', d);
+          }
+        });
+      });
+
+      // Track time on page — fire at 30s, 60s, 3min
+      [30000, 60000, 180000].forEach(ms => {
+        setTimeout(() => trackEvent('time_on_page', 'engagement', Math.round(ms/1000) + 's'), ms);
+      });
+    });
+
+    // Override submitForm to fire GA4 lead event
+    const _origSubmit = window.submitForm;
+    window.submitForm = function() {
+      const fname = document.getElementById('fname').value.trim();
+      const email = document.getElementById('email').value.trim();
+      const company = document.getElementById('company').value.trim();
+      const size = document.getElementById('size').value;
+      if (!fname || !email || !company) { alert('Please fill in your name, email, and company name.'); return; }
+      if (!email.includes('@')) { alert('Please enter a valid email address.'); return; }
+
+      // Fire GA4 lead generation event
+      gtag('event', 'generate_lead', {
+        event_category: 'conversion',
+        event_label: company,
+        company_size: size,
+        value: 750
+      });
+
+      // Fire GA4 form submit event
+      trackEvent('form_submit', 'conversion', 'audit_booking_form');
+
+      document.getElementById('contactForm').style.display = 'none';
+      document.getElementById('formSuccess').style.display = 'block';
+    };
+  </script>
+
+  <!-- ═══════════════════════════════════════════════
+       CLARIVA — AI CHAT WIDGET
+       Your AI assistant, powered by your Clariva SaaS.
+       SETUP:
+       1. Deploy Clariva at your chosen URL
+       2. Replace CLARIVA_URL below with your Clariva
+          instance URL (e.g. https://clariva.vercel.app)
+       3. The widget auto-opens after 45s or on exit intent
+  ════════════════════════════════════════════════ -->
+  <style>
+    #clariva-btn {
+      position: fixed; bottom: 28px; right: 28px; z-index: 9000;
+      width: 56px; height: 56px; border-radius: 50%;
+      background: #2563eb; border: none; cursor: pointer;
+      box-shadow: 0 4px 20px rgba(37,99,235,0.45);
+      display: flex; align-items: center; justify-content: center;
+      transition: transform 0.2s, box-shadow 0.2s;
+    }
+    #clariva-btn:hover { transform: scale(1.08); box-shadow: 0 8px 28px rgba(37,99,235,0.55); }
+    #clariva-btn svg { width: 26px; height: 26px; fill: white; }
+    #clariva-badge {
+      position: absolute; top: -4px; right: -4px;
+      width: 18px; height: 18px; border-radius: 50%;
+      background: #ef4444; color: white;
+      font-size: 10px; font-weight: 700;
+      display: flex; align-items: center; justify-content: center;
+      border: 2px solid white; animation: badgePulse 2s infinite;
+    }
+    @keyframes badgePulse { 0%,100%{transform:scale(1)} 50%{transform:scale(1.15)} }
+    #clariva-panel {
+      position: fixed; bottom: 96px; right: 28px; z-index: 9001;
+      width: 380px; height: 580px; border-radius: 16px;
+      background: white; border: 1px solid rgba(0,0,0,0.1);
+      box-shadow: 0 24px 60px rgba(0,0,0,0.2);
+      display: none; flex-direction: column; overflow: hidden;
+      transition: opacity 0.2s, transform 0.2s;
+    }
+    #clariva-panel.open { display: flex; }
+    #clariva-header {
+      background: #0f172a; padding: 14px 18px;
+      display: flex; justify-content: space-between; align-items: center;
+      flex-shrink: 0;
+    }
+    #clariva-header-left { display: flex; align-items: center; gap: 10px; }
+    #clariva-avatar {
+      width: 32px; height: 32px; border-radius: 50%;
+      background: #2563eb; display: flex; align-items: center;
+      justify-content: center; font-size: 14px; font-weight: 800; color: white;
+    }
+    #clariva-title { font-size: 14px; font-weight: 700; color: white; font-family: sans-serif; }
+    #clariva-status { font-size: 11px; color: rgba(255,255,255,0.5); font-family: sans-serif; display: flex; align-items: center; gap: 4px; }
+    #clariva-status::before { content:''; width:6px; height:6px; background:#10b981; border-radius:50%; display:inline-block; }
+    #clariva-close {
+      background: none; border: none; color: rgba(255,255,255,0.6);
+      font-size: 20px; cursor: pointer; padding: 4px; line-height: 1;
+    }
+    #clariva-close:hover { color: white; }
+    #clariva-iframe { flex: 1; border: none; width: 100%; }
+    #clariva-fallback {
+      flex: 1; display: flex; flex-direction: column;
+      padding: 20px; font-family: sans-serif;
+    }
+    #clariva-messages { flex: 1; overflow-y: auto; display: flex; flex-direction: column; gap: 10px; margin-bottom: 12px; }
+    .clariva-msg { max-width: 85%; padding: 10px 14px; border-radius: 12px; font-size: 13px; line-height: 1.5; }
+    .clariva-msg.bot { background: #f1f5f9; color: #0f172a; align-self: flex-start; border-radius: 4px 12px 12px 12px; }
+    .clariva-msg.user { background: #2563eb; color: white; align-self: flex-end; border-radius: 12px 4px 12px 12px; }
+    #clariva-input-row { display: flex; gap: 8px; }
+    #clariva-input {
+      flex: 1; border: 1px solid #e2e8f0; border-radius: 8px;
+      padding: 10px 12px; font-size: 13px; font-family: sans-serif;
+      outline: none;
+    }
+    #clariva-input:focus { border-color: #2563eb; box-shadow: 0 0 0 3px rgba(37,99,235,0.1); }
+    #clariva-send {
+      background: #2563eb; color: white; border: none;
+      border-radius: 8px; padding: 10px 14px; cursor: pointer;
+      font-size: 13px; font-weight: 600; font-family: sans-serif;
+    }
+    #clariva-send:hover { background: #1d4ed8; }
+    #clariva-tooltip {
+      position: fixed; bottom: 96px; right: 96px; z-index: 8999;
+      background: #0f172a; color: white; font-family: sans-serif;
+      font-size: 13px; padding: 10px 16px; border-radius: 10px;
+      max-width: 220px; line-height: 1.5; display: none;
+      box-shadow: 0 8px 24px rgba(0,0,0,0.25);
+    }
+    #clariva-tooltip::after {
+      content: ''; position: absolute; bottom: -6px; right: 20px;
+      width: 12px; height: 12px; background: #0f172a;
+      transform: rotate(45deg); border-radius: 2px;
+    }
+  </style>
+
+  <!-- Clariva Chat Button -->
+  <div id="clariva-btn" onclick="toggleClariva()" title="Chat with our AI assistant">
+    <div id="clariva-badge">1</div>
+    <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+      <path d="M20 2H4c-1.1 0-2 .9-2 2v18l4-4h14c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2zm-2 10H6V10h12v2zm0-3H6V7h12v2z"/>
+    </svg>
+  </div>
+
+  <!-- Clariva Tooltip (shows after 30s) -->
+  <div id="clariva-tooltip">
+    👋 Hi! Got a question about Power BI or our packages? Ask me anything.
+  </div>
+
+  <!-- Clariva Panel -->
+  <div id="clariva-panel">
+    <div id="clariva-header">
+      <div id="clariva-header-left">
+        <div id="clariva-avatar">CA</div>
+        <div>
+          <div id="clariva-title">Coventry Analytics AI</div>
+          <div id="clariva-status">Online · Powered by Clariva</div>
+        </div>
+      </div>
+      <button id="clariva-close" onclick="toggleClariva()">✕</button>
+    </div>
+    <!--
+      OPTION A — If Clariva is deployed, uncomment the iframe below
+      and set the src to your Clariva URL with context params:
+      <iframe id="clariva-iframe"
+        src="CLARIVA_URL?context=coventryanalytics&theme=light"
+        allow="microphone">
+      </iframe>
+    -->
+    <!-- OPTION B — Standalone chat UI (active until Clariva deployed) -->
+    <div id="clariva-fallback">
+      <div id="clariva-messages">
+        <div class="clariva-msg bot">Hi! I'm the Coventry Analytics AI assistant. I can answer questions about our Power BI services, packages, and pricing. What would you like to know?</div>
+      </div>
+      <div id="clariva-input-row">
+        <input id="clariva-input" type="text" placeholder="Ask about Power BI, pricing, process..." onkeydown="if(event.key==='Enter')sendClariva()" />
+        <button id="clariva-send" onclick="sendClariva()">Send</button>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    const CLARIVA_URL = 'CLARIVA_URL'; // Replace with your deployed Clariva URL
+
+    function toggleClariva() {
+      const panel = document.getElementById('clariva-panel');
+      const badge = document.getElementById('clariva-badge');
+      const tooltip = document.getElementById('clariva-tooltip');
+      const isOpen = panel.classList.contains('open');
+      panel.classList.toggle('open');
+      tooltip.style.display = 'none';
+      if (!isOpen) {
+        badge.style.display = 'none';
+        trackEvent('chat_open', 'engagement', 'clariva_widget');
+      }
+    }
+
+    // Show tooltip after 30 seconds
+    setTimeout(() => {
+      const panel = document.getElementById('clariva-panel');
+      if (!panel.classList.contains('open')) {
+        document.getElementById('clariva-tooltip').style.display = 'block';
+        setTimeout(() => { document.getElementById('clariva-tooltip').style.display = 'none'; }, 8000);
+      }
+    }, 30000);
+
+    // Exit intent — show panel when mouse leaves page top
+    document.addEventListener('mouseleave', function(e) {
+      if (e.clientY < 10) {
+        const panel = document.getElementById('clariva-panel');
+        if (!panel.classList.contains('open')) {
+          panel.classList.add('open');
+          document.getElementById('clariva-badge').style.display = 'none';
+          trackEvent('chat_exit_intent', 'engagement', 'clariva_widget');
+        }
+      }
+    });
+
+    // Standalone chat — basic FAQ responses until Clariva deployed
+    const clarivaBotResponses = {
+      'price': 'Our packages start at £750 for the Starter (5 working days), £1,500 for Growth (10 working days), and £2,800 for Premium (14 working days). All include a satisfaction guarantee.',
+      'cost': 'Our packages start at £750 for the Starter (5 working days), £1,500 for Growth (10 working days), and £2,800 for Premium (14 working days). All include a satisfaction guarantee.',
+      'how long': 'Starter takes 5 working days, Growth takes 10, and Premium takes 14. We follow a proven 5-step process: audit, schema design, dashboard build, review, and handover with training.',
+      'what do you do': 'We migrate UK SMEs from manual Excel reports to live, automated Power BI dashboards. Your team gets real-time data, no more manual updates, and full training included.',
+      'power bi': 'Power BI is Microsoft\'s business intelligence platform. It connects to your data sources and updates your dashboards automatically — no more rebuilding reports by hand.',
+      'guarantee': 'Every package includes a satisfaction guarantee. If you\'re not happy on delivery day, we keep working until you are — at no extra charge.',
+      'contact': 'Book a free 20-minute audit at coventryanalytics.co.uk or scroll down to fill in the contact form. We reply within 1 business day.',
+      'audit': 'Our free 20-minute Power BI Readiness Audit is a quick call where we look at your current setup and tell you exactly what\'s possible. No pitch, no pressure. Book at coventryanalytics.co.uk',
+      'training': 'Yes — every package includes staff training. Starter gets a 1-hour session, Growth gets a 2-hour workshop, and Premium gets a full team training programme.',
+      'default': 'Great question! For detailed answers, book a free 20-minute audit at coventryanalytics.co.uk — or scroll down to our contact form and we\'ll get back to you within 1 business day.'
+    };
+
+    function sendClariva() {
+      const input = document.getElementById('clariva-input');
+      const msgs = document.getElementById('clariva-messages');
+      const text = input.value.trim();
+      if (!text) return;
+
+      // Add user message
+      msgs.innerHTML += `<div class="clariva-msg user">${text}</div>`;
+      input.value = '';
+      msgs.scrollTop = msgs.scrollHeight;
+
+      // Track chat message
+      trackEvent('chat_message', 'engagement', 'clariva_user_message');
+
+      // Find response
+      const lower = text.toLowerCase();
+      let response = clarivaBotResponses.default;
+      for (const [key, val] of Object.entries(clarivaBotResponses)) {
+        if (lower.includes(key)) { response = val; break; }
+      }
+
+      // Show typing indicator then response
+      setTimeout(() => {
+        msgs.innerHTML += `<div class="clariva-msg bot">${response}</div>`;
+        msgs.scrollTop = msgs.scrollHeight;
+      }, 600);
     }
   </script>
+
 </body>
 </html>
