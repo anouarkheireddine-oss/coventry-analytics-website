@@ -33,7 +33,7 @@ function SettingRow({ icon: Icon, label, sublabel, action, color = '#00d4ff', da
 }
 
 export default function SettingsPage() {
-  const [profile, setProfile] = useLocalStorage('forge_profile', {
+  const [profile, setProfile] = useLocalStorage('apice_profile', {
     name: 'Athlete',
     weight: 78,
     height: 180,
@@ -46,9 +46,9 @@ export default function SettingsPage() {
 
   const exportData = () => {
     const allKeys = [
-      'forge_nutrition', 'forge_training', 'forge_tasks',
-      'forge_metrics_log', 'forge_current_metrics', 'forge_profile',
-      'forge_weekly_goals', 'forge_custom_tasks',
+      'apice_nutrition', 'apice_training', 'apice_tasks',
+      'apice_metrics_log', 'apice_current_metrics', 'apice_profile',
+      'apice_weekly_goals', 'apice_custom_tasks',
     ];
     const data = {};
     allKeys.forEach(k => {
@@ -65,9 +65,9 @@ export default function SettingsPage() {
 
   const resetAll = () => {
     const allKeys = [
-      'forge_nutrition', 'forge_training', 'forge_tasks',
-      'forge_metrics_log', 'forge_current_metrics',
-      'forge_weekly_goals', 'forge_custom_tasks',
+      'apice_nutrition', 'apice_training', 'apice_tasks',
+      'apice_metrics_log', 'apice_current_metrics',
+      'apice_weekly_goals', 'apice_custom_tasks',
     ];
     allKeys.forEach(k => localStorage.removeItem(k));
     setShowReset(false);
@@ -173,10 +173,10 @@ export default function SettingsPage() {
             <div className="w-8 h-8 rounded-lg bg-[#00d4ff] flex items-center justify-center shadow-glow">
               <Zap size={16} className="text-black" strokeWidth={2.5} />
             </div>
-            <span className="text-lg font-bold tracking-wider">FORGE</span>
+            <span className="text-lg font-bold tracking-wider">AK APICE</span>
           </div>
           <p className="text-xs text-white/30">Personal Performance OS</p>
-          <p className="text-xs text-white/20 mt-1">v1.0.0 · Built for discipline</p>
+          <p className="text-xs text-white/20 mt-1">v1.0.0 · Al vertice. Ogni giorno.</p>
           <p className="text-[10px] text-white/15 mt-3">All data stored locally on your device.</p>
         </div>
       </Card>

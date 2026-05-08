@@ -200,7 +200,7 @@ function ExerciseCard({ exercise, sessionData, onUpdate, prevData }) {
 
 export default function TrainingPage() {
   const todayKey = getTodayKey();
-  const [training, setTraining] = useLocalStorage('forge_training', {});
+  const [training, setTraining] = useLocalStorage('apice_training', {});
   const [timerRunning, setTimerRunning] = useState(false);
   const [sessionStarted, setSessionStarted] = useState(false);
   const [showComplete, setShowComplete] = useState(false);
