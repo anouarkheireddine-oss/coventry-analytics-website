@@ -19,10 +19,10 @@ import {
 
 export default function Dashboard() {
   const todayKey = getTodayKey();
-  const [nutrition] = useLocalStorage('forge_nutrition', {});
-  const [training] = useLocalStorage('forge_training', {});
-  const [tasks] = useLocalStorage('forge_tasks', {});
-  const [metrics] = useLocalStorage('forge_metrics_log', []);
+  const [nutrition] = useLocalStorage('apice_nutrition', {});
+  const [training] = useLocalStorage('apice_training', {});
+  const [tasks] = useLocalStorage('apice_tasks', {});
+  const [metrics] = useLocalStorage('apice_metrics_log', []);
   const [now, setNow] = useState(new Date());
 
   useEffect(() => {

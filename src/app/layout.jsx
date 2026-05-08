@@ -2,15 +2,15 @@ import './globals.css';
 import Navigation from '@/components/Navigation';
 
 export const metadata = {
-  title: 'FORGE — Personal Performance OS',
-  description: 'Lean muscle. Sharp focus. Built different.',
+  title: 'AK APICE — Personal Performance OS',
+  description: 'Al vertice. Ogni giorno.',
   manifest: '/manifest.json',
   themeColor: '#00d4ff',
   viewport: 'width=device-width, initial-scale=1, maximum-scale=1',
   appleWebApp: {
     capable: true,
     statusBarStyle: 'black-translucent',
-    title: 'FORGE',
+    title: 'AK APICE',
   },
 };
 

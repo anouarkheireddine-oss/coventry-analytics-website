@@ -36,9 +36,9 @@ export default function Navigation() {
               <div className="w-8 h-8 rounded-lg bg-[#00d4ff] flex items-center justify-center shadow-glow">
                 <Zap size={16} className="text-black" strokeWidth={2.5} />
               </div>
-              <span className="text-lg font-bold tracking-wider text-white">FORGE</span>
+              <span className="text-lg font-bold tracking-wider text-white">AK APICE</span>
             </div>
-            <p className="text-xs text-white/30 mt-1 ml-11">Performance OS</p>
+            <p className="text-xs text-white/30 mt-1 ml-11">Al vertice. Ogni giorno.</p>
           </div>
 
           {/* Nav links */}
@@ -78,7 +78,7 @@ export default function Navigation() {
           <div className="px-6 py-6 border-t border-white/[0.06]">
             <div className="text-xs text-white/20 space-y-1">
               <p className="font-medium text-white/30">v1.0.0</p>
-              <p>Forge your best self.</p>
+              <p>Al vertice. Ogni giorno.</p>
             </div>
           </div>
         </div>

@@ -21,7 +21,7 @@ const EXTRA_SOURCES = [
 
 export default function NutritionPage() {
   const todayKey = getTodayKey();
-  const [nutrition, setNutrition] = useLocalStorage('forge_nutrition', {});
+  const [nutrition, setNutrition] = useLocalStorage('apice_nutrition', {});
   const [customProtein, setCustomProtein] = useState('');
 
   const today = nutrition[todayKey] || { breakfast: {}, shake: {}, extras: {}, water: 0, protein: 0 };

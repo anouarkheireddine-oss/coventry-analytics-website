@@ -27,12 +27,12 @@ const WEEKLY_GOALS_DEFAULT = [
 
 export default function DisciplinePage() {
   const todayKey = getTodayKey();
-  const [tasks, setTasks] = useLocalStorage('forge_tasks', {});
-  const [weeklyGoals, setWeeklyGoals] = useLocalStorage('forge_weekly_goals', WEEKLY_GOALS_DEFAULT);
-  const [customTasks, setCustomTasks] = useLocalStorage('forge_custom_tasks', []);
+  const [tasks, setTasks] = useLocalStorage('apice_tasks', {});
+  const [weeklyGoals, setWeeklyGoals] = useLocalStorage('apice_weekly_goals', WEEKLY_GOALS_DEFAULT);
+  const [customTasks, setCustomTasks] = useLocalStorage('apice_custom_tasks', []);
   const [newTask, setNewTask] = useState('');
-  const [nutrition] = useLocalStorage('forge_nutrition', {});
-  const [training] = useLocalStorage('forge_training', {});
+  const [nutrition] = useLocalStorage('apice_nutrition', {});
+  const [training] = useLocalStorage('apice_training', {});
 
   const todayTasks = tasks[todayKey] || {};
 

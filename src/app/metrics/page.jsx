@@ -41,8 +41,8 @@ function TrendIcon({ value, target, dir = 'up' }) {
 
 export default function MetricsPage() {
   const todayKey = getTodayKey();
-  const [metricsLog, setMetricsLog] = useLocalStorage('forge_metrics_log', []);
-  const [currentMetrics, setCurrentMetrics] = useLocalStorage('forge_current_metrics', INITIAL_METRICS);
+  const [metricsLog, setMetricsLog] = useLocalStorage('apice_metrics_log', []);
+  const [currentMetrics, setCurrentMetrics] = useLocalStorage('apice_current_metrics', INITIAL_METRICS);
   const [form, setForm] = useState({
     weight: '',
     bodyFat: '',
