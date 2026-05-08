@@ -1172,7 +1172,7 @@
             <li class="muted">Custom branding</li>
             <li class="muted">Advanced DAX measures</li>
           </ul>
-          <a href="#contact" class="btn-pkg">Get Started →</a>
+          <a href="javascript:void(0)" onclick="openCheckout('starter')" class="btn-pkg">Get Started →</a>
         </div>
 
         <div class="package-card featured reveal reveal-delay-2">
@@ -1188,7 +1188,7 @@
             <li>Custom branded dashboards</li>
             <li class="muted">Advanced DAX measures</li>
           </ul>
-          <a href="#contact" class="btn-pkg featured-btn">Book This Package →</a>
+          <a href="javascript:void(0)" onclick="openCheckout('growth')" class="btn-pkg featured-btn">Book This Package →</a>
         </div>
 
         <div class="package-card reveal reveal-delay-3">
@@ -1204,7 +1204,7 @@
             <li>Custom branding & design</li>
             <li>Advanced DAX & automation</li>
           </ul>
-          <a href="#contact" class="btn-pkg">Get Started →</a>
+          <a href="javascript:void(0)" onclick="openCheckout('premium')" class="btn-pkg">Get Started →</a>
         </div>
 
       </div>
@@ -1681,6 +1681,54 @@
       const btn = document.getElementById('themeBtn');
       if (btn) btn.textContent = document.body.classList.contains('light') ? '🌙' : '☀️';
       updateNavBg();
+    }
+
+    // ═══════════════════════════════════════════════════════════
+    //  STRIPE CHECKOUT — Payment Links
+    //
+    //  SETUP (5 minutes in Stripe dashboard):
+    //  1. dashboard.stripe.com → Products → Add product
+    //     Create three products: Starter (£750), Growth (£1,500),
+    //     Premium (£2,800). Set price as "One time".
+    //  2. Payment Links → Create a link for each product.
+    //  3. Paste the test-mode URLs below (format: https://buy.stripe.com/test/...)
+    //  4. Swap for live-mode URLs when ready to go live.
+    //
+    //  To test without real payments, use Stripe test card:
+    //  Card: 4242 4242 4242 4242 | Exp: any future date | CVC: any 3 digits
+    // ═══════════════════════════════════════════════════════════
+    const STRIPE_PAYMENT_LINKS = {
+      starter: 'https://buy.stripe.com/test/REPLACE_WITH_STARTER_LINK',   // £750  Starter Package
+      growth:  'https://buy.stripe.com/test/REPLACE_WITH_GROWTH_LINK',    // £1,500 Growth Package
+      premium: 'https://buy.stripe.com/test/REPLACE_WITH_PREMIUM_LINK',   // £2,800 Premium Package
+    };
+
+    const STRIPE_PRICES = { starter: 750, growth: 1500, premium: 2800 };
+
+    function openCheckout(plan) {
+      const url = STRIPE_PAYMENT_LINKS[plan];
+
+      if (!url || url.includes('REPLACE_WITH_')) {
+        // Links not yet configured — fall back to contact form
+        window.location.href = '#contact';
+        document.getElementById('contact').scrollIntoView({ behavior: 'smooth' });
+        return;
+      }
+
+      // Fire GA4 begin_checkout conversion event
+      if (typeof gtag !== 'undefined') {
+        gtag('event', 'begin_checkout', {
+          currency: 'GBP',
+          value: STRIPE_PRICES[plan] || 0,
+          items: [{
+            item_name: plan.charAt(0).toUpperCase() + plan.slice(1) + ' Package',
+            price: STRIPE_PRICES[plan] || 0,
+            quantity: 1
+          }]
+        });
+      }
+
+      window.open(url, '_blank', 'noopener,noreferrer');
     }
 
   </script>
