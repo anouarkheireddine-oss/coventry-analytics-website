@@ -11,6 +11,7 @@ import {
   CheckSquare,
   Settings,
   Zap,
+  Sparkles,
 } from 'lucide-react';
 
 const navItems = [
@@ -19,6 +20,7 @@ const navItems = [
   { href: '/nutrition',  label: 'Nutrition',  icon: Apple           },
   { href: '/metrics',    label: 'Metrics',    icon: TrendingUp      },
   { href: '/discipline', label: 'Discipline', icon: CheckSquare     },
+  { href: '/coach',      label: 'APEX Coach', icon: Sparkles        },
   { href: '/settings',   label: 'Settings',   icon: Settings        },
 ];
 
@@ -77,7 +79,7 @@ export default function Navigation() {
           {/* Bottom info */}
           <div className="px-6 py-6 border-t border-white/[0.06]">
             <div className="text-xs text-white/20 space-y-1">
-              <p className="font-medium text-white/30">v1.0.0</p>
+              <p className="font-medium text-white/30">v2.0.0</p>
               <p>Al vertice. Ogni giorno.</p>
             </div>
           </div>

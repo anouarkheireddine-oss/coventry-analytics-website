@@ -5,13 +5,18 @@ export const metadata = {
   title: 'AK APICE — Personal Performance OS',
   description: 'Al vertice. Ogni giorno.',
   manifest: '/manifest.json',
-  themeColor: '#00d4ff',
-  viewport: 'width=device-width, initial-scale=1, maximum-scale=1',
   appleWebApp: {
     capable: true,
     statusBarStyle: 'black-translucent',
     title: 'AK APICE',
   },
+};
+
+export const viewport = {
+  themeColor: '#00d4ff',
+  width: 'device-width',
+  initialScale: 1,
+  maximumScale: 1,
 };
 
 export default function RootLayout({ children }) {

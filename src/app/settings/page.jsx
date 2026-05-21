@@ -80,9 +80,9 @@ export default function SettingsPage() {
   };
 
   const INTEGRATIONS = [
-    { label: 'Supabase Sync',       sublabel: 'Cloud backup — coming soon', icon: Database, available: false },
+    { label: 'APEX AI Coach',        sublabel: 'Powered by Claude — live now', icon: Zap, available: true },
+    { label: 'Supabase Sync',       sublabel: 'Cloud backup — add NEXT_PUBLIC_SUPABASE_URL to .env.local', icon: Database, available: false },
     { label: 'Apple Health',         sublabel: 'Sync steps & heart rate — coming soon', icon: Shield, available: false },
-    { label: 'AI Coach',             sublabel: 'Personalized coaching — coming soon', icon: Zap, available: false },
     { label: 'Push Notifications',   sublabel: 'Reminders & streaks — coming soon', icon: Bell, available: false },
   ];
 
@@ -152,16 +152,21 @@ export default function SettingsPage() {
         />
       </Card>
 
-      {/* Future integrations */}
+      {/* Integrations */}
       <Card className="mb-4" delay={0.2}>
         <div className="flex items-center gap-2 mb-2">
           <ExternalLink size={14} className="text-[#00d4ff]" />
           <h3 className="text-sm font-semibold">Integrations</h3>
-          <span className="ml-2 px-2 py-0.5 rounded-full bg-[#f59e0b15] text-[10px] text-[#f59e0b] font-medium">Coming Soon</span>
         </div>
         {INTEGRATIONS.map(({ label, sublabel, icon, available }) => (
-          <div key={label} className="opacity-40 pointer-events-none">
-            <SettingRow icon={icon} label={label} sublabel={sublabel} color="#a78bfa" />
+          <div key={label} className={available ? '' : 'opacity-40 pointer-events-none'}>
+            <SettingRow
+              icon={icon}
+              label={label}
+              sublabel={sublabel}
+              color={available ? '#00d4ff' : '#a78bfa'}
+              action={available ? () => window.location.assign('/coach') : undefined}
+            />
           </div>
         ))}
       </Card>
@@ -176,7 +181,7 @@ export default function SettingsPage() {
             <span className="text-lg font-bold tracking-wider">AK APICE</span>
           </div>
           <p className="text-xs text-white/30">Personal Performance OS</p>
-          <p className="text-xs text-white/20 mt-1">v1.0.0 · Al vertice. Ogni giorno.</p>
+          <p className="text-xs text-white/20 mt-1">v2.0.0 · Al vertice. Ogni giorno.</p>
           <p className="text-[10px] text-white/15 mt-3">All data stored locally on your device.</p>
         </div>
       </Card>

@@ -2,8 +2,25 @@
 
 import { motion } from 'framer-motion';
 import clsx from 'clsx';
+import { ReactNode } from 'react';
 
-export default function Card({ children, className, glow, hover, onClick, delay = 0 }) {
+interface CardProps {
+  children: ReactNode;
+  className?: string;
+  glow?: boolean;
+  hover?: boolean;
+  onClick?: () => void;
+  delay?: number;
+}
+
+export default function Card({
+  children,
+  className,
+  glow,
+  hover,
+  onClick,
+  delay = 0,
+}: CardProps) {
   return (
     <motion.div
       initial={{ opacity: 0, y: 16 }}
