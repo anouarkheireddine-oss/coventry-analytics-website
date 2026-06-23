@@ -1,26 +1,29 @@
 import { notFound } from 'next/navigation';
 import Link from 'next/link';
-import { ChevronRight, TrendingUp, MapPin, Briefcase } from 'lucide-react';
+import { ChevronRight, TrendingUp, MapPin, Briefcase, ArrowRight } from 'lucide-react';
 import { ROLES, getRoleBySlug, getRelatedRoles } from '@/data/roles';
 import { LOCATIONS, getLocationBySlug, getNearbyLocations } from '@/data/locations';
+import { PRIORITY_PAGES } from '@/data/priority-pages';
 import { computeSalaries, formatGBP, generateArticleContent } from '@/lib/content-engine/salary';
+import { calcTakeHome } from '@/lib/tax/uk-income-tax';
+import { getDisposable } from '@/lib/tax/cost-of-living';
 import { buildSalarySchema, buildFAQSchema, buildBreadcrumbSchema } from '@/lib/seo/schema';
 import SalaryRangeBar from '@/components/content/SalaryRangeBar';
 import FAQSection from '@/components/content/FAQSection';
 import JobBoardCTA from '@/components/content/JobBoardCTA';
 import AdSlot from '@/components/content/AdSlot';
+import TakeHomeCalculator from '@/components/content/TakeHomeCalculator';
+import CityComparison from '@/components/content/CityComparison';
 
 const BASE_URL = process.env.NEXT_PUBLIC_BASE_URL || 'https://ukpaycheck.co.uk';
 
 export async function generateStaticParams() {
-  const params = [];
-  for (const role of ROLES) {
-    for (const location of LOCATIONS) {
-      params.push({ role: role.slug, location: location.slug });
-    }
-  }
-  return params;
+  // Pre-build only the 30 priority pages. All others are served on-demand.
+  return PRIORITY_PAGES;
 }
+
+// Allow non-pre-built pages to render on first request
+export const dynamicParams = true;
 
 export async function generateMetadata({ params }) {
   const { role: roleSlug, location: locationSlug } = await params;
@@ -29,16 +32,16 @@ export async function generateMetadata({ params }) {
   if (!role || !location) return {};
 
   const salaries = computeSalaries(role, location);
+  const tax = calcTakeHome(salaries.mid);
   const year = new Date().getFullYear();
-  const title = `${role.title} Salary in ${location.name} (${year}) — ${formatGBP(salaries.entry)}–${formatGBP(salaries.senior)}`;
-  const description = `Average ${role.title} salary in ${location.name} is ${formatGBP(salaries.mid)}/year in ${year}. See entry, mid and senior salary bands, career progression, and top-paying employers.`;
+  const title = `${role.title} Salary in ${location.name} (${year}) — ${formatGBP(salaries.mid)} avg, ${formatGBP(tax.netMonthly)}/mo take-home`;
+  const description = `Average ${role.title} salary in ${location.name} is ${formatGBP(salaries.mid)}/year in ${year}. Take-home pay is ${formatGBP(tax.netMonthly)}/month after UK income tax and NI. Full salary breakdown and career progression.`;
 
   return {
     title,
     description,
     alternates: { canonical: `${BASE_URL}/salary/${roleSlug}/${locationSlug}` },
     openGraph: { title, description, type: 'article' },
-    other: { 'google-adsense-account': process.env.NEXT_PUBLIC_ADSENSE_ID || '' },
   };
 }
 
@@ -49,6 +52,8 @@ export default async function SalaryPage({ params }) {
   if (!role || !location) notFound();
 
   const salaries = computeSalaries(role, location);
+  const tax = calcTakeHome(salaries.mid);
+  const disposable = getDisposable(tax.netMonthly, location.slug);
   const article = generateArticleContent(role, location, salaries);
   const related = getRelatedRoles(role, 5);
   const nearby = getNearbyLocations(location, 4);
@@ -58,7 +63,7 @@ export default async function SalaryPage({ params }) {
   const breadcrumbSchema = buildBreadcrumbSchema([
     { name: 'Home', url: BASE_URL },
     { name: 'Salary Guides', url: `${BASE_URL}/salary` },
-    { name: `${role.title} Salary`, url: `${BASE_URL}/salary/${role.slug}` },
+    { name: `${role.title} Salary`, url: `${BASE_URL}/compare/${role.slug}` },
     { name: location.name, url: `${BASE_URL}/salary/${role.slug}/${location.slug}` },
   ]);
 
@@ -69,7 +74,6 @@ export default async function SalaryPage({ params }) {
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbSchema) }} />
 
       <main className="min-h-screen bg-[#0a0a0b] text-white">
-        {/* Top ad leaderboard */}
         <div className="max-w-3xl mx-auto px-4 pt-4">
           <AdSlot slot="leaderboard" className="mb-2" />
         </div>
@@ -81,7 +85,7 @@ export default async function SalaryPage({ params }) {
             <ChevronRight size={10} />
             <Link href="/salary" className="hover:text-white/60 transition-colors">Salary Guides</Link>
             <ChevronRight size={10} />
-            <Link href={`/salary/${role.slug}`} className="hover:text-white/60 transition-colors">{role.title}</Link>
+            <Link href={`/compare/${role.slug}`} className="hover:text-white/60 transition-colors">{role.title} by city</Link>
             <ChevronRight size={10} />
             <span className="text-white/60">{location.name}</span>
           </nav>
@@ -90,53 +94,66 @@ export default async function SalaryPage({ params }) {
         {/* Hero */}
         <div className="max-w-3xl mx-auto px-4 pt-6 pb-2">
           <div className="flex items-center gap-2 mb-3">
-            <span className="px-2.5 py-1 rounded-full bg-[#00d4ff15] border border-[#00d4ff25] text-[11px] font-semibold text-[#00d4ff] uppercase tracking-wider">
-              {role.sector}
-            </span>
+            <span className="px-2.5 py-1 rounded-full bg-[#00d4ff15] border border-[#00d4ff25] text-[11px] font-semibold text-[#00d4ff] uppercase tracking-wider">{role.sector}</span>
             <span className={`px-2.5 py-1 rounded-full text-[11px] font-semibold uppercase tracking-wider ${
-              role.demand === 'high'
-                ? 'bg-[#22c55e15] border border-[#22c55e25] text-[#22c55e]'
-                : 'bg-white/[0.05] border border-white/[0.08] text-white/40'
-            }`}>
-              {role.demand} demand
-            </span>
+              role.demand === 'high' ? 'bg-[#22c55e15] border border-[#22c55e25] text-[#22c55e]' : 'bg-white/[0.05] border border-white/[0.08] text-white/40'
+            }`}>{role.demand} demand · {role.growth}/yr</span>
           </div>
 
           <h1 className="text-2xl sm:text-3xl font-extrabold text-white leading-tight mb-3">
             {role.title} Salary in {location.name}, UK ({article.currentYear})
           </h1>
 
-          {/* Key stat row */}
-          <div className="grid grid-cols-3 gap-3 my-6">
+          {/* Key stat row — gross + take-home side by side */}
+          <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 my-6">
             {[
-              { label: 'Average Salary', value: formatGBP(salaries.mid), color: '#00d4ff' },
-              { label: 'Entry Level', value: formatGBP(salaries.entry), color: '#ffffff60' },
-              { label: 'Senior Level', value: formatGBP(salaries.senior), color: '#22c55e' },
-            ].map(({ label, value, color }) => (
+              { label: 'Average Gross', value: formatGBP(salaries.mid), color: '#00d4ff', sub: 'per year' },
+              { label: 'Monthly Take-Home', value: formatGBP(tax.netMonthly), color: '#22c55e', sub: 'after tax + NI' },
+              { label: 'Entry Level', value: formatGBP(salaries.entry), color: '#ffffff60', sub: 'per year' },
+              { label: 'Senior Level', value: formatGBP(salaries.senior), color: '#f59e0b', sub: 'per year' },
+            ].map(({ label, value, color, sub }) => (
               <div key={label} className="rounded-xl border border-white/[0.07] bg-white/[0.03] p-4 text-center">
                 <p className="text-[11px] text-white/40 mb-1 font-medium">{label}</p>
-                <p className="text-lg font-extrabold" style={{ color }}>{value}</p>
-                <p className="text-[10px] text-white/25 mt-0.5">per year</p>
+                <p className="text-lg font-extrabold leading-tight" style={{ color }}>{value}</p>
+                <p className="text-[10px] text-white/25 mt-0.5">{sub}</p>
               </div>
             ))}
           </div>
 
-          <p className="text-white/70 leading-relaxed text-[15px]">{article.intro}</p>
+          {/* Take-home insight callout */}
+          {disposable && (
+            <div className="rounded-xl border border-[#22c55e20] bg-[#22c55e06] px-4 py-3 mb-4 flex items-start gap-3">
+              <TrendingUp size={16} className="text-[#22c55e] flex-shrink-0 mt-0.5" />
+              <p className="text-sm text-white/70 leading-relaxed">
+                After income tax and National Insurance, a {role.title} in {location.name} takes home{' '}
+                <strong className="text-[#22c55e]">{formatGBP(tax.netMonthly)}/month</strong>.
+                After estimated living costs of {formatGBP(disposable.totalCosts)}/month,
+                disposable income is approximately{' '}
+                <strong className={disposable.disposable > 500 ? 'text-[#22c55e]' : 'text-[#f59e0b]'}>
+                  {formatGBP(disposable.disposable)}/month
+                </strong>.{' '}
+                <Link href={`/compare/${role.slug}`} className="text-[#00d4ff] hover:underline">
+                  See how {location.name} compares to other cities →
+                </Link>
+              </p>
+            </div>
+          )}
+
+          <p className="text-white/65 leading-relaxed text-[15px]">{article.intro}</p>
         </div>
 
-        {/* Ad — in-article */}
         <div className="max-w-3xl mx-auto px-4 my-6">
           <AdSlot slot="in-article" />
         </div>
 
         {/* Salary range visual */}
         <div className="max-w-3xl mx-auto px-4">
-          <SalaryRangeBar
-            entry={salaries.entry}
-            mid={salaries.mid}
-            senior={salaries.senior}
-            lead={salaries.lead}
-          />
+          <SalaryRangeBar entry={salaries.entry} mid={salaries.mid} senior={salaries.senior} lead={salaries.lead} />
+        </div>
+
+        {/* Interactive take-home calculator */}
+        <div className="max-w-3xl mx-auto px-4">
+          <TakeHomeCalculator defaultGross={salaries.mid} />
         </div>
 
         {/* Article sections */}
@@ -152,16 +169,21 @@ export default async function SalaryPage({ params }) {
                     <thead>
                       <tr className="border-b border-white/[0.07] bg-white/[0.03]">
                         <th className="text-left px-4 py-3 text-xs font-semibold text-white/40 uppercase tracking-wider">Level</th>
-                        <th className="text-right px-4 py-3 text-xs font-semibold text-white/40 uppercase tracking-wider">Annual Salary</th>
+                        <th className="text-right px-4 py-3 text-xs font-semibold text-white/40 uppercase tracking-wider">Gross/Year</th>
+                        <th className="text-right px-4 py-3 text-xs font-semibold text-white/40 uppercase tracking-wider">Net/Month</th>
                       </tr>
                     </thead>
                     <tbody>
-                      {section.table.map(({ level, salary }, j) => (
-                        <tr key={j} className={`border-b border-white/[0.04] ${j % 2 === 0 ? '' : 'bg-white/[0.015]'}`}>
-                          <td className="px-4 py-3 text-white/80 font-medium">{level}</td>
-                          <td className="px-4 py-3 text-right font-bold text-[#00d4ff]">{formatGBP(salary)}</td>
-                        </tr>
-                      ))}
+                      {section.table.map(({ level, salary }, j) => {
+                        const t = calcTakeHome(salary);
+                        return (
+                          <tr key={j} className={`border-b border-white/[0.04] ${j % 2 === 0 ? '' : 'bg-white/[0.015]'}`}>
+                            <td className="px-4 py-3 text-white/80 font-medium">{level}</td>
+                            <td className="px-4 py-3 text-right font-bold text-[#00d4ff]">{formatGBP(salary)}</td>
+                            <td className="px-4 py-3 text-right font-semibold text-[#22c55e]">{formatGBP(t.netMonthly)}</td>
+                          </tr>
+                        );
+                      })}
                     </tbody>
                   </table>
                 </div>
@@ -180,22 +202,27 @@ export default async function SalaryPage({ params }) {
 
               {section.progression && (
                 <div className="mt-4 space-y-2">
-                  {section.progression.map(({ stage, years, salary }, j) => (
-                    <div key={j} className="flex items-center gap-3 p-3 rounded-xl border border-white/[0.06] bg-white/[0.02]">
-                      <div className="w-6 h-6 rounded-full bg-[#00d4ff15] border border-[#00d4ff25] flex items-center justify-center flex-shrink-0">
-                        <TrendingUp size={12} className="text-[#00d4ff]" />
+                  {section.progression.map(({ stage, years, salary }, j) => {
+                    const t = calcTakeHome(salary);
+                    return (
+                      <div key={j} className="flex items-center gap-3 p-3 rounded-xl border border-white/[0.06] bg-white/[0.02]">
+                        <div className="w-6 h-6 rounded-full bg-[#00d4ff15] border border-[#00d4ff25] flex items-center justify-center flex-shrink-0">
+                          <TrendingUp size={12} className="text-[#00d4ff]" />
+                        </div>
+                        <div className="flex-1">
+                          <p className="text-sm font-semibold text-white">{stage}</p>
+                          <p className="text-xs text-white/40">{years}</p>
+                        </div>
+                        <div className="text-right">
+                          <p className="text-sm font-bold text-[#22c55e]">{formatGBP(salary)}</p>
+                          <p className="text-xs text-white/30">{formatGBP(t.netMonthly)}/mo net</p>
+                        </div>
                       </div>
-                      <div className="flex-1">
-                        <p className="text-sm font-semibold text-white">{stage}</p>
-                        <p className="text-xs text-white/40">{years}</p>
-                      </div>
-                      <span className="text-sm font-bold text-[#22c55e]">{formatGBP(salary)}</span>
-                    </div>
-                  ))}
+                    );
+                  })}
                 </div>
               )}
 
-              {/* Mid-article ad after 3rd section */}
               {i === 2 && (
                 <div className="mt-6">
                   <AdSlot slot="mid-content" />
@@ -205,8 +232,13 @@ export default async function SalaryPage({ params }) {
           ))}
         </div>
 
-        {/* Job board CTA */}
+        {/* City comparison table */}
         <div className="max-w-3xl mx-auto px-4">
+          <CityComparison role={role} currentLocationSlug={location.slug} />
+        </div>
+
+        {/* Job board CTA */}
+        <div className="max-w-3xl mx-auto px-4 mt-8">
           <JobBoardCTA roleTitle={role.title} locationName={location.name} />
         </div>
 
@@ -218,47 +250,42 @@ export default async function SalaryPage({ params }) {
         {/* Related roles + nearby cities */}
         <div className="max-w-3xl mx-auto px-4 mt-10 pb-10">
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
-            {/* Related roles */}
             <div>
               <h3 className="text-sm font-semibold text-white/50 uppercase tracking-wider mb-3 flex items-center gap-2">
-                <Briefcase size={13} /> Related Roles
+                <Briefcase size={13} /> Related Roles in {location.name}
               </h3>
               <div className="space-y-1.5">
                 {related.map(r => (
-                  <Link
-                    key={r.slug}
-                    href={`/salary/${r.slug}/${location.slug}`}
-                    className="flex items-center justify-between p-3 rounded-xl border border-white/[0.06] bg-white/[0.02] hover:bg-white/[0.04] transition-colors group"
-                  >
+                  <Link key={r.slug} href={`/salary/${r.slug}/${location.slug}`}
+                    className="flex items-center justify-between p-3 rounded-xl border border-white/[0.06] bg-white/[0.02] hover:bg-white/[0.04] transition-colors group">
                     <span className="text-sm text-white/70 group-hover:text-white transition-colors">{r.title}</span>
                     <ChevronRight size={13} className="text-white/20" />
                   </Link>
                 ))}
               </div>
             </div>
-
-            {/* Nearby cities */}
             <div>
               <h3 className="text-sm font-semibold text-white/50 uppercase tracking-wider mb-3 flex items-center gap-2">
-                <MapPin size={13} /> Other Cities
+                <MapPin size={13} /> {role.title} in Other Cities
               </h3>
               <div className="space-y-1.5">
                 {nearby.map(loc => (
-                  <Link
-                    key={loc.slug}
-                    href={`/salary/${role.slug}/${loc.slug}`}
-                    className="flex items-center justify-between p-3 rounded-xl border border-white/[0.06] bg-white/[0.02] hover:bg-white/[0.04] transition-colors group"
-                  >
+                  <Link key={loc.slug} href={`/salary/${role.slug}/${loc.slug}`}
+                    className="flex items-center justify-between p-3 rounded-xl border border-white/[0.06] bg-white/[0.02] hover:bg-white/[0.04] transition-colors group">
                     <span className="text-sm text-white/70 group-hover:text-white transition-colors">{role.title} in {loc.name}</span>
                     <ChevronRight size={13} className="text-white/20" />
                   </Link>
                 ))}
+                <Link href={`/compare/${role.slug}`}
+                  className="flex items-center justify-between p-3 rounded-xl border border-[#00d4ff20] bg-[#00d4ff06] hover:bg-[#00d4ff10] transition-colors group">
+                  <span className="text-sm text-[#00d4ff] font-semibold">View all cities comparison</span>
+                  <ArrowRight size={13} className="text-[#00d4ff]" />
+                </Link>
               </div>
             </div>
           </div>
         </div>
 
-        {/* Bottom ad */}
         <div className="max-w-3xl mx-auto px-4 pb-8">
           <AdSlot slot="bottom" />
         </div>
