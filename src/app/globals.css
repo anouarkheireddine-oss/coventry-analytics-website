@@ -82,6 +82,12 @@ input[type="number"]::-webkit-outer-spin-button {
 .recharts-text { fill: rgba(255, 255, 255, 0.4) !important; }
 .recharts-tooltip-wrapper { outline: none; }
 
+/* Glow on nav logo */
+.shadow-glow {
+  box-shadow: 0 0 16px rgba(0, 212, 255, 0.4);
+}
+
 @layer utilities {
   .text-balance { text-wrap: balance; }
+  .scroll-mt-20 { scroll-margin-top: 5rem; }
 }

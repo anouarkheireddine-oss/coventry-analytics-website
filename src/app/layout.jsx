@@ -2,16 +2,8 @@ import './globals.css';
 import Navigation from '@/components/Navigation';
 
 export const metadata = {
-  title: 'AK APICE — Personal Performance OS',
-  description: 'Al vertice. Ogni giorno.',
-  manifest: '/manifest.json',
-  themeColor: '#00d4ff',
-  viewport: 'width=device-width, initial-scale=1, maximum-scale=1',
-  appleWebApp: {
-    capable: true,
-    statusBarStyle: 'black-translucent',
-    title: 'AK APICE',
-  },
+  title: 'Coventry Analytics — Operational Control Systems for SMEs',
+  description: 'We deploy real-time Operational Control Systems for SME leaders in logistics, operations, and e-commerce. Instant business visibility in 5 days.',
 };
 
 export default function RootLayout({ children }) {
@@ -20,24 +12,20 @@ export default function RootLayout({ children }) {
       <head>
         <link rel="preconnect" href="https://fonts.googleapis.com" />
         <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
-        <meta name="apple-mobile-web-app-capable" content="yes" />
-        <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
       </head>
       <body className="bg-[#0a0a0b] text-white min-h-screen antialiased">
         <div className="relative min-h-screen">
-          {/* Ambient background glow */}
+          {/* Ambient background */}
           <div className="fixed inset-0 pointer-events-none overflow-hidden z-0">
-            <div className="absolute -top-40 -right-40 w-96 h-96 rounded-full bg-[#00d4ff] opacity-[0.03] blur-3xl" />
-            <div className="absolute top-1/2 -left-40 w-80 h-80 rounded-full bg-[#00d4ff] opacity-[0.02] blur-3xl" />
+            <div className="absolute -top-60 -right-60 w-[600px] h-[600px] rounded-full bg-[#00d4ff] opacity-[0.025] blur-3xl" />
+            <div className="absolute top-1/2 -left-60 w-96 h-96 rounded-full bg-[#00d4ff] opacity-[0.015] blur-3xl" />
+            <div className="absolute bottom-0 right-1/3 w-80 h-80 rounded-full bg-[#00d4ff] opacity-[0.01] blur-3xl" />
           </div>
 
-          {/* Main content */}
-          <div className="relative z-10 pb-24 md:pb-0 md:pl-64">
+          <div className="relative z-10">
+            <Navigation />
             {children}
           </div>
-
-          {/* Navigation */}
-          <Navigation />
         </div>
       </body>
     </html>
