@@ -1,44 +1,44 @@
 import './globals.css';
-import Navigation from '@/components/Navigation';
+
+const BASE_URL = process.env.NEXT_PUBLIC_BASE_URL || 'https://ukpaycheck.co.uk';
 
 export const metadata = {
-  title: 'AK APICE — Personal Performance OS',
-  description: 'Al vertice. Ogni giorno.',
-  manifest: '/manifest.json',
-  themeColor: '#00d4ff',
-  viewport: 'width=device-width, initial-scale=1, maximum-scale=1',
-  appleWebApp: {
-    capable: true,
-    statusBarStyle: 'black-translucent',
-    title: 'AK APICE',
+  title: {
+    default: 'UKPayCheck — UK Salary Intelligence',
+    template: '%s | UKPayCheck',
+  },
+  description: 'Accurate salary data for every UK job role and city. Make informed career decisions.',
+  metadataBase: new URL(BASE_URL),
+  openGraph: {
+    siteName: 'UKPayCheck',
+    type: 'website',
+    locale: 'en_GB',
+  },
+  robots: {
+    index: true,
+    follow: true,
+    googleBot: { index: true, follow: true, 'max-snippet': -1, 'max-image-preview': 'large' },
   },
 };
 
 export default function RootLayout({ children }) {
+  const adsenseId = process.env.NEXT_PUBLIC_ADSENSE_ID;
+
   return (
-    <html lang="en" className="dark">
+    <html lang="en-GB">
       <head>
         <link rel="preconnect" href="https://fonts.googleapis.com" />
         <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
-        <meta name="apple-mobile-web-app-capable" content="yes" />
-        <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+        {adsenseId && (
+          <script
+            async
+            src={`https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=${adsenseId}`}
+            crossOrigin="anonymous"
+          />
+        )}
       </head>
       <body className="bg-[#0a0a0b] text-white min-h-screen antialiased">
-        <div className="relative min-h-screen">
-          {/* Ambient background glow */}
-          <div className="fixed inset-0 pointer-events-none overflow-hidden z-0">
-            <div className="absolute -top-40 -right-40 w-96 h-96 rounded-full bg-[#00d4ff] opacity-[0.03] blur-3xl" />
-            <div className="absolute top-1/2 -left-40 w-80 h-80 rounded-full bg-[#00d4ff] opacity-[0.02] blur-3xl" />
-          </div>
-
-          {/* Main content */}
-          <div className="relative z-10 pb-24 md:pb-0 md:pl-64">
-            {children}
-          </div>
-
-          {/* Navigation */}
-          <Navigation />
-        </div>
+        {children}
       </body>
     </html>
   );

@@ -1,290 +1,170 @@
-'use client';
-
-import { useState, useEffect } from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
-import { format } from 'date-fns';
-import {
-  Flame, Zap, TrendingUp, Droplets, Target,
-  CheckCircle2, Circle, ArrowRight, Plus,
-} from 'lucide-react';
 import Link from 'next/link';
-import Card from '@/components/ui/Card';
-import ProgressRing from '@/components/ui/ProgressRing';
-import StatBar from '@/components/ui/StatBar';
-import { useLocalStorage } from '@/hooks/useLocalStorage';
-import {
-  PROTEIN_TARGET, getTodayKey, getLast7Days,
-  getFocusMessage, DAILY_TASKS,
-} from '@/utils/data';
+import { TrendingUp, Globe, Zap, BarChart3, ArrowRight, CircleDot } from 'lucide-react';
+import { ROLES } from '@/data/roles';
+import { LOCATIONS } from '@/data/locations';
 
-export default function Dashboard() {
-  const todayKey = getTodayKey();
-  const [nutrition] = useLocalStorage('apice_nutrition', {});
-  const [training] = useLocalStorage('apice_training', {});
-  const [tasks] = useLocalStorage('apice_tasks', {});
-  const [metrics] = useLocalStorage('apice_metrics_log', []);
-  const [now, setNow] = useState(new Date());
+export const metadata = {
+  title: 'UKPayCheck — UK Salary Intelligence Network',
+  description: 'Data-driven salary guides for every UK job role and city. Know your worth.',
+};
 
-  useEffect(() => {
-    const t = setInterval(() => setNow(new Date()), 60000);
-    return () => clearInterval(t);
-  }, []);
+const TOTAL_PAGES = ROLES.length * LOCATIONS.length;
+const ESTIMATED_MONTHLY_SEARCHES = ROLES.reduce((sum, r) => {
+  const dm = r.demand === 'high' ? 8500 : r.demand === 'medium' ? 4500 : 2000;
+  return sum + dm;
+}, 0);
 
-  const todayNutrition = nutrition[todayKey] || {};
-  const todayTraining = training[todayKey] || {};
-  const todayTasks = tasks[todayKey] || {};
+function StatCard({ label, value, sub, color = '#00d4ff' }) {
+  return (
+    <div className="rounded-2xl border border-white/[0.07] bg-white/[0.03] p-5">
+      <p className="text-xs text-white/40 font-medium uppercase tracking-wider mb-2">{label}</p>
+      <p className="text-3xl font-extrabold" style={{ color }}>{value}</p>
+      {sub && <p className="text-xs text-white/30 mt-1">{sub}</p>}
+    </div>
+  );
+}
 
-  const proteinEaten = todayNutrition.protein || 0;
-  const proteinPct = Math.min((proteinEaten / PROTEIN_TARGET) * 100, 100);
-  const waterCups = todayNutrition.water || 0;
-
-  const workoutDone = todayTraining.completed || false;
-
-  const last7 = getLast7Days();
-  const streak = (() => {
-    let s = 0;
-    for (let i = last7.length - 1; i >= 0; i--) {
-      const d = last7[i];
-      const dayDone = (tasks[d]?.training || training[d]?.completed);
-      if (dayDone) s++;
-      else if (i < last7.length - 1) break;
-    }
-    return s;
-  })();
-
-  const weekConsistency = (() => {
-    const done = last7.filter(d => training[d]?.completed || tasks[d]?.training).length;
-    return Math.round((done / 7) * 100);
-  })();
-
-  const latestWeight = metrics.length ? metrics[metrics.length - 1].weight : null;
-
-  const tasksCompleted = DAILY_TASKS.filter(t => todayTasks[t.id]).length;
-  const tasksPct = Math.round((tasksCompleted / DAILY_TASKS.length) * 100);
-
-  const hour = now.getHours();
-  const greeting = hour < 12 ? 'Good morning' : hour < 17 ? 'Good afternoon' : 'Good evening';
+export default function CommandCenter() {
+  const sectors = [...new Set(ROLES.map(r => r.sector))];
+  const sectorBreakdown = sectors.map(sector => {
+    const sectorRoles = ROLES.filter(r => r.sector === sector);
+    return {
+      sector,
+      roles: sectorRoles.length,
+      avgSalary: Math.round(sectorRoles.reduce((s, r) => s + r.nationalAverage, 0) / sectorRoles.length),
+      highDemand: sectorRoles.filter(r => r.demand === 'high').length,
+    };
+  });
 
   return (
-    <main className="min-h-screen px-4 py-8 max-w-2xl mx-auto md:max-w-none md:px-8 md:py-10">
+    <main className="min-h-screen bg-[#0a0a0b] text-white px-4 py-10 max-w-5xl mx-auto">
       {/* Header */}
-      <motion.div
-        initial={{ opacity: 0, y: -16 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.5 }}
-        className="mb-8"
-      >
-        <div className="flex items-center justify-between">
-          <div>
-            <p className="text-sm text-white/40 font-medium">
-              {format(now, 'EEEE, MMMM d')}
-            </p>
-            <h1 className="text-3xl font-bold mt-1">
-              {greeting} <span className="neon-text">.</span>
-            </h1>
-          </div>
-          <motion.div
-            animate={{ rotate: [0, 5, -5, 0] }}
-            transition={{ duration: 4, repeat: Infinity, ease: 'easeInOut' }}
-            className="w-10 h-10 rounded-xl bg-[#00d4ff10] border border-[#00d4ff20] flex items-center justify-center"
-          >
-            <Zap size={18} className="text-[#00d4ff]" />
-          </motion.div>
+      <div className="mb-10">
+        <div className="flex items-center gap-2 mb-4">
+          <div className="w-2 h-2 rounded-full bg-[#22c55e] animate-pulse" />
+          <span className="text-xs text-[#22c55e] font-semibold uppercase tracking-widest">Network Live</span>
         </div>
-
-        {/* Focus message */}
-        <motion.div
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ delay: 0.3 }}
-          className="mt-4 px-4 py-3 rounded-xl bg-white/[0.03] border border-white/[0.06]"
-        >
-          <p className="text-sm text-white/50 italic">"{getFocusMessage()}"</p>
-        </motion.div>
-      </motion.div>
-
-      {/* Top stats row */}
-      <div className="grid grid-cols-2 gap-3 mb-4 md:grid-cols-4">
-        {/* Protein ring */}
-        <Card delay={0.1} className="flex flex-col items-center gap-3 py-5">
-          <ProgressRing
-            value={proteinEaten}
-            max={PROTEIN_TARGET}
-            size={72}
-            strokeWidth={5}
-            color="#00d4ff"
-            label={`${proteinEaten}g`}
-            sublabel="protein"
-          />
-          <div className="text-center">
-            <p className="text-xs text-white/40">of {PROTEIN_TARGET}g target</p>
-          </div>
-        </Card>
-
-        {/* Workout status */}
-        <Card delay={0.15} className="flex flex-col justify-between">
-          <div className="flex items-center justify-between mb-3">
-            <span className="text-xs text-white/40 font-medium uppercase tracking-wider">Workout</span>
-            {workoutDone
-              ? <CheckCircle2 size={16} className="text-[#22c55e]" />
-              : <Circle size={16} className="text-white/20" />}
-          </div>
-          <div>
-            <p className={`text-2xl font-bold ${workoutDone ? 'text-[#22c55e]' : 'text-white/30'}`}>
-              {workoutDone ? 'Done' : 'Pending'}
-            </p>
-            <p className="text-xs text-white/30 mt-1">Today's session</p>
-          </div>
-        </Card>
-
-        {/* Streak */}
-        <Card delay={0.2} className="flex flex-col justify-between">
-          <div className="flex items-center justify-between mb-3">
-            <span className="text-xs text-white/40 font-medium uppercase tracking-wider">Streak</span>
-            <Flame size={16} className={streak > 0 ? 'text-[#f59e0b]' : 'text-white/20'} />
-          </div>
-          <div>
-            <p className="text-2xl font-bold">
-              {streak}
-              <span className="text-sm text-white/40 ml-1">days</span>
-            </p>
-            <p className="text-xs text-white/30 mt-1">Current streak</p>
-          </div>
-        </Card>
-
-        {/* Weight */}
-        <Card delay={0.25} className="flex flex-col justify-between">
-          <div className="flex items-center justify-between mb-3">
-            <span className="text-xs text-white/40 font-medium uppercase tracking-wider">Weight</span>
-            <TrendingUp size={16} className="text-white/20" />
-          </div>
-          <div>
-            <p className="text-2xl font-bold">
-              {latestWeight ? `${latestWeight}` : '—'}
-              <span className="text-sm text-white/40 ml-1">kg</span>
-            </p>
-            <p className="text-xs text-white/30 mt-1">Last recorded</p>
-          </div>
-        </Card>
+        <h1 className="text-4xl font-extrabold text-white mb-2">
+          UK<span className="text-[#00d4ff]">Pay</span>Check
+        </h1>
+        <p className="text-white/40 text-[15px] max-w-lg">
+          Autonomous salary intelligence network. {TOTAL_PAGES.toLocaleString()} data assets indexed
+          across {ROLES.length} roles and {LOCATIONS.length} UK cities.
+        </p>
       </div>
 
-      {/* Progress bars row */}
-      <div className="grid grid-cols-1 gap-3 mb-4 md:grid-cols-2">
-        {/* Weekly consistency */}
-        <Card delay={0.3}>
-          <div className="flex items-center justify-between mb-3">
-            <div>
-              <p className="text-sm font-semibold text-white">Weekly Consistency</p>
-              <p className="text-xs text-white/40 mt-0.5">Training sessions this week</p>
-            </div>
-            <span className="text-lg font-bold text-[#00d4ff]">{weekConsistency}%</span>
-          </div>
-          <StatBar value={weekConsistency} max={100} color="#00d4ff" delay={0.5} />
-          <div className="flex justify-between mt-2">
-            {last7.map((d, i) => {
-              const done = training[d]?.completed || tasks[d]?.training;
-              return (
-                <motion.div
-                  key={d}
-                  initial={{ scale: 0 }}
-                  animate={{ scale: 1 }}
-                  transition={{ delay: 0.5 + i * 0.05 }}
-                  className={`w-6 h-6 rounded-lg flex items-center justify-center text-[10px] font-semibold ${
-                    done ? 'bg-[#00d4ff20] text-[#00d4ff]' : 'bg-white/[0.04] text-white/20'
-                  }`}
-                >
-                  {format(new Date(d + 'T12:00:00'), 'EEEEE')}
-                </motion.div>
-              );
-            })}
-          </div>
-        </Card>
-
-        {/* Daily tasks */}
-        <Card delay={0.35}>
-          <div className="flex items-center justify-between mb-3">
-            <div>
-              <p className="text-sm font-semibold text-white">Daily Non-Negotiables</p>
-              <p className="text-xs text-white/40 mt-0.5">{tasksCompleted} of {DAILY_TASKS.length} complete</p>
-            </div>
-            <span className="text-lg font-bold text-[#22c55e]">{tasksPct}%</span>
-          </div>
-          <StatBar value={tasksCompleted} max={DAILY_TASKS.length} color="#22c55e" delay={0.5} />
-          <div className="mt-3 space-y-1.5">
-            {DAILY_TASKS.slice(0, 3).map((task) => (
-              <div key={task.id} className="flex items-center gap-2">
-                {todayTasks[task.id]
-                  ? <CheckCircle2 size={14} className="text-[#22c55e] flex-shrink-0" />
-                  : <Circle size={14} className="text-white/20 flex-shrink-0" />
-                }
-                <span className={`text-xs ${todayTasks[task.id] ? 'text-white/60 line-through' : 'text-white/40'}`}>
-                  {task.label}
-                </span>
-              </div>
-            ))}
-          </div>
-        </Card>
+      {/* Network metrics */}
+      <div className="grid grid-cols-2 lg:grid-cols-4 gap-3 mb-8">
+        <StatCard
+          label="Indexed Pages"
+          value={TOTAL_PAGES.toLocaleString()}
+          sub={`${ROLES.length} roles × ${LOCATIONS.length} cities`}
+          color="#00d4ff"
+        />
+        <StatCard
+          label="Est. Monthly Searches"
+          value={`${(ESTIMATED_MONTHLY_SEARCHES / 1000).toFixed(0)}k`}
+          sub="Aggregated keyword volume"
+          color="#22c55e"
+        />
+        <StatCard
+          label="High-Demand Roles"
+          value={ROLES.filter(r => r.demand === 'high').length}
+          sub="Premium RPM keyword clusters"
+          color="#f59e0b"
+        />
+        <StatCard
+          label="Sectors Covered"
+          value={sectors.length}
+          sub="Diversified asset classes"
+          color="#a78bfa"
+        />
       </div>
 
-      {/* Hydration */}
-      <Card delay={0.4} className="mb-4">
-        <div className="flex items-center justify-between mb-3">
-          <div className="flex items-center gap-2">
-            <Droplets size={18} className="text-[#00d4ff]" />
-            <span className="text-sm font-semibold">Hydration</span>
-          </div>
-          <span className="text-sm text-white/60">{waterCups} / 8 cups</span>
-        </div>
-        <div className="flex gap-2">
-          {Array.from({ length: 8 }, (_, i) => (
-            <motion.div
-              key={i}
-              initial={{ scale: 0 }}
-              animate={{ scale: 1 }}
-              transition={{ delay: 0.6 + i * 0.04 }}
-              className={`flex-1 h-8 rounded-lg border transition-all ${
-                i < waterCups
-                  ? 'bg-[#00d4ff20] border-[#00d4ff30]'
-                  : 'bg-white/[0.03] border-white/[0.06]'
-              }`}
-            />
-          ))}
-        </div>
-      </Card>
-
-      {/* Quick actions */}
-      <motion.div
-        initial={{ opacity: 0, y: 12 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ delay: 0.45 }}
-        className="grid grid-cols-2 gap-3 md:grid-cols-4"
-      >
+      {/* Quick nav */}
+      <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 mb-8">
         {[
-          { href: '/training',   label: 'Start Workout', icon: Zap,    color: '#00d4ff' },
-          { href: '/nutrition',  label: 'Log Protein',   icon: Target,  color: '#22c55e' },
-          { href: '/metrics',    label: 'Log Weight',    icon: TrendingUp, color: '#f59e0b' },
-          { href: '/discipline', label: 'Check Tasks',   icon: CheckCircle2, color: '#a78bfa' },
-        ].map(({ href, label, icon: Icon, color }, i) => (
+          { href: '/salary', label: 'Browse Salary Guides', icon: BarChart3, desc: `${TOTAL_PAGES.toLocaleString()} pages live` },
+          { href: '/salary/software-engineer/london', label: 'Top Page: SWE London', icon: TrendingUp, desc: 'Highest estimated RPM' },
+          { href: '/salary/nurse/manchester', label: 'Healthcare / Manchester', icon: Globe, desc: 'High-volume cluster' },
+        ].map(({ href, label, icon: Icon, desc }) => (
           <Link key={href} href={href}>
-            <motion.div
-              whileHover={{ y: -2 }}
-              whileTap={{ scale: 0.97 }}
-              className="glass glass-hover rounded-2xl p-4 flex items-center gap-3 cursor-pointer transition-all duration-200"
-            >
-              <div
-                className="w-9 h-9 rounded-xl flex items-center justify-center flex-shrink-0"
-                style={{ background: `${color}15`, boxShadow: `0 0 12px ${color}20` }}
-              >
-                <Icon size={16} style={{ color }} />
+            <div className="rounded-2xl border border-white/[0.07] bg-white/[0.03] hover:bg-white/[0.05] hover:border-white/[0.12] transition-all p-5 cursor-pointer group">
+              <div className="flex items-start justify-between mb-3">
+                <div className="w-9 h-9 rounded-xl bg-[#00d4ff10] border border-[#00d4ff20] flex items-center justify-center">
+                  <Icon size={16} className="text-[#00d4ff]" />
+                </div>
+                <ArrowRight size={14} className="text-white/20 group-hover:text-white/50 transition-colors mt-1" />
               </div>
-              <div className="flex-1 min-w-0">
-                <p className="text-xs font-semibold text-white leading-tight">{label}</p>
-              </div>
-              <ArrowRight size={12} className="text-white/20 flex-shrink-0" />
-            </motion.div>
+              <p className="text-sm font-bold text-white mb-1">{label}</p>
+              <p className="text-xs text-white/40">{desc}</p>
+            </div>
           </Link>
         ))}
-      </motion.div>
+      </div>
+
+      {/* Sector performance table */}
+      <section className="mb-8">
+        <h2 className="text-sm font-semibold text-white/40 uppercase tracking-wider mb-4 flex items-center gap-2">
+          <BarChart3 size={13} /> Sector Asset Classes
+        </h2>
+        <div className="rounded-2xl border border-white/[0.07] overflow-hidden">
+          <table className="w-full text-sm">
+            <thead>
+              <tr className="border-b border-white/[0.07] bg-white/[0.03]">
+                {['Sector', 'Roles', 'Avg Salary', 'High Demand', 'Pages'].map(h => (
+                  <th key={h} className="px-4 py-3 text-left text-[11px] font-semibold text-white/30 uppercase tracking-wider">{h}</th>
+                ))}
+              </tr>
+            </thead>
+            <tbody>
+              {sectorBreakdown.sort((a, b) => b.avgSalary - a.avgSalary).map(({ sector, roles, avgSalary, highDemand }, i) => (
+                <tr key={sector} className={`border-b border-white/[0.04] ${i % 2 === 0 ? '' : 'bg-white/[0.01]'} hover:bg-white/[0.03] transition-colors`}>
+                  <td className="px-4 py-3 font-semibold text-white/80">{sector}</td>
+                  <td className="px-4 py-3 text-white/50">{roles}</td>
+                  <td className="px-4 py-3 text-[#00d4ff] font-semibold">£{avgSalary.toLocaleString()}</td>
+                  <td className="px-4 py-3">
+                    {highDemand > 0 && (
+                      <span className="px-2 py-0.5 rounded-full bg-[#22c55e15] text-[#22c55e] text-[10px] font-bold">{highDemand} high</span>
+                    )}
+                  </td>
+                  <td className="px-4 py-3 text-white/40 font-mono text-xs">{(roles * LOCATIONS.length).toLocaleString()}</td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
+      </section>
+
+      {/* Pipeline status */}
+      <section className="rounded-2xl border border-white/[0.07] bg-white/[0.02] p-5">
+        <h2 className="text-sm font-semibold text-white/40 uppercase tracking-wider mb-4 flex items-center gap-2">
+          <Zap size={13} className="text-[#f59e0b]" /> Content Pipeline Status
+        </h2>
+        <div className="space-y-3">
+          {[
+            { label: 'Template engine', status: 'active', detail: 'Generating from role × location matrix' },
+            { label: 'Claude API integration', status: 'pending', detail: 'Add ANTHROPIC_API_KEY env var to activate rich content' },
+            { label: 'Google AdSense', status: 'pending', detail: 'Add NEXT_PUBLIC_ADSENSE_ID to activate ad units' },
+            { label: 'Sitemap generation', status: 'active', detail: `Auto-generates ${TOTAL_PAGES.toLocaleString()} URLs` },
+            { label: 'JSON-LD Schema (Salary + FAQ + Breadcrumb)', status: 'active', detail: 'Rich results eligible on all pages' },
+            { label: 'Affiliate CTAs (Reed, Totaljobs, Indeed, LinkedIn)', status: 'active', detail: 'Sponsored job board links live' },
+          ].map(({ label, status, detail }) => (
+            <div key={label} className="flex items-center gap-3">
+              <CircleDot size={14} className={status === 'active' ? 'text-[#22c55e]' : 'text-white/20'} />
+              <div className="flex-1 min-w-0">
+                <span className="text-sm font-medium text-white/80">{label}</span>
+                <span className="text-xs text-white/30 ml-2 hidden sm:inline">{detail}</span>
+              </div>
+              <span className={`text-[10px] font-bold uppercase px-2 py-0.5 rounded-full flex-shrink-0 ${
+                status === 'active'
+                  ? 'bg-[#22c55e15] text-[#22c55e]'
+                  : 'bg-white/[0.05] text-white/30'
+              }`}>{status}</span>
+            </div>
+          ))}
+        </div>
+      </section>
     </main>
   );
 }
