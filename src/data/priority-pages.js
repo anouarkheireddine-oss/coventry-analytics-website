@@ -1,40 +1,40 @@
-// The 30 pages we pre-build at launch. Quality over quantity.
-// Rest of the 1,025 combinations are served on-demand (ISR).
+// 30 priority pages — pre-built at deploy time.
+// Every page in this list is exceptional, not thin.
 export const PRIORITY_PAGES = [
-  // Technology — highest RPM, highest demand
-  { role: 'software-engineer',       location: 'london'      },
-  { role: 'software-engineer',       location: 'manchester'  },
-  { role: 'software-engineer',       location: 'birmingham'  },
-  { role: 'data-scientist',          location: 'london'      },
-  { role: 'machine-learning-engineer', location: 'london'   },
-  { role: 'devops-engineer',         location: 'london'      },
-  { role: 'product-manager',         location: 'london'      },
-  { role: 'frontend-developer',      location: 'london'      },
-  { role: 'cybersecurity-analyst',   location: 'london'      },
-  { role: 'cloud-architect',         location: 'london'      },
-  // Healthcare — mass search volume, NHS brand recognition
-  { role: 'nurse',                   location: 'london'      },
-  { role: 'nurse',                   location: 'manchester'  },
-  { role: 'nurse',                   location: 'birmingham'  },
-  { role: 'doctor',                  location: 'london'      },
-  { role: 'physiotherapist',         location: 'london'      },
-  { role: 'pharmacist',              location: 'london'      },
-  // Finance — high CPM advertisers
-  { role: 'investment-banker',       location: 'london'      },
-  { role: 'financial-analyst',       location: 'london'      },
-  { role: 'accountant',              location: 'london'      },
-  { role: 'actuary',                 location: 'london'      },
-  // Education — extremely high volume ("teacher salary" = 100k+ searches/mo)
-  { role: 'teacher',                 location: 'london'      },
-  { role: 'teacher',                 location: 'manchester'  },
-  { role: 'headteacher',             location: 'london'      },
-  { role: 'university-lecturer',     location: 'london'      },
-  // Legal — high CPC, affiliate value
-  { role: 'solicitor',               location: 'london'      },
-  { role: 'barrister',               location: 'london'      },
-  // Business
-  { role: 'project-manager',         location: 'london'      },
-  { role: 'marketing-manager',       location: 'london'      },
-  { role: 'business-analyst',        location: 'london'      },
-  { role: 'operations-manager',      location: 'london'      },
+  // Software — highest search volume + RPM
+  { role: 'software-engineer',         location: 'london'     },
+  { role: 'software-engineer',         location: 'manchester' },
+  { role: 'software-engineer',         location: 'bristol'    },
+  { role: 'frontend-developer',        location: 'london'     },
+  { role: 'devops-engineer',           location: 'london'     },
+  { role: 'cloud-architect',           location: 'london'     },
+  { role: 'cybersecurity-analyst',     location: 'london'     },
+  // Data & AI — fastest growing sector, high advertiser CPC
+  { role: 'data-analyst',              location: 'london'     },
+  { role: 'data-analyst',              location: 'manchester' },
+  { role: 'data-scientist',            location: 'london'     },
+  { role: 'data-scientist',            location: 'manchester' },
+  { role: 'data-engineer',             location: 'london'     },
+  { role: 'machine-learning-engineer', location: 'london'     },
+  // Product
+  { role: 'product-manager',           location: 'london'     },
+  { role: 'product-manager',           location: 'manchester' },
+  { role: 'ux-designer',               location: 'london'     },
+  // Business & Strategy
+  { role: 'business-analyst',          location: 'london'     },
+  { role: 'project-manager',           location: 'london'     },
+  { role: 'management-consultant',     location: 'london'     },
+  // Finance — high CPC advertisers (Ezoic/Mediavine RPM boost)
+  { role: 'financial-analyst',         location: 'london'     },
+  { role: 'investment-banker',         location: 'london'     },
+  { role: 'actuary',                   location: 'london'     },
+  { role: 'compliance-officer',        location: 'london'     },
+  { role: 'accountant',                location: 'london'     },
+  // Regional pages — differentiated by take-home comparison
+  { role: 'data-scientist',            location: 'edinburgh'  },
+  { role: 'software-engineer',         location: 'leeds'      },
+  { role: 'software-engineer',         location: 'birmingham' },
+  { role: 'business-analyst',          location: 'manchester' },
+  { role: 'financial-analyst',         location: 'edinburgh'  },
+  { role: 'machine-learning-engineer', location: 'cambridge'  },
 ];

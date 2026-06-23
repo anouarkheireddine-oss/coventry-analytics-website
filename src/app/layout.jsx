@@ -1,19 +1,15 @@
 import './globals.css';
 
-const BASE_URL = process.env.NEXT_PUBLIC_BASE_URL || 'https://ukpaycheck.co.uk';
+const BASE_URL = process.env.NEXT_PUBLIC_BASE_URL || 'https://salarystack.co.uk';
 
 export const metadata = {
   title: {
-    default: 'UKPayCheck — UK Salary Intelligence',
-    template: '%s | UKPayCheck',
+    default: 'SalaryStack — UK Tech & Analytics Career Intelligence',
+    template: '%s | SalaryStack',
   },
-  description: 'Accurate salary data for every UK job role and city. Make informed career decisions.',
+  description: 'Salary data, take-home calculators, and career intelligence for UK tech, data, and analytics professionals.',
   metadataBase: new URL(BASE_URL),
-  openGraph: {
-    siteName: 'UKPayCheck',
-    type: 'website',
-    locale: 'en_GB',
-  },
+  openGraph: { siteName: 'SalaryStack', type: 'website', locale: 'en_GB' },
   robots: {
     index: true,
     follow: true,
@@ -23,21 +19,37 @@ export const metadata = {
 
 export default function RootLayout({ children }) {
   const adsenseId = process.env.NEXT_PUBLIC_ADSENSE_ID;
-
   return (
     <html lang="en-GB">
       <head>
         <link rel="preconnect" href="https://fonts.googleapis.com" />
         <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
         {adsenseId && (
-          <script
-            async
-            src={`https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=${adsenseId}`}
-            crossOrigin="anonymous"
-          />
+          <script async src={`https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=${adsenseId}`} crossOrigin="anonymous" />
         )}
       </head>
       <body className="bg-[#0a0a0b] text-white min-h-screen antialiased">
+        {/* Persistent top nav */}
+        <header className="sticky top-0 z-50 border-b border-white/[0.06] bg-[#0a0a0b]/90 backdrop-blur-xl">
+          <div className="max-w-5xl mx-auto px-4 h-12 flex items-center justify-between">
+            <a href="/" className="text-base font-extrabold text-white">
+              Salary<span className="text-[#00d4ff]">Stack</span>
+            </a>
+            <nav className="flex items-center gap-1">
+              {[
+                { href: '/salary',                   label: 'Salaries'    },
+                { href: '/calculators/contractor',   label: 'Contractor'  },
+                { href: '/calculators/offer',        label: 'Offers'      },
+                { href: '/insights/london-tech-premium', label: 'Insights' },
+              ].map(({ href, label }) => (
+                <a key={href} href={href}
+                  className="px-3 py-1.5 text-xs font-medium text-white/50 hover:text-white hover:bg-white/[0.05] rounded-lg transition-all">
+                  {label}
+                </a>
+              ))}
+            </nav>
+          </div>
+        </header>
         {children}
       </body>
     </html>
