@@ -17,7 +17,7 @@ export const metadata = {
     googleBot: { index: true, follow: true, 'max-snippet': -1, 'max-image-preview': 'large' },
   },
   verification: {
-    google: 'DpdoaWT6fvxblHIje8lK2zc4U2XcepRpZsE1lvElZjU',
+    google: 'qZCdzwec735OfmH8qxXXw9kFpzjak_FUiWG9RZyFFZQ',
   },
 };
 
