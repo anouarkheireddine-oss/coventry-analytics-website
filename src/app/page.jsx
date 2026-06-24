@@ -2,11 +2,11 @@ import Link from 'next/link';
 import { TrendingUp, Calculator, BarChart3, FileText, ArrowRight, Zap } from 'lucide-react';
 import { ROLES, SECTORS } from '@/data/roles';
 import { LOCATIONS } from '@/data/locations';
-import { PRIORITY_PAGES } from '@/data/priority-pages';
+import QuickCalc from '@/components/content/QuickCalc';
 
 export const metadata = {
   title: 'SalaryStack — UK Tech & Analytics Career Intelligence',
-  description: 'Salary guides, take-home calculators, and original analysis for UK tech, data, and analytics professionals. Not another generic salary site.',
+  description: 'Salary guides, take-home calculators, and original analysis for UK tech, data, and analytics professionals. Every page shows gross and net — because gross is what they offer.',
 };
 
 const TOOLS = [
@@ -15,7 +15,7 @@ const TOOLS = [
     icon: Calculator,
     color: '#00d4ff',
     label: 'Contractor vs Permanent',
-    desc: 'Is £500/day outside IR35 better than £80k permanent? Real numbers.',
+    desc: 'Is £500/day outside IR35 better than £80k permanent? Real numbers, not guesses.',
     tag: 'Most used',
   },
   {
@@ -23,7 +23,7 @@ const TOOLS = [
     icon: BarChart3,
     color: '#a78bfa',
     label: 'Offer Comparison',
-    desc: 'Compare two jobs on total compensation: salary, bonus, equity, pension.',
+    desc: 'Two offers look different on paper. This shows the real gap: salary, bonus, pension, equity.',
     tag: null,
   },
   {
@@ -31,15 +31,15 @@ const TOOLS = [
     icon: FileText,
     color: '#f59e0b',
     label: 'London Tech Premium 2026',
-    desc: 'Is London still worth it after rent? We ran the numbers for 8 roles.',
+    desc: 'London pays 35% more gross. After rent, it often loses on disposable income. We ran the numbers.',
     tag: 'Original analysis',
   },
   {
     href: '/salary/software-engineer/london',
     icon: TrendingUp,
     color: '#22c55e',
-    label: 'UK Take-Home Calculator',
-    desc: 'Any salary → net monthly pay after income tax, NI, pension, student loan.',
+    label: 'Salary Guides',
+    desc: `${ROLES.length} roles × ${LOCATIONS.length} cities. Every page shows gross and net monthly take-home.`,
     tag: null,
   },
 ];
@@ -58,35 +58,43 @@ export default function HomePage() {
 
   return (
     <main className="min-h-screen bg-[#0a0a0b] text-white">
-      {/* Hero */}
+
+      {/* Hero + Quick Calc */}
       <section className="max-w-4xl mx-auto px-4 pt-14 pb-10">
-        <div className="flex items-center gap-2 mb-5">
-          <div className="w-2 h-2 rounded-full bg-[#22c55e] animate-pulse" />
-          <span className="text-xs text-[#22c55e] font-semibold uppercase tracking-widest">UK Career Intelligence · {new Date().getFullYear()}</span>
-        </div>
-        <h1 className="text-4xl sm:text-5xl font-extrabold text-white leading-tight mb-4">
-          Know what you<br />
-          <span className="text-[#00d4ff]">actually take home.</span>
-        </h1>
-        <p className="text-white/50 text-[16px] max-w-xl leading-relaxed mb-8">
-          Salary data, take-home calculators, and original analysis for UK tech, data, and analytics careers.
-          We show you gross <em>and</em> net — because gross is what they offer. Net is what you live on.
-        </p>
-        <div className="flex flex-wrap gap-3">
-          <Link href="/calculators/contractor"
-            className="px-5 py-2.5 rounded-xl bg-[#00d4ff] text-[#0a0a0b] text-sm font-bold hover:opacity-90 transition-opacity">
-            Contractor Calculator
-          </Link>
-          <Link href="/salary"
-            className="px-5 py-2.5 rounded-xl border border-white/[0.12] text-sm font-semibold text-white/70 hover:text-white hover:border-white/25 transition-all">
-            Salary Guides →
-          </Link>
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-10 items-start">
+          <div>
+            <div className="flex items-center gap-2 mb-5">
+              <div className="w-2 h-2 rounded-full bg-[#22c55e] animate-pulse" />
+              <span className="text-xs text-[#22c55e] font-semibold uppercase tracking-widest">UK Career Intelligence · {new Date().getFullYear()}</span>
+            </div>
+            <h1 className="text-4xl sm:text-5xl font-extrabold text-white leading-tight mb-4">
+              Know what you<br />
+              <span className="text-[#00d4ff]">actually take home.</span>
+            </h1>
+            <p className="text-white/50 text-[16px] max-w-xl leading-relaxed mb-6">
+              Gross is what they advertise. Net is what lands in your account.
+              We show you both — for {ROLES.length} tech and analytics roles across {LOCATIONS.length} UK cities.
+            </p>
+            <div className="flex flex-wrap gap-3">
+              <Link href="/calculators/contractor"
+                className="px-5 py-2.5 rounded-xl bg-[#00d4ff] text-[#0a0a0b] text-sm font-bold hover:opacity-90 transition-opacity">
+                Contractor Calculator
+              </Link>
+              <Link href="/salary"
+                className="px-5 py-2.5 rounded-xl border border-white/[0.12] text-sm font-semibold text-white/70 hover:text-white hover:border-white/25 transition-all">
+                Salary Guides →
+              </Link>
+            </div>
+          </div>
+          <div className="lg:pt-2">
+            <QuickCalc />
+          </div>
         </div>
       </section>
 
       {/* Tools grid */}
       <section className="max-w-4xl mx-auto px-4 pb-12">
-        <p className="text-xs text-white/30 font-semibold uppercase tracking-wider mb-4">Tools & Intelligence</p>
+        <p className="text-xs text-white/25 font-semibold uppercase tracking-wider mb-4">Tools & Analysis</p>
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
           {TOOLS.map(({ href, icon: Icon, color, label, desc, tag }) => (
             <Link key={href} href={href}>
@@ -114,7 +122,7 @@ export default function HomePage() {
       {/* Featured salary pages */}
       <section className="max-w-4xl mx-auto px-4 pb-12">
         <div className="flex items-center justify-between mb-4">
-          <p className="text-xs text-white/30 font-semibold uppercase tracking-wider">Top Salary Guides</p>
+          <p className="text-xs text-white/25 font-semibold uppercase tracking-wider">Top Salary Guides</p>
           <Link href="/salary" className="text-xs text-[#00d4ff] hover:underline">View all {totalPages.toLocaleString()} →</Link>
         </div>
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-2">
@@ -130,7 +138,7 @@ export default function HomePage() {
 
       {/* Sector quick-links */}
       <section className="max-w-4xl mx-auto px-4 pb-14">
-        <p className="text-xs text-white/30 font-semibold uppercase tracking-wider mb-4">Browse by Sector</p>
+        <p className="text-xs text-white/25 font-semibold uppercase tracking-wider mb-4">Browse by Sector</p>
         <div className="flex flex-wrap gap-2">
           {SECTORS.map(sector => {
             const sectorRoles = ROLES.filter(r => r.sector === sector);
@@ -145,18 +153,34 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* Why SalaryStack */}
+      {/* The honest section */}
       <section className="border-t border-white/[0.05] bg-white/[0.01]">
         <div className="max-w-4xl mx-auto px-4 py-12">
-          <p className="text-xs text-white/30 font-semibold uppercase tracking-wider mb-6">Why SalaryStack</p>
-          <div className="grid grid-cols-1 sm:grid-cols-3 gap-6">
+          <p className="text-xs text-white/25 font-semibold uppercase tracking-wider mb-6">Why we built this</p>
+          <div className="grid grid-cols-1 sm:grid-cols-3 gap-8">
             {[
-              { icon: Zap, color: '#00d4ff', title: 'Gross AND net', body: 'Every salary page shows take-home after income tax, NI, pension, and student loan. Competitors show gross. We show what lands in your account.' },
-              { icon: BarChart3, color: '#22c55e', title: 'City-by-city disposable income', body: 'London pays more gross. It rarely wins on disposable income. Our compare pages show where your salary actually goes furthest.' },
-              { icon: FileText, color: '#f59e0b', title: 'Original analysis, not scraped data', body: 'The London Tech Premium piece, the contractor model — our own calculations, not recycled Glassdoor numbers.' },
+              {
+                icon: Zap,
+                color: '#00d4ff',
+                title: 'Net pay, not gross',
+                body: 'Every salary site shows gross. We show what actually lands in your account each month — after income tax, National Insurance, pension, and student loan. Those four deductions take 35–45% of a typical tech salary.',
+              },
+              {
+                icon: BarChart3,
+                color: '#22c55e',
+                title: 'London rarely wins on disposable income',
+                body: "London pays tech workers 35% more gross. After £2,100/month rent, it loses on disposable income for most roles below £120k. Our compare pages show this city by city — not the conclusion most salary sites reach.",
+              },
+              {
+                icon: FileText,
+                color: '#f59e0b',
+                title: 'Our own calculations',
+                body: "The contractor model, the London premium analysis — we computed these from first principles using HMRC 2025/26 rates and ONS regional data. Not recycled Glassdoor numbers.",
+              },
             ].map(({ icon: Icon, color, title, body }) => (
               <div key={title}>
-                <div className="w-8 h-8 rounded-lg flex items-center justify-center mb-3" style={{ background: `${color}12`, border: `1px solid ${color}20` }}>
+                <div className="w-8 h-8 rounded-lg flex items-center justify-center mb-3"
+                  style={{ background: `${color}12`, border: `1px solid ${color}20` }}>
                   <Icon size={14} style={{ color }} />
                 </div>
                 <p className="text-sm font-bold text-white mb-2">{title}</p>
@@ -164,6 +188,10 @@ export default function HomePage() {
               </div>
             ))}
           </div>
+          <p className="text-xs text-white/25 mt-8">
+            HMRC 2025/26 rates · Updated June 2026 ·{' '}
+            <Link href="/methodology" className="hover:text-white/45 transition-colors underline">How we calculate this</Link>
+          </p>
         </div>
       </section>
     </main>

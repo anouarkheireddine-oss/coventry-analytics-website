@@ -1,4 +1,5 @@
 import './globals.css';
+import Footer from '@/components/layout/Footer';
 
 const BASE_URL = process.env.NEXT_PUBLIC_BASE_URL || 'https://salarystack.co.uk';
 
@@ -51,6 +52,7 @@ export default function RootLayout({ children }) {
           </div>
         </header>
         {children}
+        <Footer />
       </body>
     </html>
   );

@@ -13,6 +13,7 @@ export default function sitemap() {
     { url: `${BASE_URL}/calculators/contractor`,        lastModified: now, changeFrequency: 'monthly', priority: 0.9 },
     { url: `${BASE_URL}/calculators/offer`,             lastModified: now, changeFrequency: 'monthly', priority: 0.9 },
     { url: `${BASE_URL}/insights/london-tech-premium`,  lastModified: now, changeFrequency: 'monthly', priority: 0.85 },
+    { url: `${BASE_URL}/methodology`,                   lastModified: now, changeFrequency: 'monthly', priority: 0.70 },
   ];
 
   const comparePages = ROLES.map(role => ({
