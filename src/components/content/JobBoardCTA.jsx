@@ -16,8 +16,8 @@ export default function JobBoardCTA({ roleTitle, locationName }) {
           <Briefcase size={18} className="text-[#818cf8]" />
         </div>
         <div>
-          <h3 className="text-base font-bold text-white">Find {roleTitle} Jobs in {locationName}</h3>
-          <p className="text-sm text-white/50 mt-0.5">Apply today — thousands of live vacancies across the UK</p>
+          <h3 className="text-base font-bold text-gray-900">Find {roleTitle} Jobs in {locationName}</h3>
+          <p className="text-sm text-black/50 mt-0.5">Apply today — thousands of live vacancies across the UK</p>
         </div>
       </div>
       <div className="grid grid-cols-2 gap-2 sm:grid-cols-4">
@@ -27,11 +27,11 @@ export default function JobBoardCTA({ roleTitle, locationName }) {
             href={url}
             target="_blank"
             rel="noopener sponsored"
-            className="flex flex-col items-center gap-1.5 p-3 rounded-xl border border-white/[0.07] bg-white/[0.03] hover:bg-white/[0.06] transition-all group"
+            className="flex flex-col items-center gap-1.5 p-3 rounded-xl border border-black/[0.07] bg-black/[0.025] hover:bg-black/[0.04] transition-all group"
           >
             <span className="text-sm font-bold" style={{ color }}>{name}</span>
-            <span className="text-[10px] text-white/40 text-center leading-tight">{tagline}</span>
-            <ArrowRight size={10} className="text-white/20 group-hover:text-white/40 transition-colors" />
+            <span className="text-[10px] text-black/40 text-center leading-tight">{tagline}</span>
+            <ArrowRight size={10} className="text-black/20 group-hover:text-black/40 transition-colors" />
           </a>
         ))}
       </div>

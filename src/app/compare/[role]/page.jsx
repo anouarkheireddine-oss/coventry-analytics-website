@@ -63,19 +63,19 @@ export default async function CompareRolePage({ params }) {
     <>
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumb) }} />
 
-      <main className="min-h-screen bg-[#09090f] text-white">
+      <main className="min-h-screen bg-[#f8f7f5] text-gray-900">
         <div className="max-w-4xl mx-auto px-4 pt-4">
           <AdSlot slot="leaderboard" className="mb-2" />
         </div>
 
         {/* Breadcrumb */}
         <div className="max-w-4xl mx-auto px-4 pt-6">
-          <nav className="flex items-center gap-1.5 text-xs text-white/30 flex-wrap">
-            <Link href="/" className="hover:text-white/60 transition-colors">Home</Link>
+          <nav className="flex items-center gap-1.5 text-xs text-black/30 flex-wrap">
+            <Link href="/" className="hover:text-black/60 transition-colors">Home</Link>
             <ChevronRight size={10} />
-            <Link href="/salary" className="hover:text-white/60 transition-colors">Salary Guides</Link>
+            <Link href="/salary" className="hover:text-black/60 transition-colors">Salary Guides</Link>
             <ChevronRight size={10} />
-            <span className="text-white/60">{role.title} by City</span>
+            <span className="text-black/60">{role.title} by City</span>
           </nav>
         </div>
 
@@ -84,11 +84,11 @@ export default async function CompareRolePage({ params }) {
           <div className="flex items-center gap-2 mb-3">
             <span className="px-2.5 py-1 rounded-full bg-[#818cf815] border border-[#818cf825] text-[11px] font-semibold text-[#818cf8] uppercase tracking-wider">{role.sector}</span>
           </div>
-          <h1 className="text-2xl sm:text-3xl font-extrabold text-white leading-tight mb-4">
+          <h1 className="text-2xl sm:text-3xl font-extrabold text-gray-900 leading-tight mb-4">
             {role.title} Salary by City, UK ({year})<br />
             <span className="text-[#818cf8]">Where Do You Actually Take Home the Most?</span>
           </h1>
-          <p className="text-white/65 text-[15px] leading-relaxed max-w-2xl mb-6">
+          <p className="text-black/65 text-[15px] leading-relaxed max-w-2xl mb-6">
             London pays the highest gross salary for a {role.title} — but after income tax, National Insurance,
             and London&apos;s cost of living, you may take home <em>less</em> than in cities like {best.loc.name}.
             This table shows the real numbers.
@@ -99,57 +99,57 @@ export default async function CompareRolePage({ params }) {
             <div className="rounded-2xl border border-[#34d39925] bg-[#34d39908] p-4">
               <p className="text-xs text-[#34d399]/70 font-semibold uppercase tracking-wider mb-1">Best City (Disposable)</p>
               <p className="text-xl font-extrabold text-[#34d399]">{best.loc.name}</p>
-              <p className="text-sm text-white/60 mt-1">{formatGBP(best.disposable)}/mo disposable</p>
-              <p className="text-xs text-white/30 mt-0.5">{formatGBP(best.gross)} gross</p>
+              <p className="text-sm text-black/60 mt-1">{formatGBP(best.disposable)}/mo disposable</p>
+              <p className="text-xs text-black/30 mt-0.5">{formatGBP(best.gross)} gross</p>
             </div>
             {londonRow && (
               <div className="rounded-2xl border border-[#818cf825] bg-[#818cf808] p-4">
                 <p className="text-xs text-[#818cf8]/70 font-semibold uppercase tracking-wider mb-1">London (Gross Leader)</p>
                 <p className="text-xl font-extrabold text-[#818cf8]">{formatGBP(londonRow.gross)}</p>
-                <p className="text-sm text-white/60 mt-1">{formatGBP(londonRow.disposable)}/mo disposable</p>
-                <p className="text-xs text-white/30 mt-0.5">Rank #{rows.findIndex(r => r.loc.slug === 'london') + 1} by take-home</p>
+                <p className="text-sm text-black/60 mt-1">{formatGBP(londonRow.disposable)}/mo disposable</p>
+                <p className="text-xs text-black/30 mt-0.5">Rank #{rows.findIndex(r => r.loc.slug === 'london') + 1} by take-home</p>
               </div>
             )}
-            <div className="rounded-2xl border border-white/[0.07] bg-white/[0.02] p-4">
-              <p className="text-xs text-white/40 font-semibold uppercase tracking-wider mb-1">Lowest Disposable</p>
-              <p className="text-xl font-extrabold text-white/60">{worst.loc.name}</p>
-              <p className="text-sm text-white/40 mt-1">{formatGBP(worst.disposable)}/mo disposable</p>
-              <p className="text-xs text-white/25 mt-0.5">{formatGBP(worst.gross)} gross</p>
+            <div className="rounded-2xl border border-black/[0.07] bg-black/[0.02] p-4">
+              <p className="text-xs text-black/40 font-semibold uppercase tracking-wider mb-1">Lowest Disposable</p>
+              <p className="text-xl font-extrabold text-black/60">{worst.loc.name}</p>
+              <p className="text-sm text-black/40 mt-1">{formatGBP(worst.disposable)}/mo disposable</p>
+              <p className="text-xs text-black/25 mt-0.5">{formatGBP(worst.gross)} gross</p>
             </div>
           </div>
         </div>
 
         {/* Full comparison table */}
         <div className="max-w-4xl mx-auto px-4 mb-8">
-          <h2 className="text-lg font-bold text-white mb-3">{role.title} Take-Home by City — Full Comparison</h2>
-          <div className="rounded-2xl border border-white/[0.07] overflow-hidden">
+          <h2 className="text-lg font-bold text-gray-900 mb-3">{role.title} Take-Home by City — Full Comparison</h2>
+          <div className="rounded-2xl border border-black/[0.07] overflow-hidden">
             <div className="overflow-x-auto">
               <table className="w-full text-sm">
                 <thead>
-                  <tr className="border-b border-white/[0.07] bg-white/[0.03]">
+                  <tr className="border-b border-black/[0.07] bg-black/[0.025]">
                     {['Rank', 'City', 'Gross Salary', 'Monthly Net', 'Tax Rate', 'Est. Costs/mo', 'Disposable/mo'].map(h => (
-                      <th key={h} className="px-4 py-3 text-left text-[11px] font-semibold text-white/30 uppercase tracking-wider whitespace-nowrap">{h}</th>
+                      <th key={h} className="px-4 py-3 text-left text-[11px] font-semibold text-black/30 uppercase tracking-wider whitespace-nowrap">{h}</th>
                     ))}
                   </tr>
                 </thead>
                 <tbody>
                   {rows.map(({ loc, gross, monthly, effectiveRate, disposable, costs }, i) => (
-                    <tr key={loc.slug} className={`border-b border-white/[0.04] ${i === 0 ? 'bg-[#34d39906]' : i % 2 === 0 ? '' : 'bg-white/[0.01]'} hover:bg-white/[0.03] transition-colors`}>
+                    <tr key={loc.slug} className={`border-b border-black/[0.04] ${i === 0 ? 'bg-[#34d39906]' : i % 2 === 0 ? '' : 'bg-black/[0.015]'} hover:bg-black/[0.025] transition-colors`}>
                       <td className="px-4 py-3">
-                        <span className={`text-xs font-bold ${i === 0 ? 'text-[#34d399]' : 'text-white/25'}`}>#{i + 1}</span>
+                        <span className={`text-xs font-bold ${i === 0 ? 'text-[#34d399]' : 'text-black/25'}`}>#{i + 1}</span>
                       </td>
                       <td className="px-4 py-3">
-                        <Link href={`/salary/${role.slug}/${loc.slug}`} className="font-semibold text-white/85 hover:text-white transition-colors">
+                        <Link href={`/salary/${role.slug}/${loc.slug}`} className="font-semibold text-gray-900/85 hover:text-gray-900 transition-colors">
                           {loc.name}
                         </Link>
-                        <p className="text-[10px] text-white/25">{loc.region}</p>
+                        <p className="text-[10px] text-black/25">{loc.region}</p>
                       </td>
-                      <td className="px-4 py-3 text-white/60 text-xs">{formatGBP(gross)}</td>
+                      <td className="px-4 py-3 text-black/60 text-xs">{formatGBP(gross)}</td>
                       <td className="px-4 py-3 font-semibold text-[#818cf8]">{formatGBP(monthly)}</td>
-                      <td className="px-4 py-3 text-white/40 text-xs">{effectiveRate}%</td>
-                      <td className="px-4 py-3 text-white/40 text-xs">{formatGBP(costs?.total ?? 0)}</td>
+                      <td className="px-4 py-3 text-black/40 text-xs">{effectiveRate}%</td>
+                      <td className="px-4 py-3 text-black/40 text-xs">{formatGBP(costs?.total ?? 0)}</td>
                       <td className="px-4 py-3">
-                        <span className={`font-bold ${i === 0 ? 'text-[#34d399] text-base' : disposable > 500 ? 'text-white/70' : 'text-[#ef4444]'}`}>
+                        <span className={`font-bold ${i === 0 ? 'text-[#34d399] text-base' : disposable > 500 ? 'text-black/70' : 'text-[#ef4444]'}`}>
                           {formatGBP(disposable)}
                         </span>
                       </td>
@@ -159,7 +159,7 @@ export default async function CompareRolePage({ params }) {
               </table>
             </div>
           </div>
-          <p className="text-[11px] text-white/25 mt-2">
+          <p className="text-[11px] text-black/25 mt-2">
             Take-home calculated using 2025/26 UK income tax and NI rates, 5% pension, Plan 2 student loan.
             Living costs: 1-bed rent + transport + groceries estimate.
           </p>
@@ -172,16 +172,16 @@ export default async function CompareRolePage({ params }) {
 
         {/* Insight copy */}
         <div className="max-w-4xl mx-auto px-4 mb-8">
-          <div className="rounded-2xl border border-white/[0.07] bg-white/[0.02] p-6">
-            <h2 className="text-lg font-bold text-white mb-3">Why London Doesn&apos;t Always Win</h2>
-            <p className="text-white/65 text-[15px] leading-relaxed mb-3">
+          <div className="rounded-2xl border border-black/[0.07] bg-black/[0.02] p-6">
+            <h2 className="text-lg font-bold text-gray-900 mb-3">Why London Doesn&apos;t Always Win</h2>
+            <p className="text-black/65 text-[15px] leading-relaxed mb-3">
               A {role.title} in London earns {formatGBP(londonRow?.gross ?? 0)} gross — significantly more than most UK cities.
               But after income tax, National Insurance, and a London rent averaging £2,100/month,
               a {role.title} in {best.loc.name} may have {formatGBP((best.disposable - (londonRow?.disposable ?? 0)))} more
               disposable income every month.
             </p>
-            <p className="text-white/65 text-[15px] leading-relaxed">
-              The concept of <strong className="text-white/85">geographic salary arbitrage</strong> — relocating to a lower-cost city
+            <p className="text-black/65 text-[15px] leading-relaxed">
+              The concept of <strong className="text-gray-900/85">geographic salary arbitrage</strong> — relocating to a lower-cost city
               while maintaining a competitive salary — has become increasingly viable with remote working.
               {role.sector === 'Technology' && ' Tech roles in particular are well-suited to remote arrangements, making city selection a genuine financial optimisation.'}
             </p>
@@ -195,15 +195,15 @@ export default async function CompareRolePage({ params }) {
 
         {/* Individual city links */}
         <div className="max-w-4xl mx-auto px-4 mb-10">
-          <h2 className="text-lg font-bold text-white mb-3">Detailed {role.title} Salary Guides by City</h2>
+          <h2 className="text-lg font-bold text-gray-900 mb-3">Detailed {role.title} Salary Guides by City</h2>
           <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-2">
             {rows.map(({ loc }) => (
               <Link
                 key={loc.slug}
                 href={`/salary/${role.slug}/${loc.slug}`}
-                className="p-3 rounded-xl border border-white/[0.06] bg-white/[0.02] hover:bg-white/[0.04] transition-colors text-center"
+                className="p-3 rounded-xl border border-black/[0.06] bg-black/[0.02] hover:bg-black/[0.03] transition-colors text-center"
               >
-                <p className="text-sm font-semibold text-white/80">{loc.name}</p>
+                <p className="text-sm font-semibold text-black/80">{loc.name}</p>
               </Link>
             ))}
           </div>

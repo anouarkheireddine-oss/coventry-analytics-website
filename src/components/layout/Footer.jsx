@@ -30,14 +30,14 @@ const NAV = [
 
 export default function Footer() {
   return (
-    <footer className="border-t border-white/[0.05] bg-[#09090f]">
+    <footer className="border-t border-black/[0.05] bg-[#f8f7f5]">
       <div className="max-w-5xl mx-auto px-4 py-12">
         <div className="flex flex-col sm:flex-row justify-between gap-10 mb-10">
           <div className="max-w-xs">
-            <a href="/" className="text-base font-extrabold text-white">
+            <a href="/" className="text-base font-extrabold text-gray-900">
               Salary<span className="text-[#818cf8]">Stack</span>
             </a>
-            <p className="text-xs text-white/35 mt-2.5 leading-relaxed">
+            <p className="text-xs text-black/35 mt-2.5 leading-relaxed">
               UK salary intelligence for tech, data, and analytics careers.
               We show gross <em>and</em> net — because net is what you live on.
             </p>
@@ -46,11 +46,11 @@ export default function Footer() {
           <div className="grid grid-cols-2 sm:grid-cols-3 gap-8">
             {NAV.map(({ heading, links }) => (
               <div key={heading}>
-                <p className="text-[10px] font-semibold text-white/30 uppercase tracking-widest mb-3">{heading}</p>
+                <p className="text-[10px] font-semibold text-black/30 uppercase tracking-widest mb-3">{heading}</p>
                 <div className="space-y-2">
                   {links.map(({ href, label }) => (
                     <Link key={href} href={href}
-                      className="block text-xs text-white/40 hover:text-white/70 transition-colors leading-relaxed">
+                      className="block text-xs text-black/40 hover:text-black/70 transition-colors leading-relaxed">
                       {label}
                     </Link>
                   ))}
@@ -60,17 +60,17 @@ export default function Footer() {
           </div>
         </div>
 
-        <div className="border-t border-white/[0.05] pt-6 space-y-3">
-          <p className="text-[11px] text-white/25 leading-relaxed max-w-2xl">
+        <div className="border-t border-black/[0.05] pt-6 space-y-3">
+          <p className="text-[11px] text-black/25 leading-relaxed max-w-2xl">
             Take-home calculations use HMRC 2025/26 income tax bands and National Insurance rates.
             Salary figures are modelled estimates based on market data — individual salaries will vary.
             All figures are for guidance only and do not constitute financial advice.
             Last updated June 2026.{' '}
-            <Link href="/methodology" className="text-white/40 hover:text-white/60 underline transition-colors">
+            <Link href="/methodology" className="text-black/40 hover:text-black/60 underline transition-colors">
               How we calculate this →
             </Link>
           </p>
-          <p className="text-[11px] text-white/20">
+          <p className="text-[11px] text-black/20">
             © 2026 SalaryStack. Independent. Not affiliated with HMRC, any employer, or recruitment agency.
           </p>
         </div>

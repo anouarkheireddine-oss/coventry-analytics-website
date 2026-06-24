@@ -16,10 +16,10 @@ function Bar({ label, value, total, color }) {
   return (
     <div>
       <div className="flex justify-between mb-1">
-        <span className="text-xs text-white/50">{label}</span>
-        <span className="text-xs font-semibold text-white/70">{formatGBP(value)} <span className="text-white/30">({pct}%)</span></span>
+        <span className="text-xs text-black/50">{label}</span>
+        <span className="text-xs font-semibold text-black/70">{formatGBP(value)} <span className="text-black/30">({pct}%)</span></span>
       </div>
-      <div className="h-1.5 rounded-full bg-white/[0.06]">
+      <div className="h-1.5 rounded-full bg-black/[0.04]">
         <div className="h-1.5 rounded-full" style={{ width: `${pct}%`, backgroundColor: color }} />
       </div>
     </div>
@@ -35,20 +35,20 @@ export default function TakeHomeCalculator({ defaultGross }) {
 
   return (
     <div className="rounded-2xl border border-[#818cf820] bg-[#818cf806] p-6 my-6">
-      <h3 className="text-base font-bold text-white mb-1">Take-Home Pay Calculator</h3>
-      <p className="text-xs text-white/40 mb-5">2025/26 UK tax rates · Income tax + NI + pension + student loan</p>
+      <h3 className="text-base font-bold text-gray-900 mb-1">Take-Home Pay Calculator</h3>
+      <p className="text-xs text-black/40 mb-5">2025/26 UK tax rates · Income tax + NI + pension + student loan</p>
 
       {/* Inputs */}
       <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 mb-6">
         <div>
-          <label className="text-xs text-white/40 font-medium block mb-1.5">Gross Annual Salary</label>
+          <label className="text-xs text-black/40 font-medium block mb-1.5">Gross Annual Salary</label>
           <div className="relative">
-            <span className="absolute left-3 top-1/2 -translate-y-1/2 text-white/40 text-sm font-semibold">£</span>
+            <span className="absolute left-3 top-1/2 -translate-y-1/2 text-black/40 text-sm font-semibold">£</span>
             <input
               type="number"
               value={gross}
               onChange={e => setGross(Math.max(0, parseInt(e.target.value) || 0))}
-              className="w-full bg-white/[0.06] border border-white/[0.10] rounded-xl pl-7 pr-3 py-2.5 text-sm font-semibold text-white focus:outline-none focus:border-[#818cf840]"
+              className="w-full bg-black/[0.04] border border-black/[0.10] rounded-xl pl-7 pr-3 py-2.5 text-sm font-semibold text-gray-900 focus:outline-none focus:border-[#818cf840]"
               min={0}
               step={1000}
             />
@@ -56,18 +56,18 @@ export default function TakeHomeCalculator({ defaultGross }) {
         </div>
 
         <div>
-          <label className="text-xs text-white/40 font-medium block mb-1.5">Student Loan</label>
+          <label className="text-xs text-black/40 font-medium block mb-1.5">Student Loan</label>
           <select
             value={studentLoan}
             onChange={e => setStudentLoan(e.target.value)}
-            className="w-full bg-white/[0.06] border border-white/[0.10] rounded-xl px-3 py-2.5 text-sm text-white focus:outline-none focus:border-[#818cf840] appearance-none"
+            className="w-full bg-black/[0.04] border border-black/[0.10] rounded-xl px-3 py-2.5 text-sm text-gray-900 focus:outline-none focus:border-[#818cf840] appearance-none"
           >
             {LOAN_OPTIONS.map(o => <option key={o.value} value={o.value}>{o.label}</option>)}
           </select>
         </div>
 
         <div>
-          <label className="text-xs text-white/40 font-medium block mb-1.5">Pension (% of gross)</label>
+          <label className="text-xs text-black/40 font-medium block mb-1.5">Pension (% of gross)</label>
           <div className="flex items-center gap-3">
             <input
               type="range"
@@ -90,8 +90,8 @@ export default function TakeHomeCalculator({ defaultGross }) {
           { label: 'Income Tax', value: formatGBP(result.incomeTax), color: '#f59e0b' },
           { label: 'Effective Rate', value: `${result.effectiveRate}%`, color: '#818cf8' },
         ].map(({ label, value, color, large }) => (
-          <div key={label} className={`rounded-xl border border-white/[0.07] bg-white/[0.03] p-3 ${large ? 'col-span-2 sm:col-span-1' : ''}`}>
-            <p className="text-[11px] text-white/40 mb-1">{label}</p>
+          <div key={label} className={`rounded-xl border border-black/[0.07] bg-black/[0.025] p-3 ${large ? 'col-span-2 sm:col-span-1' : ''}`}>
+            <p className="text-[11px] text-black/40 mb-1">{label}</p>
             <p className="text-xl font-extrabold" style={{ color }}>{value}</p>
           </div>
         ))}
@@ -108,7 +108,7 @@ export default function TakeHomeCalculator({ defaultGross }) {
         )}
       </div>
 
-      <p className="text-[10px] text-white/20 mt-4">Estimates only. Assumes standard personal allowance, no other deductions. 2025/26 rates.</p>
+      <p className="text-[10px] text-black/20 mt-4">Estimates only. Assumes standard personal allowance, no other deductions. 2025/26 rates.</p>
     </div>
   );
 }

@@ -57,7 +57,7 @@ export default function HomePage() {
   const totalPages = ROLES.length * LOCATIONS.length;
 
   return (
-    <main className="min-h-screen bg-[#09090f] text-white">
+    <main className="min-h-screen bg-[#f8f7f5] text-gray-900">
 
       {/* Hero + Quick Calc */}
       <section className="max-w-4xl mx-auto px-4 pt-14 pb-10">
@@ -67,11 +67,11 @@ export default function HomePage() {
               <div className="w-2 h-2 rounded-full bg-[#34d399] animate-pulse" />
               <span className="text-xs text-[#34d399] font-semibold uppercase tracking-widest">UK Career Intelligence · {new Date().getFullYear()}</span>
             </div>
-            <h1 className="text-4xl sm:text-5xl font-extrabold text-white leading-tight mb-4">
+            <h1 className="text-4xl sm:text-5xl font-extrabold text-gray-900 leading-tight mb-4">
               Know what you<br />
               <span className="text-[#818cf8]">actually take home.</span>
             </h1>
-            <p className="text-white/50 text-[16px] max-w-xl leading-relaxed mb-6">
+            <p className="text-black/50 text-[16px] max-w-xl leading-relaxed mb-6">
               Gross is what they advertise. Net is what lands in your account.
               We show you both — for {ROLES.length} tech and analytics roles across {LOCATIONS.length} UK cities.
             </p>
@@ -81,7 +81,7 @@ export default function HomePage() {
                 Contractor Calculator
               </Link>
               <Link href="/salary"
-                className="px-5 py-2.5 rounded-xl border border-white/[0.12] text-sm font-semibold text-white/70 hover:text-white hover:border-white/25 transition-all">
+                className="px-5 py-2.5 rounded-xl border border-black/[0.10] text-sm font-semibold text-black/70 hover:text-gray-900 hover:border-white/25 transition-all">
                 Salary Guides →
               </Link>
             </div>
@@ -94,11 +94,11 @@ export default function HomePage() {
 
       {/* Tools grid */}
       <section className="max-w-4xl mx-auto px-4 pb-12">
-        <p className="text-xs text-white/25 font-semibold uppercase tracking-wider mb-4">Tools & Analysis</p>
+        <p className="text-xs text-black/25 font-semibold uppercase tracking-wider mb-4">Tools & Analysis</p>
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
           {TOOLS.map(({ href, icon: Icon, color, label, desc, tag }) => (
             <Link key={href} href={href}>
-              <div className="rounded-2xl border border-white/[0.07] bg-white/[0.02] hover:bg-white/[0.04] hover:border-white/[0.12] transition-all p-5 cursor-pointer group h-full">
+              <div className="rounded-2xl border border-black/[0.07] bg-black/[0.02] hover:bg-black/[0.03] hover:border-black/[0.10] transition-all p-5 cursor-pointer group h-full">
                 <div className="flex items-start justify-between mb-4">
                   <div className="w-9 h-9 rounded-xl flex items-center justify-center flex-shrink-0"
                     style={{ background: `${color}12`, border: `1px solid ${color}25` }}>
@@ -106,13 +106,13 @@ export default function HomePage() {
                   </div>
                   <div className="flex items-center gap-2">
                     {tag && (
-                      <span className="text-[10px] font-bold px-2 py-0.5 rounded-full bg-white/[0.06] text-white/40 uppercase tracking-wider">{tag}</span>
+                      <span className="text-[10px] font-bold px-2 py-0.5 rounded-full bg-black/[0.04] text-black/40 uppercase tracking-wider">{tag}</span>
                     )}
-                    <ArrowRight size={13} className="text-white/20 group-hover:text-white/50 transition-colors" />
+                    <ArrowRight size={13} className="text-black/20 group-hover:text-black/50 transition-colors" />
                   </div>
                 </div>
-                <p className="text-sm font-bold text-white mb-1">{label}</p>
-                <p className="text-xs text-white/45 leading-relaxed">{desc}</p>
+                <p className="text-sm font-bold text-gray-900 mb-1">{label}</p>
+                <p className="text-xs text-black/45 leading-relaxed">{desc}</p>
               </div>
             </Link>
           ))}
@@ -122,15 +122,15 @@ export default function HomePage() {
       {/* Featured salary pages */}
       <section className="max-w-4xl mx-auto px-4 pb-12">
         <div className="flex items-center justify-between mb-4">
-          <p className="text-xs text-white/25 font-semibold uppercase tracking-wider">Top Salary Guides</p>
+          <p className="text-xs text-black/25 font-semibold uppercase tracking-wider">Top Salary Guides</p>
           <Link href="/salary" className="text-xs text-[#818cf8] hover:underline">View all {totalPages.toLocaleString()} →</Link>
         </div>
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-2">
           {FEATURED_SALARY_PAGES.map(({ role, location, label }) => (
             <Link key={`${role}/${location}`} href={`/salary/${role}/${location}`}
-              className="flex items-center justify-between p-3.5 rounded-xl border border-white/[0.06] bg-white/[0.02] hover:bg-white/[0.04] transition-colors group">
-              <span className="text-sm text-white/70 group-hover:text-white transition-colors">{label}</span>
-              <ArrowRight size={12} className="text-white/20 group-hover:text-white/50 transition-colors flex-shrink-0" />
+              className="flex items-center justify-between p-3.5 rounded-xl border border-black/[0.06] bg-black/[0.02] hover:bg-black/[0.03] transition-colors group">
+              <span className="text-sm text-black/70 group-hover:text-gray-900 transition-colors">{label}</span>
+              <ArrowRight size={12} className="text-black/20 group-hover:text-black/50 transition-colors flex-shrink-0" />
             </Link>
           ))}
         </div>
@@ -138,15 +138,15 @@ export default function HomePage() {
 
       {/* Sector quick-links */}
       <section className="max-w-4xl mx-auto px-4 pb-14">
-        <p className="text-xs text-white/25 font-semibold uppercase tracking-wider mb-4">Browse by Sector</p>
+        <p className="text-xs text-black/25 font-semibold uppercase tracking-wider mb-4">Browse by Sector</p>
         <div className="flex flex-wrap gap-2">
           {SECTORS.map(sector => {
             const sectorRoles = ROLES.filter(r => r.sector === sector);
             const first = sectorRoles[0];
             return (
               <Link key={sector} href={`/salary/${first.slug}/london`}
-                className="px-3 py-1.5 text-xs font-medium rounded-lg border border-white/[0.07] bg-white/[0.02] text-white/50 hover:text-white hover:bg-white/[0.05] transition-all">
-                {sector} <span className="text-white/25">({sectorRoles.length})</span>
+                className="px-3 py-1.5 text-xs font-medium rounded-lg border border-black/[0.07] bg-black/[0.02] text-black/50 hover:text-gray-900 hover:bg-black/[0.04] transition-all">
+                {sector} <span className="text-black/25">({sectorRoles.length})</span>
               </Link>
             );
           })}
@@ -154,9 +154,9 @@ export default function HomePage() {
       </section>
 
       {/* The honest section */}
-      <section className="border-t border-white/[0.05] bg-white/[0.01]">
+      <section className="border-t border-black/[0.05] bg-black/[0.015]">
         <div className="max-w-4xl mx-auto px-4 py-12">
-          <p className="text-xs text-white/25 font-semibold uppercase tracking-wider mb-6">Why we built this</p>
+          <p className="text-xs text-black/25 font-semibold uppercase tracking-wider mb-6">Why we built this</p>
           <div className="grid grid-cols-1 sm:grid-cols-3 gap-8">
             {[
               {
@@ -183,14 +183,14 @@ export default function HomePage() {
                   style={{ background: `${color}12`, border: `1px solid ${color}20` }}>
                   <Icon size={14} style={{ color }} />
                 </div>
-                <p className="text-sm font-bold text-white mb-2">{title}</p>
-                <p className="text-xs text-white/45 leading-relaxed">{body}</p>
+                <p className="text-sm font-bold text-gray-900 mb-2">{title}</p>
+                <p className="text-xs text-black/45 leading-relaxed">{body}</p>
               </div>
             ))}
           </div>
-          <p className="text-xs text-white/25 mt-8">
+          <p className="text-xs text-black/25 mt-8">
             HMRC 2025/26 rates · Updated June 2026 ·{' '}
-            <Link href="/methodology" className="hover:text-white/45 transition-colors underline">How we calculate this</Link>
+            <Link href="/methodology" className="hover:text-black/45 transition-colors underline">How we calculate this</Link>
           </p>
         </div>
       </section>

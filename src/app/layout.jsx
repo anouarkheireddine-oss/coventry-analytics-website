@@ -29,11 +29,11 @@ export default function RootLayout({ children }) {
           <script async src={`https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=${adsenseId}`} crossOrigin="anonymous" />
         )}
       </head>
-      <body className="bg-[#09090f] text-white min-h-screen antialiased">
+      <body className="bg-[#f8f7f5] text-gray-900 min-h-screen antialiased">
         {/* Persistent top nav */}
-        <header className="sticky top-0 z-50 border-b border-white/[0.06] bg-[#09090f]/90 backdrop-blur-xl">
+        <header className="sticky top-0 z-50 border-b border-black/[0.06] bg-[#f8f7f5]/90 backdrop-blur-xl">
           <div className="max-w-5xl mx-auto px-4 h-12 flex items-center justify-between">
-            <a href="/" className="text-base font-extrabold text-white">
+            <a href="/" className="text-base font-extrabold text-gray-900">
               Salary<span className="text-[#818cf8]">Stack</span>
             </a>
             <nav className="flex items-center gap-1">
@@ -44,7 +44,7 @@ export default function RootLayout({ children }) {
                 { href: '/insights/london-tech-premium', label: 'Insights' },
               ].map(({ href, label }) => (
                 <a key={href} href={href}
-                  className="px-3 py-1.5 text-xs font-medium text-white/50 hover:text-white hover:bg-white/[0.05] rounded-lg transition-all">
+                  className="px-3 py-1.5 text-xs font-medium text-black/50 hover:text-gray-900 hover:bg-black/[0.04] rounded-lg transition-all">
                   {label}
                 </a>
               ))}

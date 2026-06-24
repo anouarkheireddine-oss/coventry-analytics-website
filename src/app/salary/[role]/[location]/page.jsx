@@ -73,21 +73,21 @@ export default async function SalaryPage({ params }) {
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(faqSchema) }} />
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbSchema) }} />
 
-      <main className="min-h-screen bg-[#09090f] text-white">
+      <main className="min-h-screen bg-[#f8f7f5] text-gray-900">
         <div className="max-w-3xl mx-auto px-4 pt-4">
           <AdSlot slot="leaderboard" className="mb-2" />
         </div>
 
         {/* Breadcrumb */}
         <div className="max-w-3xl mx-auto px-4 pt-6">
-          <nav className="flex items-center gap-1.5 text-xs text-white/30 flex-wrap">
-            <Link href="/" className="hover:text-white/60 transition-colors">Home</Link>
+          <nav className="flex items-center gap-1.5 text-xs text-black/30 flex-wrap">
+            <Link href="/" className="hover:text-black/60 transition-colors">Home</Link>
             <ChevronRight size={10} />
-            <Link href="/salary" className="hover:text-white/60 transition-colors">Salary Guides</Link>
+            <Link href="/salary" className="hover:text-black/60 transition-colors">Salary Guides</Link>
             <ChevronRight size={10} />
-            <Link href={`/compare/${role.slug}`} className="hover:text-white/60 transition-colors">{role.title} by city</Link>
+            <Link href={`/compare/${role.slug}`} className="hover:text-black/60 transition-colors">{role.title} by city</Link>
             <ChevronRight size={10} />
-            <span className="text-white/60">{location.name}</span>
+            <span className="text-black/60">{location.name}</span>
           </nav>
         </div>
 
@@ -96,11 +96,11 @@ export default async function SalaryPage({ params }) {
           <div className="flex items-center gap-2 mb-3">
             <span className="px-2.5 py-1 rounded-full bg-[#818cf815] border border-[#818cf825] text-[11px] font-semibold text-[#818cf8] uppercase tracking-wider">{role.sector}</span>
             <span className={`px-2.5 py-1 rounded-full text-[11px] font-semibold uppercase tracking-wider ${
-              role.demand === 'high' ? 'bg-[#34d39915] border border-[#34d39925] text-[#34d399]' : 'bg-white/[0.05] border border-white/[0.08] text-white/40'
+              role.demand === 'high' ? 'bg-[#34d39915] border border-[#34d39925] text-[#34d399]' : 'bg-black/[0.04] border border-black/[0.08] text-black/40'
             }`}>{role.demand} demand · {role.growth}/yr</span>
           </div>
 
-          <h1 className="text-2xl sm:text-3xl font-extrabold text-white leading-tight mb-3">
+          <h1 className="text-2xl sm:text-3xl font-extrabold text-gray-900 leading-tight mb-3">
             {role.title} Salary in {location.name}, UK ({article.currentYear})
           </h1>
 
@@ -112,10 +112,10 @@ export default async function SalaryPage({ params }) {
               { label: 'Entry Level', value: formatGBP(salaries.entry), color: '#ffffff60', sub: 'per year' },
               { label: 'Senior Level', value: formatGBP(salaries.senior), color: '#f59e0b', sub: 'per year' },
             ].map(({ label, value, color, sub }) => (
-              <div key={label} className="rounded-xl border border-white/[0.07] bg-white/[0.03] p-4 text-center">
-                <p className="text-[11px] text-white/40 mb-1 font-medium">{label}</p>
+              <div key={label} className="rounded-xl border border-black/[0.07] bg-black/[0.025] p-4 text-center">
+                <p className="text-[11px] text-black/40 mb-1 font-medium">{label}</p>
                 <p className="text-lg font-extrabold leading-tight" style={{ color }}>{value}</p>
-                <p className="text-[10px] text-white/25 mt-0.5">{sub}</p>
+                <p className="text-[10px] text-black/25 mt-0.5">{sub}</p>
               </div>
             ))}
           </div>
@@ -124,7 +124,7 @@ export default async function SalaryPage({ params }) {
           {disposable && (
             <div className="rounded-xl border border-[#34d39920] bg-[#34d39906] px-4 py-3 mb-4 flex items-start gap-3">
               <TrendingUp size={16} className="text-[#34d399] flex-shrink-0 mt-0.5" />
-              <p className="text-sm text-white/70 leading-relaxed">
+              <p className="text-sm text-black/70 leading-relaxed">
                 After income tax and National Insurance, a {role.title} in {location.name} takes home{' '}
                 <strong className="text-[#34d399]">{formatGBP(tax.netMonthly)}/month</strong>.
                 After estimated living costs of {formatGBP(disposable.totalCosts)}/month,
@@ -139,7 +139,7 @@ export default async function SalaryPage({ params }) {
             </div>
           )}
 
-          <p className="text-white/65 leading-relaxed text-[15px]">{article.intro}</p>
+          <p className="text-black/65 leading-relaxed text-[15px]">{article.intro}</p>
         </div>
 
         <div className="max-w-3xl mx-auto px-4 my-6">
@@ -160,25 +160,25 @@ export default async function SalaryPage({ params }) {
         <div className="max-w-3xl mx-auto px-4 mt-2">
           {article.sections.map((section, i) => (
             <section key={i} className="mt-8">
-              <h2 className="text-xl font-bold text-white mb-3">{section.h2}</h2>
-              <p className="text-white/65 leading-relaxed text-[15px]">{section.content}</p>
+              <h2 className="text-xl font-bold text-gray-900 mb-3">{section.h2}</h2>
+              <p className="text-black/65 leading-relaxed text-[15px]">{section.content}</p>
 
               {section.table && (
-                <div className="mt-4 rounded-xl border border-white/[0.07] overflow-hidden">
+                <div className="mt-4 rounded-xl border border-black/[0.07] overflow-hidden">
                   <table className="w-full text-sm">
                     <thead>
-                      <tr className="border-b border-white/[0.07] bg-white/[0.03]">
-                        <th className="text-left px-4 py-3 text-xs font-semibold text-white/40 uppercase tracking-wider">Level</th>
-                        <th className="text-right px-4 py-3 text-xs font-semibold text-white/40 uppercase tracking-wider">Gross/Year</th>
-                        <th className="text-right px-4 py-3 text-xs font-semibold text-white/40 uppercase tracking-wider">Net/Month</th>
+                      <tr className="border-b border-black/[0.07] bg-black/[0.025]">
+                        <th className="text-left px-4 py-3 text-xs font-semibold text-black/40 uppercase tracking-wider">Level</th>
+                        <th className="text-right px-4 py-3 text-xs font-semibold text-black/40 uppercase tracking-wider">Gross/Year</th>
+                        <th className="text-right px-4 py-3 text-xs font-semibold text-black/40 uppercase tracking-wider">Net/Month</th>
                       </tr>
                     </thead>
                     <tbody>
                       {section.table.map(({ level, salary }, j) => {
                         const t = calcTakeHome(salary);
                         return (
-                          <tr key={j} className={`border-b border-white/[0.04] ${j % 2 === 0 ? '' : 'bg-white/[0.015]'}`}>
-                            <td className="px-4 py-3 text-white/80 font-medium">{level}</td>
+                          <tr key={j} className={`border-b border-black/[0.04] ${j % 2 === 0 ? '' : 'bg-black/[0.015]'}`}>
+                            <td className="px-4 py-3 text-black/80 font-medium">{level}</td>
                             <td className="px-4 py-3 text-right font-bold text-[#818cf8]">{formatGBP(salary)}</td>
                             <td className="px-4 py-3 text-right font-semibold text-[#34d399]">{formatGBP(t.netMonthly)}</td>
                           </tr>
@@ -194,7 +194,7 @@ export default async function SalaryPage({ params }) {
                   {section.bullets.map((b, j) => (
                     <li key={j} className="flex items-start gap-2.5">
                       <span className="mt-1.5 w-1.5 h-1.5 rounded-full bg-[#818cf8] flex-shrink-0" />
-                      <span className="text-white/65 text-[15px] leading-relaxed">{b}</span>
+                      <span className="text-black/65 text-[15px] leading-relaxed">{b}</span>
                     </li>
                   ))}
                 </ul>
@@ -205,17 +205,17 @@ export default async function SalaryPage({ params }) {
                   {section.progression.map(({ stage, years, salary }, j) => {
                     const t = calcTakeHome(salary);
                     return (
-                      <div key={j} className="flex items-center gap-3 p-3 rounded-xl border border-white/[0.06] bg-white/[0.02]">
+                      <div key={j} className="flex items-center gap-3 p-3 rounded-xl border border-black/[0.06] bg-black/[0.02]">
                         <div className="w-6 h-6 rounded-full bg-[#818cf815] border border-[#818cf825] flex items-center justify-center flex-shrink-0">
                           <TrendingUp size={12} className="text-[#818cf8]" />
                         </div>
                         <div className="flex-1">
-                          <p className="text-sm font-semibold text-white">{stage}</p>
-                          <p className="text-xs text-white/40">{years}</p>
+                          <p className="text-sm font-semibold text-gray-900">{stage}</p>
+                          <p className="text-xs text-black/40">{years}</p>
                         </div>
                         <div className="text-right">
                           <p className="text-sm font-bold text-[#34d399]">{formatGBP(salary)}</p>
-                          <p className="text-xs text-white/30">{formatGBP(t.netMonthly)}/mo net</p>
+                          <p className="text-xs text-black/30">{formatGBP(t.netMonthly)}/mo net</p>
                         </div>
                       </div>
                     );
@@ -251,29 +251,29 @@ export default async function SalaryPage({ params }) {
         <div className="max-w-3xl mx-auto px-4 mt-10 pb-10">
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
             <div>
-              <h3 className="text-sm font-semibold text-white/50 uppercase tracking-wider mb-3 flex items-center gap-2">
+              <h3 className="text-sm font-semibold text-black/50 uppercase tracking-wider mb-3 flex items-center gap-2">
                 <Briefcase size={13} /> Related Roles in {location.name}
               </h3>
               <div className="space-y-1.5">
                 {related.map(r => (
                   <Link key={r.slug} href={`/salary/${r.slug}/${location.slug}`}
-                    className="flex items-center justify-between p-3 rounded-xl border border-white/[0.06] bg-white/[0.02] hover:bg-white/[0.04] transition-colors group">
-                    <span className="text-sm text-white/70 group-hover:text-white transition-colors">{r.title}</span>
-                    <ChevronRight size={13} className="text-white/20" />
+                    className="flex items-center justify-between p-3 rounded-xl border border-black/[0.06] bg-black/[0.02] hover:bg-black/[0.03] transition-colors group">
+                    <span className="text-sm text-black/70 group-hover:text-gray-900 transition-colors">{r.title}</span>
+                    <ChevronRight size={13} className="text-black/20" />
                   </Link>
                 ))}
               </div>
             </div>
             <div>
-              <h3 className="text-sm font-semibold text-white/50 uppercase tracking-wider mb-3 flex items-center gap-2">
+              <h3 className="text-sm font-semibold text-black/50 uppercase tracking-wider mb-3 flex items-center gap-2">
                 <MapPin size={13} /> {role.title} in Other Cities
               </h3>
               <div className="space-y-1.5">
                 {nearby.map(loc => (
                   <Link key={loc.slug} href={`/salary/${role.slug}/${loc.slug}`}
-                    className="flex items-center justify-between p-3 rounded-xl border border-white/[0.06] bg-white/[0.02] hover:bg-white/[0.04] transition-colors group">
-                    <span className="text-sm text-white/70 group-hover:text-white transition-colors">{role.title} in {loc.name}</span>
-                    <ChevronRight size={13} className="text-white/20" />
+                    className="flex items-center justify-between p-3 rounded-xl border border-black/[0.06] bg-black/[0.02] hover:bg-black/[0.03] transition-colors group">
+                    <span className="text-sm text-black/70 group-hover:text-gray-900 transition-colors">{role.title} in {loc.name}</span>
+                    <ChevronRight size={13} className="text-black/20" />
                   </Link>
                 ))}
                 <Link href={`/compare/${role.slug}`}
