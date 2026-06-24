@@ -134,7 +134,7 @@ export default function Home() {
       </section>
 
       {/* ─── PROBLEM ──────────────────────────────────────────────────── */}
-      <section id="problem" className="py-24 md:py-32">
+      <section id="problem" className="scroll-mt-16 py-24 md:py-32">
         <div className="max-w-6xl mx-auto px-6">
           <motion.div {...fadeUp(0)} className="max-w-2xl mb-16">
             <SectionLabel>The Problem</SectionLabel>
@@ -197,7 +197,7 @@ export default function Home() {
       </section>
 
       {/* ─── SOLUTION ─────────────────────────────────────────────────── */}
-      <section id="solution" className="py-24 md:py-32 border-t border-white/[0.04]">
+      <section id="solution" className="scroll-mt-16 py-24 md:py-32 border-t border-white/[0.04]">
         <div className="max-w-6xl mx-auto px-6">
           <div className="grid md:grid-cols-2 gap-16 items-center">
             <div>
@@ -276,7 +276,7 @@ export default function Home() {
       </section>
 
       {/* ─── CORE OFFER ───────────────────────────────────────────────── */}
-      <section id="offer" className="py-24 md:py-32 border-t border-white/[0.04]">
+      <section id="offer" className="scroll-mt-16 py-24 md:py-32 border-t border-white/[0.04]">
         <div className="max-w-6xl mx-auto px-6">
           <div className="text-center max-w-2xl mx-auto mb-16">
             <motion.div {...fadeUp(0)}>
@@ -381,7 +381,7 @@ export default function Home() {
       </section>
 
       {/* ─── PROCESS ──────────────────────────────────────────────────── */}
-      <section id="process" className="py-24 md:py-32 border-t border-white/[0.04]">
+      <section id="process" className="scroll-mt-16 py-24 md:py-32 border-t border-white/[0.04]">
         <div className="max-w-6xl mx-auto px-6">
           <div className="max-w-2xl mb-16">
             <motion.div {...fadeUp(0)}>
@@ -445,7 +445,7 @@ export default function Home() {
       </section>
 
       {/* ─── WHO IT'S FOR ─────────────────────────────────────────────── */}
-      <section id="who" className="py-24 md:py-32 border-t border-white/[0.04]">
+      <section id="who" className="scroll-mt-16 py-24 md:py-32 border-t border-white/[0.04]">
         <div className="max-w-6xl mx-auto px-6">
           <div className="text-center max-w-2xl mx-auto mb-16">
             <motion.div {...fadeUp(0)}>
@@ -513,7 +513,7 @@ export default function Home() {
       </section>
 
       {/* ─── CTA ──────────────────────────────────────────────────────── */}
-      <section id="contact" className="py-24 md:py-32 border-t border-white/[0.04]">
+      <section id="contact" className="scroll-mt-16 py-24 md:py-32 border-t border-white/[0.04]">
         <div className="max-w-6xl mx-auto px-6">
           <div className="relative glass rounded-3xl p-10 md:p-16 border border-[#00d4ff15] overflow-hidden text-center max-w-3xl mx-auto">
             {/* Background glow */}
@@ -535,7 +535,7 @@ export default function Home() {
 
               <motion.div {...fadeUp(0.3)} className="flex flex-col sm:flex-row gap-3 justify-center items-center mb-10">
                 <a
-                  href="mailto:hello@coventryanalytics.co.uk?subject=Operational Leak Audit Request"
+                  href="mailto:info.coventryanalytics@gmail.com?subject=Operational Leak Audit Request"
                   className="inline-flex items-center gap-2 px-8 py-4 rounded-xl bg-[#00d4ff] text-black font-bold text-base hover:bg-[#00bfe8] transition-all shadow-[0_0_30px_rgba(0,212,255,0.4)] hover:shadow-[0_0_45px_rgba(0,212,255,0.55)]"
                 >
                   Book Your Free Audit
@@ -576,10 +576,10 @@ export default function Home() {
             © {new Date().getFullYear()} Coventry Analytics. UK-based operational intelligence consultancy.
           </p>
           <a
-            href="mailto:hello@coventryanalytics.co.uk"
+            href="mailto:info.coventryanalytics@gmail.com"
             className="text-xs text-white/30 hover:text-[#00d4ff] transition-colors"
           >
-            hello@coventryanalytics.co.uk
+            info.coventryanalytics@gmail.com
           </a>
         </div>
       </footer>

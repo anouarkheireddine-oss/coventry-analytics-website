@@ -26,8 +26,10 @@ export default function Navigation() {
   const handleAnchor = (e, href) => {
     e.preventDefault();
     setOpen(false);
-    const el = document.querySelector(href);
-    if (el) el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    setTimeout(() => {
+      const el = document.querySelector(href);
+      if (el) el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }, 150);
   };
 
   return (
