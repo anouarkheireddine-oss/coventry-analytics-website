@@ -31,7 +31,7 @@ const NAV = [
 export default function Footer() {
   return (
     <footer className="border-t border-black/[0.05] bg-[#f8f7f5]">
-      <div className="max-w-5xl mx-auto px-4 py-12">
+      <div className="max-w-7xl mx-auto px-4 py-12">
         <div className="flex flex-col sm:flex-row justify-between gap-10 mb-10">
           <div className="max-w-xs">
             <a href="/" className="text-base font-extrabold text-gray-900">

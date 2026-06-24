@@ -74,12 +74,12 @@ export default async function SalaryPage({ params }) {
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbSchema) }} />
 
       <main className="min-h-screen bg-[#f8f7f5] text-gray-900">
-        <div className="max-w-3xl mx-auto px-4 pt-4">
+        <div className="max-w-7xl mx-auto px-4 pt-4">
           <AdSlot slot="leaderboard" className="mb-2" />
         </div>
 
         {/* Breadcrumb */}
-        <div className="max-w-3xl mx-auto px-4 pt-6">
+        <div className="max-w-7xl mx-auto px-4 pt-6">
           <nav className="flex items-center gap-1.5 text-xs text-black/30 flex-wrap">
             <Link href="/" className="hover:text-black/60 transition-colors">Home</Link>
             <ChevronRight size={10} />
@@ -92,7 +92,7 @@ export default async function SalaryPage({ params }) {
         </div>
 
         {/* Hero */}
-        <div className="max-w-3xl mx-auto px-4 pt-6 pb-2">
+        <div className="max-w-7xl mx-auto px-4 pt-6 pb-2">
           <div className="flex items-center gap-2 mb-3">
             <span className="px-2.5 py-1 rounded-full bg-[#818cf815] border border-[#818cf825] text-[11px] font-semibold text-[#818cf8] uppercase tracking-wider">{role.sector}</span>
             <span className={`px-2.5 py-1 rounded-full text-[11px] font-semibold uppercase tracking-wider ${
@@ -142,22 +142,22 @@ export default async function SalaryPage({ params }) {
           <p className="text-black/65 leading-relaxed text-[15px]">{article.intro}</p>
         </div>
 
-        <div className="max-w-3xl mx-auto px-4 my-6">
+        <div className="max-w-7xl mx-auto px-4 my-6">
           <AdSlot slot="in-article" />
         </div>
 
         {/* Salary range visual */}
-        <div className="max-w-3xl mx-auto px-4">
+        <div className="max-w-7xl mx-auto px-4">
           <SalaryRangeBar entry={salaries.entry} mid={salaries.mid} senior={salaries.senior} lead={salaries.lead} />
         </div>
 
         {/* Interactive take-home calculator */}
-        <div className="max-w-3xl mx-auto px-4">
+        <div className="max-w-7xl mx-auto px-4">
           <TakeHomeCalculator defaultGross={salaries.mid} />
         </div>
 
         {/* Article sections */}
-        <div className="max-w-3xl mx-auto px-4 mt-2">
+        <div className="max-w-7xl mx-auto px-4 mt-2">
           {article.sections.map((section, i) => (
             <section key={i} className="mt-8">
               <h2 className="text-xl font-bold text-gray-900 mb-3">{section.h2}</h2>
@@ -233,22 +233,22 @@ export default async function SalaryPage({ params }) {
         </div>
 
         {/* City comparison table */}
-        <div className="max-w-3xl mx-auto px-4">
+        <div className="max-w-7xl mx-auto px-4">
           <CityComparison role={role} currentLocationSlug={location.slug} />
         </div>
 
         {/* Job board CTA */}
-        <div className="max-w-3xl mx-auto px-4 mt-8">
+        <div className="max-w-7xl mx-auto px-4 mt-8">
           <JobBoardCTA roleTitle={role.title} locationName={location.name} />
         </div>
 
         {/* FAQ */}
-        <div className="max-w-3xl mx-auto px-4">
+        <div className="max-w-7xl mx-auto px-4">
           <FAQSection faqs={article.faqs} />
         </div>
 
         {/* Related roles + nearby cities */}
-        <div className="max-w-3xl mx-auto px-4 mt-10 pb-10">
+        <div className="max-w-7xl mx-auto px-4 mt-10 pb-10">
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
             <div>
               <h3 className="text-sm font-semibold text-black/50 uppercase tracking-wider mb-3 flex items-center gap-2">
@@ -286,7 +286,7 @@ export default async function SalaryPage({ params }) {
           </div>
         </div>
 
-        <div className="max-w-3xl mx-auto px-4 pb-8">
+        <div className="max-w-7xl mx-auto px-4 pb-8">
           <AdSlot slot="bottom" />
         </div>
       </main>

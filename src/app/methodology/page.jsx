@@ -24,7 +24,7 @@ const NI_BANDS = [
 export default function MethodologyPage() {
   return (
     <main className="min-h-screen bg-[#f8f7f5] text-gray-900">
-      <article className="max-w-3xl mx-auto px-4 py-10">
+      <article className="max-w-7xl mx-auto px-4 py-10">
         <nav className="flex items-center gap-2 text-xs text-black/30 mb-8">
           <Link href="/" className="hover:text-black/60 transition-colors">Home</Link>
           <span>›</span>

@@ -60,7 +60,7 @@ export default function HomePage() {
     <main className="min-h-screen bg-[#f8f7f5] text-gray-900">
 
       {/* Hero + Quick Calc */}
-      <section className="max-w-4xl mx-auto px-4 pt-14 pb-10">
+      <section className="max-w-7xl mx-auto px-4 pt-14 pb-10">
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-10 items-start">
           <div>
             <div className="flex items-center gap-2 mb-5">
@@ -93,7 +93,7 @@ export default function HomePage() {
       </section>
 
       {/* Tools grid */}
-      <section className="max-w-4xl mx-auto px-4 pb-12">
+      <section className="max-w-7xl mx-auto px-4 pb-12">
         <p className="text-xs text-black/25 font-semibold uppercase tracking-wider mb-4">Tools & Analysis</p>
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
           {TOOLS.map(({ href, icon: Icon, color, label, desc, tag }) => (
@@ -120,7 +120,7 @@ export default function HomePage() {
       </section>
 
       {/* Featured salary pages */}
-      <section className="max-w-4xl mx-auto px-4 pb-12">
+      <section className="max-w-7xl mx-auto px-4 pb-12">
         <div className="flex items-center justify-between mb-4">
           <p className="text-xs text-black/25 font-semibold uppercase tracking-wider">Top Salary Guides</p>
           <Link href="/salary" className="text-xs text-[#818cf8] hover:underline">View all {totalPages.toLocaleString()} →</Link>
@@ -137,7 +137,7 @@ export default function HomePage() {
       </section>
 
       {/* Sector quick-links */}
-      <section className="max-w-4xl mx-auto px-4 pb-14">
+      <section className="max-w-7xl mx-auto px-4 pb-14">
         <p className="text-xs text-black/25 font-semibold uppercase tracking-wider mb-4">Browse by Sector</p>
         <div className="flex flex-wrap gap-2">
           {SECTORS.map(sector => {
@@ -155,7 +155,7 @@ export default function HomePage() {
 
       {/* The honest section */}
       <section className="border-t border-black/[0.05] bg-black/[0.015]">
-        <div className="max-w-4xl mx-auto px-4 py-12">
+        <div className="max-w-7xl mx-auto px-4 py-12">
           <p className="text-xs text-black/25 font-semibold uppercase tracking-wider mb-6">Why we built this</p>
           <div className="grid grid-cols-1 sm:grid-cols-3 gap-8">
             {[

@@ -64,12 +64,12 @@ export default async function CompareRolePage({ params }) {
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumb) }} />
 
       <main className="min-h-screen bg-[#f8f7f5] text-gray-900">
-        <div className="max-w-4xl mx-auto px-4 pt-4">
+        <div className="max-w-7xl mx-auto px-4 pt-4">
           <AdSlot slot="leaderboard" className="mb-2" />
         </div>
 
         {/* Breadcrumb */}
-        <div className="max-w-4xl mx-auto px-4 pt-6">
+        <div className="max-w-7xl mx-auto px-4 pt-6">
           <nav className="flex items-center gap-1.5 text-xs text-black/30 flex-wrap">
             <Link href="/" className="hover:text-black/60 transition-colors">Home</Link>
             <ChevronRight size={10} />
@@ -80,7 +80,7 @@ export default async function CompareRolePage({ params }) {
         </div>
 
         {/* Hero */}
-        <div className="max-w-4xl mx-auto px-4 pt-6">
+        <div className="max-w-7xl mx-auto px-4 pt-6">
           <div className="flex items-center gap-2 mb-3">
             <span className="px-2.5 py-1 rounded-full bg-[#818cf815] border border-[#818cf825] text-[11px] font-semibold text-[#818cf8] uppercase tracking-wider">{role.sector}</span>
           </div>
@@ -120,7 +120,7 @@ export default async function CompareRolePage({ params }) {
         </div>
 
         {/* Full comparison table */}
-        <div className="max-w-4xl mx-auto px-4 mb-8">
+        <div className="max-w-7xl mx-auto px-4 mb-8">
           <h2 className="text-lg font-bold text-gray-900 mb-3">{role.title} Take-Home by City — Full Comparison</h2>
           <div className="rounded-2xl border border-black/[0.07] overflow-hidden">
             <div className="overflow-x-auto">
@@ -166,12 +166,12 @@ export default async function CompareRolePage({ params }) {
         </div>
 
         {/* Ad */}
-        <div className="max-w-4xl mx-auto px-4 mb-8">
+        <div className="max-w-7xl mx-auto px-4 mb-8">
           <AdSlot slot="in-article" />
         </div>
 
         {/* Insight copy */}
-        <div className="max-w-4xl mx-auto px-4 mb-8">
+        <div className="max-w-7xl mx-auto px-4 mb-8">
           <div className="rounded-2xl border border-black/[0.07] bg-black/[0.02] p-6">
             <h2 className="text-lg font-bold text-gray-900 mb-3">Why London Doesn&apos;t Always Win</h2>
             <p className="text-black/65 text-[15px] leading-relaxed mb-3">
@@ -189,12 +189,12 @@ export default async function CompareRolePage({ params }) {
         </div>
 
         {/* Job board CTA */}
-        <div className="max-w-4xl mx-auto px-4 mb-8">
+        <div className="max-w-7xl mx-auto px-4 mb-8">
           <JobBoardCTA roleTitle={role.title} locationName="across the UK" />
         </div>
 
         {/* Individual city links */}
-        <div className="max-w-4xl mx-auto px-4 mb-10">
+        <div className="max-w-7xl mx-auto px-4 mb-10">
           <h2 className="text-lg font-bold text-gray-900 mb-3">Detailed {role.title} Salary Guides by City</h2>
           <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-2">
             {rows.map(({ loc }) => (
@@ -209,7 +209,7 @@ export default async function CompareRolePage({ params }) {
           </div>
         </div>
 
-        <div className="max-w-4xl mx-auto px-4 pb-8">
+        <div className="max-w-7xl mx-auto px-4 pb-8">
           <AdSlot slot="bottom" />
         </div>
       </main>

@@ -68,11 +68,11 @@ export default function LondonTechPremiumPage() {
 
   return (
     <main className="min-h-screen bg-[#f8f7f5] text-gray-900">
-      <div className="max-w-3xl mx-auto px-4 pt-4">
+      <div className="max-w-7xl mx-auto px-4 pt-4">
         <AdSlot slot="leaderboard" className="mb-2" />
       </div>
 
-      <article className="max-w-3xl mx-auto px-4 py-10">
+      <article className="max-w-7xl mx-auto px-4 py-10">
         <nav className="flex items-center gap-2 text-xs text-black/30 mb-6">
           <Link href="/" className="hover:text-black/60 transition-colors">Home</Link>
           <span>›</span>
@@ -247,7 +247,7 @@ export default function LondonTechPremiumPage() {
         </div>
       </article>
 
-      <div className="max-w-3xl mx-auto px-4 pb-10">
+      <div className="max-w-7xl mx-auto px-4 pb-10">
         <AdSlot slot="bottom" />
       </div>
     </main>

@@ -32,7 +32,7 @@ export default function RootLayout({ children }) {
       <body className="bg-[#f8f7f5] text-gray-900 min-h-screen antialiased">
         {/* Persistent top nav */}
         <header className="sticky top-0 z-50 border-b border-black/[0.06] bg-[#f8f7f5]/90 backdrop-blur-xl">
-          <div className="max-w-5xl mx-auto px-4 h-12 flex items-center justify-between">
+          <div className="max-w-7xl mx-auto px-4 h-12 flex items-center justify-between">
             <a href="/" className="text-base font-extrabold text-gray-900">
               Salary<span className="text-[#818cf8]">Stack</span>
             </a>

@@ -23,7 +23,7 @@ export default function SalaryHubPage() {
   const totalPages = ROLES.length * LOCATIONS.length;
 
   return (
-    <main className="min-h-screen bg-[#f8f7f5] text-gray-900 px-4 py-10 max-w-5xl mx-auto">
+    <main className="min-h-screen bg-[#f8f7f5] text-gray-900 px-4 py-10 max-w-7xl mx-auto">
 
       <div className="mb-10">
         <div className="flex items-center gap-3 mb-3">
