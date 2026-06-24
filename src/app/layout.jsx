@@ -1,5 +1,6 @@
 import './globals.css';
 import Footer from '@/components/layout/Footer';
+import Script from 'next/script';
 
 const BASE_URL = process.env.NEXT_PUBLIC_BASE_URL || 'https://salarystack.co.uk';
 
@@ -80,6 +81,13 @@ export default function RootLayout({ children }) {
         </header>
         {children}
         <Footer />
+        <Script src="https://www.googletagmanager.com/gtag/js?id=G-0TXQWNFSQW" strategy="afterInteractive" />
+        <Script id="ga4" strategy="afterInteractive">{`
+          window.dataLayer = window.dataLayer || [];
+          function gtag(){dataLayer.push(arguments);}
+          gtag('js', new Date());
+          gtag('config', 'G-0TXQWNFSQW');
+        `}</Script>
       </body>
     </html>
   );
