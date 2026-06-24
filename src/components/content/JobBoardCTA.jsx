@@ -1,11 +1,30 @@
 import { ArrowRight, Briefcase } from 'lucide-react';
-import Link from 'next/link';
+
+const UTM = 'utm_source=salarystack&utm_medium=salary-page&utm_campaign=job-search';
+
+function buildUrl(board, roleTitle, locationName) {
+  const q = encodeURIComponent(roleTitle);
+  const l = encodeURIComponent(locationName);
+
+  switch (board) {
+    case 'Reed':
+      return `https://www.reed.co.uk/jobs/?keywords=${q}&location=${l}&${UTM}`;
+    case 'Totaljobs':
+      return `https://www.totaljobs.com/jobs/${encodeURIComponent(roleTitle.toLowerCase().replace(/\s+/g, '-'))}/in-${encodeURIComponent(locationName.toLowerCase())}?${UTM}`;
+    case 'Adzuna':
+      return `https://www.adzuna.co.uk/search?q=${q}&loc=${l}&${UTM}`;
+    case 'LinkedIn':
+      return `https://www.linkedin.com/jobs/search/?keywords=${q}&location=${l}%2C+UK`;
+    default:
+      return '#';
+  }
+}
 
 const JOB_BOARDS = [
-  { name: 'Reed',      url: 'https://www.reed.co.uk/jobs', color: '#e63946', tagline: 'UK\'s #1 job site' },
-  { name: 'Totaljobs', url: 'https://www.totaljobs.com',   color: '#00b4d8', tagline: '280k+ live vacancies' },
-  { name: 'Indeed',    url: 'https://uk.indeed.com',       color: '#003a9b', tagline: 'Search millions of jobs' },
-  { name: 'LinkedIn',  url: 'https://www.linkedin.com/jobs', color: '#0a66c2', tagline: 'Professional network' },
+  { name: 'Reed',      color: '#e63946', tagline: "UK's #1 job site"        },
+  { name: 'Totaljobs', color: '#0891b2', tagline: '280k+ live vacancies'    },
+  { name: 'Adzuna',    color: '#ef7c00', tagline: 'Real-time job data'      },
+  { name: 'LinkedIn',  color: '#0a66c2', tagline: 'Professional network'    },
 ];
 
 export default function JobBoardCTA({ roleTitle, locationName }) {
@@ -17,14 +36,14 @@ export default function JobBoardCTA({ roleTitle, locationName }) {
         </div>
         <div>
           <h3 className="text-base font-bold text-gray-900">Find {roleTitle} Jobs in {locationName}</h3>
-          <p className="text-sm text-black/50 mt-0.5">Apply today — thousands of live vacancies across the UK</p>
+          <p className="text-sm text-black/50 mt-0.5">Search live vacancies — all links go directly to {roleTitle} roles in {locationName}</p>
         </div>
       </div>
       <div className="grid grid-cols-2 gap-2 sm:grid-cols-4">
-        {JOB_BOARDS.map(({ name, url, color, tagline }) => (
+        {JOB_BOARDS.map(({ name, color, tagline }) => (
           <a
             key={name}
-            href={url}
+            href={buildUrl(name, roleTitle, locationName)}
             target="_blank"
             rel="noopener sponsored"
             className="flex flex-col items-center gap-1.5 p-3 rounded-xl border border-black/[0.07] bg-black/[0.025] hover:bg-black/[0.04] transition-all group"
@@ -35,6 +54,7 @@ export default function JobBoardCTA({ roleTitle, locationName }) {
           </a>
         ))}
       </div>
+      <p className="text-[10px] text-black/20 mt-3">Sponsored links · SalaryStack may earn a commission at no cost to you</p>
     </section>
   );
 }

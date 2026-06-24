@@ -14,8 +14,11 @@ import JobBoardCTA from '@/components/content/JobBoardCTA';
 import AdSlot from '@/components/content/AdSlot';
 import TakeHomeCalculator from '@/components/content/TakeHomeCalculator';
 import CityComparison from '@/components/content/CityComparison';
+import OfferCheck from '@/components/content/OfferCheck';
+import EmailCapture from '@/components/content/EmailCapture';
+import SalarySubmit from '@/components/content/SalarySubmit';
 
-const BASE_URL = process.env.NEXT_PUBLIC_BASE_URL || 'https://ukpaycheck.co.uk';
+const BASE_URL = process.env.NEXT_PUBLIC_BASE_URL || 'https://salarystack.co.uk';
 
 export async function generateStaticParams() {
   // Pre-build only the 30 priority pages. All others are served on-demand.
@@ -108,9 +111,9 @@ export default async function SalaryPage({ params }) {
           <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 my-6">
             {[
               { label: 'Average Gross', value: formatGBP(salaries.mid), color: '#818cf8', sub: 'per year' },
-              { label: 'Monthly Take-Home', value: formatGBP(tax.netMonthly), color: '#34d399', sub: 'after tax + NI' },
-              { label: 'Entry Level', value: formatGBP(salaries.entry), color: '#ffffff60', sub: 'per year' },
-              { label: 'Senior Level', value: formatGBP(salaries.senior), color: '#f59e0b', sub: 'per year' },
+              { label: 'Monthly Take-Home', value: formatGBP(tax.netMonthly), color: '#059669', sub: 'after tax + NI' },
+              { label: 'Entry Level', value: formatGBP(salaries.entry), color: '#6b7280', sub: 'per year' },
+              { label: 'Senior Level', value: formatGBP(salaries.senior), color: '#d97706', sub: 'per year' },
             ].map(({ label, value, color, sub }) => (
               <div key={label} className="rounded-xl border border-black/[0.07] bg-black/[0.025] p-4 text-center">
                 <p className="text-[11px] text-black/40 mb-1 font-medium">{label}</p>
@@ -119,6 +122,10 @@ export default async function SalaryPage({ params }) {
               </div>
             ))}
           </div>
+          <p className="text-[10px] text-black/30 -mt-3 mb-3">
+            Modelled from ONS ASHE 2025 data · HMRC 2025/26 income tax &amp; NI rates ·{' '}
+            <a href="/methodology" className="underline hover:text-black/50 transition-colors">How we calculate this</a>
+          </p>
 
           {/* Take-home insight callout */}
           {disposable && (
@@ -154,6 +161,14 @@ export default async function SalaryPage({ params }) {
         {/* Interactive take-home calculator */}
         <div className="max-w-7xl mx-auto px-4">
           <TakeHomeCalculator defaultGross={salaries.mid} />
+          <OfferCheck
+            entry={salaries.entry}
+            mid={salaries.mid}
+            senior={salaries.senior}
+            lead={salaries.lead}
+            roleTitle={role.title}
+            locationName={location.name}
+          />
         </div>
 
         {/* Article sections */}
@@ -247,8 +262,16 @@ export default async function SalaryPage({ params }) {
           <FAQSection faqs={article.faqs} />
         </div>
 
+        {/* Email capture + salary submission */}
+        <div className="max-w-7xl mx-auto px-4 mt-10">
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-6">
+            <EmailCapture />
+            <SalarySubmit defaultRole={role.title} defaultLocation={location.name} />
+          </div>
+        </div>
+
         {/* Related roles + nearby cities */}
-        <div className="max-w-7xl mx-auto px-4 mt-10 pb-10">
+        <div className="max-w-7xl mx-auto px-4 mt-4 pb-10">
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
             <div>
               <h3 className="text-sm font-semibold text-black/50 uppercase tracking-wider mb-3 flex items-center gap-2">

@@ -3,6 +3,7 @@ import { TrendingUp, Calculator, BarChart3, FileText, ArrowRight, Zap } from 'lu
 import { ROLES, SECTORS } from '@/data/roles';
 import { LOCATIONS } from '@/data/locations';
 import QuickCalc from '@/components/content/QuickCalc';
+import EmailCapture from '@/components/content/EmailCapture';
 
 export const metadata = {
   title: 'SalaryStack — UK Tech & Analytics Career Intelligence',
@@ -150,6 +151,13 @@ export default function HomePage() {
               </Link>
             );
           })}
+        </div>
+      </section>
+
+      {/* Email capture */}
+      <section className="max-w-7xl mx-auto px-4 pb-12">
+        <div className="max-w-lg">
+          <EmailCapture />
         </div>
       </section>
 

@@ -2,8 +2,9 @@ import ContractorCalc from '@/components/calculators/ContractorCalc';
 import AdSlot from '@/components/content/AdSlot';
 import { buildFAQSchema } from '@/lib/seo/schema';
 import Link from 'next/link';
+import { ArrowRight, ShieldCheck } from 'lucide-react';
 
-const BASE_URL = process.env.NEXT_PUBLIC_BASE_URL || 'https://ukpaycheck.co.uk';
+const BASE_URL = process.env.NEXT_PUBLIC_BASE_URL || 'https://salarystack.co.uk';
 
 export const metadata = {
   title: 'Contractor vs Permanent Calculator UK (2025/26) — Outside & Inside IR35',
@@ -53,6 +54,43 @@ export default function ContractorCalculatorPage() {
           <div className="mt-10">
             <AdSlot slot="in-article" />
           </div>
+
+          {/* IR35 affiliate CTA */}
+          <section className="mt-10 rounded-2xl border border-[#d9770625] bg-[#d9770606] p-6">
+            <div className="flex items-start gap-3 mb-4">
+              <div className="w-10 h-10 rounded-xl bg-[#d9770615] border border-[#d9770625] flex items-center justify-center flex-shrink-0">
+                <ShieldCheck size={18} className="text-[#d97706]" />
+              </div>
+              <div>
+                <p className="text-[11px] text-black/30 font-semibold uppercase tracking-widest mb-1">IR35 Review</p>
+                <h3 className="text-base font-bold text-gray-900">Not sure if your contract is inside or outside IR35?</h3>
+              </div>
+            </div>
+            <p className="text-sm text-black/55 leading-relaxed mb-5">
+              Misclassification can cost tens of thousands in back-tax. Qdos Contractor are one of the UK&apos;s leading
+              IR35 specialists — they review your contract and give a written determination used as evidence if
+              HMRC ever investigates.
+            </p>
+            <div className="flex flex-col sm:flex-row gap-3">
+              <a
+                href="https://qdoscontractor.com/services/ir35/ir35-contract-review"
+                target="_blank"
+                rel="noopener sponsored"
+                className="inline-flex items-center justify-center gap-2 px-5 py-2.5 rounded-xl bg-[#d97706] text-white text-sm font-semibold hover:opacity-90 transition-opacity"
+              >
+                Get a professional IR35 review <ArrowRight size={14} />
+              </a>
+              <a
+                href="https://qdoscontractor.com/services/insurance/contractor-insurance"
+                target="_blank"
+                rel="noopener sponsored"
+                className="inline-flex items-center justify-center gap-2 px-5 py-2.5 rounded-xl border border-[#d9770625] text-sm font-semibold text-[#d97706] hover:bg-[#d9770608] transition-colors"
+              >
+                Contractor insurance quotes
+              </a>
+            </div>
+            <p className="text-[10px] text-black/20 mt-4">Sponsored · SalaryStack may earn a commission at no cost to you</p>
+          </section>
 
           {/* FAQ */}
           <section className="mt-10">
