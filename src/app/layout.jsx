@@ -21,11 +21,34 @@ export const metadata = {
   },
 };
 
+const ORG_SCHEMA = {
+  '@context': 'https://schema.org',
+  '@graph': [
+    {
+      '@type': 'Organization',
+      '@id': `${BASE_URL}/#organization`,
+      name: 'SalaryStack',
+      url: BASE_URL,
+      description: 'UK salary intelligence for tech, data, and analytics professionals. Every figure shows gross and monthly take-home.',
+      contactPoint: { '@type': 'ContactPoint', email: 'hello@salarystack.co.uk', contactType: 'customer support' },
+    },
+    {
+      '@type': 'WebSite',
+      '@id': `${BASE_URL}/#website`,
+      url: BASE_URL,
+      name: 'SalaryStack',
+      publisher: { '@id': `${BASE_URL}/#organization` },
+      potentialAction: { '@type': 'SearchAction', target: { '@type': 'EntryPoint', urlTemplate: `${BASE_URL}/salary?q={search_term_string}` }, 'query-input': 'required name=search_term_string' },
+    },
+  ],
+};
+
 export default function RootLayout({ children }) {
   const adsenseId = process.env.NEXT_PUBLIC_ADSENSE_ID;
   return (
     <html lang="en-GB">
       <head>
+        <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(ORG_SCHEMA) }} />
         <link rel="preconnect" href="https://fonts.googleapis.com" />
         <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
         {adsenseId && (
@@ -44,7 +67,8 @@ export default function RootLayout({ children }) {
                 { href: '/salary',                   label: 'Salaries'    },
                 { href: '/calculators/contractor',   label: 'Contractor'  },
                 { href: '/calculators/offer',        label: 'Offers'      },
-                { href: '/insights/london-tech-premium', label: 'Insights' },
+                { href: '/insights/uk-tech-salary-report-2026', label: 'Report' },
+                { href: '/about', label: 'About' },
               ].map(({ href, label }) => (
                 <a key={href} href={href}
                   className="px-3 py-1.5 text-xs font-medium text-black/50 hover:text-gray-900 hover:bg-black/[0.04] rounded-lg transition-all">

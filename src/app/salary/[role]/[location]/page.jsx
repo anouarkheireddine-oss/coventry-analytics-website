@@ -66,7 +66,7 @@ export default async function SalaryPage({ params }) {
   const breadcrumbSchema = buildBreadcrumbSchema([
     { name: 'Home', url: BASE_URL },
     { name: 'Salary Guides', url: `${BASE_URL}/salary` },
-    { name: `${role.title} Salary`, url: `${BASE_URL}/compare/${role.slug}` },
+    { name: `${role.title} Salary`, url: `${BASE_URL}/salary/${role.slug}` },
     { name: location.name, url: `${BASE_URL}/salary/${role.slug}/${location.slug}` },
   ]);
 
@@ -88,7 +88,7 @@ export default async function SalaryPage({ params }) {
             <ChevronRight size={10} />
             <Link href="/salary" className="hover:text-black/60 transition-colors">Salary Guides</Link>
             <ChevronRight size={10} />
-            <Link href={`/compare/${role.slug}`} className="hover:text-black/60 transition-colors">{role.title} by city</Link>
+            <Link href={`/salary/${role.slug}`} className="hover:text-black/60 transition-colors">{role.title} by city</Link>
             <ChevronRight size={10} />
             <span className="text-black/60">{location.name}</span>
           </nav>
@@ -107,20 +107,30 @@ export default async function SalaryPage({ params }) {
             {role.title} Salary in {location.name}, UK ({article.currentYear})
           </h1>
 
-          {/* Key stat row — gross + take-home side by side */}
-          <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 my-6">
-            {[
-              { label: 'Average Gross', value: formatGBP(salaries.mid), color: '#818cf8', sub: 'per year' },
-              { label: 'Monthly Take-Home', value: formatGBP(tax.netMonthly), color: '#059669', sub: 'after tax + NI' },
-              { label: 'Entry Level', value: formatGBP(salaries.entry), color: '#6b7280', sub: 'per year' },
-              { label: 'Senior Level', value: formatGBP(salaries.senior), color: '#d97706', sub: 'per year' },
-            ].map(({ label, value, color, sub }) => (
-              <div key={label} className="rounded-xl border border-black/[0.07] bg-black/[0.025] p-4 text-center">
-                <p className="text-[11px] text-black/40 mb-1 font-medium">{label}</p>
-                <p className="text-lg font-extrabold leading-tight" style={{ color }}>{value}</p>
-                <p className="text-[10px] text-black/25 mt-0.5">{sub}</p>
-              </div>
-            ))}
+          {/* Hero stat: take-home first, then supporting numbers */}
+          <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 my-6">
+            {/* Take-home — dominant */}
+            <div className="sm:col-span-1 rounded-2xl border border-[#05966925] bg-[#05966908] p-5">
+              <p className="text-xs text-black/40 font-medium mb-1">Monthly take-home</p>
+              <p className="text-4xl font-extrabold text-[#059669] leading-none">
+                {formatGBP(tax.netMonthly)}<span className="text-base font-semibold text-[#059669]/70">/mo</span>
+              </p>
+              <p className="text-xs text-black/35 mt-1.5">after income tax &amp; NI · {tax.effectiveRate}% effective rate</p>
+            </div>
+            {/* Secondary stats */}
+            <div className="sm:col-span-2 grid grid-cols-3 gap-2">
+              {[
+                { label: 'Gross salary', value: formatGBP(salaries.mid), sub: 'per year', color: '#818cf8' },
+                { label: 'Entry level', value: formatGBP(salaries.entry), sub: 'per year', color: '#6b7280' },
+                { label: 'Senior level', value: formatGBP(salaries.senior), sub: 'per year', color: '#d97706' },
+              ].map(({ label, value, color, sub }) => (
+                <div key={label} className="rounded-xl border border-black/[0.07] bg-black/[0.025] p-3 text-center flex flex-col justify-center">
+                  <p className="text-[10px] text-black/35 mb-1 font-medium leading-tight">{label}</p>
+                  <p className="text-base font-extrabold leading-tight" style={{ color }}>{value}</p>
+                  <p className="text-[10px] text-black/25 mt-0.5">{sub}</p>
+                </div>
+              ))}
+            </div>
           </div>
           <p className="text-[10px] text-black/30 -mt-3 mb-3">
             Modelled from ONS ASHE 2025 data · HMRC 2025/26 income tax &amp; NI rates ·{' '}
@@ -139,7 +149,7 @@ export default async function SalaryPage({ params }) {
                 <strong className={disposable.disposable > 500 ? 'text-[#34d399]' : 'text-[#f59e0b]'}>
                   {formatGBP(disposable.disposable)}/month
                 </strong>.{' '}
-                <Link href={`/compare/${role.slug}`} className="text-[#818cf8] hover:underline">
+                <Link href={`/salary/${role.slug}`} className="text-[#818cf8] hover:underline">
                   See how {location.name} compares to other cities →
                 </Link>
               </p>
@@ -299,7 +309,7 @@ export default async function SalaryPage({ params }) {
                     <ChevronRight size={13} className="text-black/20" />
                   </Link>
                 ))}
-                <Link href={`/compare/${role.slug}`}
+                <Link href={`/salary/${role.slug}`}
                   className="flex items-center justify-between p-3 rounded-xl border border-[#818cf820] bg-[#818cf806] hover:bg-[#818cf810] transition-colors group">
                   <span className="text-sm text-[#818cf8] font-semibold">View all cities comparison</span>
                   <ArrowRight size={13} className="text-[#818cf8]" />

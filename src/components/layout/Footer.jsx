@@ -22,8 +22,10 @@ const NAV = [
   {
     heading: 'About',
     links: [
+      { href: '/about', label: 'About SalaryStack' },
       { href: '/methodology', label: 'How we calculate this' },
       { href: '/salary', label: 'All roles & cities' },
+      { href: '/insights/uk-tech-salary-report-2026', label: 'UK Salary Report 2026' },
     ],
   },
 ];
@@ -61,9 +63,12 @@ export default function Footer() {
         </div>
 
         <div className="border-t border-black/[0.05] pt-6 space-y-3">
+          <p className="text-[11px] text-black/35 font-medium mb-1">
+            Built by UK finance &amp; data professionals. Independent. Not affiliated with HMRC, any employer, or recruitment agency.
+          </p>
           <p className="text-[11px] text-black/25 leading-relaxed max-w-2xl">
             Take-home calculations use HMRC 2025/26 income tax bands and National Insurance rates.
-            Salary figures are modelled estimates based on market data — individual salaries will vary.
+            Salary figures are modelled estimates based on ONS ASHE 2025 regional data — individual salaries will vary.
             All figures are for guidance only and do not constitute financial advice.
             Last updated June 2026.{' '}
             <Link href="/methodology" className="text-black/40 hover:text-black/60 underline transition-colors">
@@ -71,7 +76,7 @@ export default function Footer() {
             </Link>
           </p>
           <p className="text-[11px] text-black/20">
-            © 2026 SalaryStack. Independent. Not affiliated with HMRC, any employer, or recruitment agency.
+            © 2026 SalaryStack. Independent.
           </p>
         </div>
       </div>

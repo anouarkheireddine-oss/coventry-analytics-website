@@ -8,12 +8,14 @@ export default function sitemap() {
   const now = new Date();
 
   const staticPages = [
-    { url: BASE_URL,                                    lastModified: now, changeFrequency: 'weekly',  priority: 1.0 },
-    { url: `${BASE_URL}/salary`,                        lastModified: now, changeFrequency: 'weekly',  priority: 0.9 },
-    { url: `${BASE_URL}/calculators/contractor`,        lastModified: now, changeFrequency: 'monthly', priority: 0.9 },
-    { url: `${BASE_URL}/calculators/offer`,             lastModified: now, changeFrequency: 'monthly', priority: 0.9 },
-    { url: `${BASE_URL}/insights/london-tech-premium`,  lastModified: now, changeFrequency: 'monthly', priority: 0.85 },
-    { url: `${BASE_URL}/methodology`,                   lastModified: now, changeFrequency: 'monthly', priority: 0.70 },
+    { url: BASE_URL,                                                   lastModified: now, changeFrequency: 'weekly',  priority: 1.0 },
+    { url: `${BASE_URL}/salary`,                                       lastModified: now, changeFrequency: 'weekly',  priority: 0.9 },
+    { url: `${BASE_URL}/calculators/contractor`,                       lastModified: now, changeFrequency: 'monthly', priority: 0.9 },
+    { url: `${BASE_URL}/calculators/offer`,                            lastModified: now, changeFrequency: 'monthly', priority: 0.9 },
+    { url: `${BASE_URL}/insights/london-tech-premium`,                 lastModified: now, changeFrequency: 'monthly', priority: 0.85 },
+    { url: `${BASE_URL}/insights/uk-tech-salary-report-2026`,          lastModified: now, changeFrequency: 'monthly', priority: 0.85 },
+    { url: `${BASE_URL}/about`,                                        lastModified: now, changeFrequency: 'monthly', priority: 0.75 },
+    { url: `${BASE_URL}/methodology`,                                  lastModified: now, changeFrequency: 'monthly', priority: 0.70 },
   ];
 
   const comparePages = ROLES.map(role => ({
@@ -21,6 +23,13 @@ export default function sitemap() {
     lastModified: now,
     changeFrequency: 'monthly',
     priority: 0.80,
+  }));
+
+  const rolePillarPages = ROLES.map(role => ({
+    url: `${BASE_URL}/salary/${role.slug}`,
+    lastModified: now,
+    changeFrequency: 'monthly',
+    priority: 0.85,
   }));
 
   const prioritySet = new Set(PRIORITY_PAGES.map(p => `${p.role}/${p.location}`));
@@ -45,5 +54,5 @@ export default function sitemap() {
     }
   }
 
-  return [...staticPages, ...comparePages, ...prioritySalaryPages, ...remainingPages];
+  return [...staticPages, ...rolePillarPages, ...comparePages, ...prioritySalaryPages, ...remainingPages];
 }
