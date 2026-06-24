@@ -34,7 +34,7 @@ export default function TakeHomeCalculator({ defaultGross }) {
   const result = calcTakeHome(gross, { studentLoan, pensionPct });
 
   return (
-    <div className="rounded-2xl border border-[#00d4ff20] bg-[#00d4ff06] p-6 my-6">
+    <div className="rounded-2xl border border-[#818cf820] bg-[#818cf806] p-6 my-6">
       <h3 className="text-base font-bold text-white mb-1">Take-Home Pay Calculator</h3>
       <p className="text-xs text-white/40 mb-5">2025/26 UK tax rates · Income tax + NI + pension + student loan</p>
 
@@ -48,7 +48,7 @@ export default function TakeHomeCalculator({ defaultGross }) {
               type="number"
               value={gross}
               onChange={e => setGross(Math.max(0, parseInt(e.target.value) || 0))}
-              className="w-full bg-white/[0.06] border border-white/[0.10] rounded-xl pl-7 pr-3 py-2.5 text-sm font-semibold text-white focus:outline-none focus:border-[#00d4ff40]"
+              className="w-full bg-white/[0.06] border border-white/[0.10] rounded-xl pl-7 pr-3 py-2.5 text-sm font-semibold text-white focus:outline-none focus:border-[#818cf840]"
               min={0}
               step={1000}
             />
@@ -60,7 +60,7 @@ export default function TakeHomeCalculator({ defaultGross }) {
           <select
             value={studentLoan}
             onChange={e => setStudentLoan(e.target.value)}
-            className="w-full bg-white/[0.06] border border-white/[0.10] rounded-xl px-3 py-2.5 text-sm text-white focus:outline-none focus:border-[#00d4ff40] appearance-none"
+            className="w-full bg-white/[0.06] border border-white/[0.10] rounded-xl px-3 py-2.5 text-sm text-white focus:outline-none focus:border-[#818cf840] appearance-none"
           >
             {LOAN_OPTIONS.map(o => <option key={o.value} value={o.value}>{o.label}</option>)}
           </select>
@@ -75,9 +75,9 @@ export default function TakeHomeCalculator({ defaultGross }) {
               max={20}
               value={pensionPct}
               onChange={e => setPensionPct(parseInt(e.target.value))}
-              className="flex-1 accent-[#00d4ff]"
+              className="flex-1 accent-[#818cf8]"
             />
-            <span className="text-sm font-bold text-[#00d4ff] w-8 text-right">{pensionPct}%</span>
+            <span className="text-sm font-bold text-[#818cf8] w-8 text-right">{pensionPct}%</span>
           </div>
         </div>
       </div>
@@ -85,10 +85,10 @@ export default function TakeHomeCalculator({ defaultGross }) {
       {/* Result headline */}
       <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 mb-6">
         {[
-          { label: 'Monthly Take-Home', value: formatGBP(result.netMonthly), color: '#00d4ff', large: true },
-          { label: 'Annual Take-Home', value: formatGBP(result.netAnnual), color: '#22c55e' },
+          { label: 'Monthly Take-Home', value: formatGBP(result.netMonthly), color: '#818cf8', large: true },
+          { label: 'Annual Take-Home', value: formatGBP(result.netAnnual), color: '#34d399' },
           { label: 'Income Tax', value: formatGBP(result.incomeTax), color: '#f59e0b' },
-          { label: 'Effective Rate', value: `${result.effectiveRate}%`, color: '#a78bfa' },
+          { label: 'Effective Rate', value: `${result.effectiveRate}%`, color: '#818cf8' },
         ].map(({ label, value, color, large }) => (
           <div key={label} className={`rounded-xl border border-white/[0.07] bg-white/[0.03] p-3 ${large ? 'col-span-2 sm:col-span-1' : ''}`}>
             <p className="text-[11px] text-white/40 mb-1">{label}</p>
@@ -99,10 +99,10 @@ export default function TakeHomeCalculator({ defaultGross }) {
 
       {/* Breakdown bars */}
       <div className="space-y-3">
-        <Bar label="Take-Home"      value={result.netAnnual}           total={gross} color="#00d4ff" />
+        <Bar label="Take-Home"      value={result.netAnnual}           total={gross} color="#818cf8" />
         <Bar label="Income Tax"     value={result.incomeTax}           total={gross} color="#f59e0b" />
         <Bar label="National Ins."  value={result.ni}                  total={gross} color="#ef4444" />
-        <Bar label={`Pension (${pensionPct}%)`} value={result.pensionContrib} total={gross} color="#a78bfa" />
+        <Bar label={`Pension (${pensionPct}%)`} value={result.pensionContrib} total={gross} color="#818cf8" />
         {result.studentLoanDeduction > 0 && (
           <Bar label="Student Loan" value={result.studentLoanDeduction} total={gross} color="#6b7280" />
         )}

@@ -13,7 +13,7 @@ const TOOLS = [
   {
     href: '/calculators/contractor',
     icon: Calculator,
-    color: '#00d4ff',
+    color: '#818cf8',
     label: 'Contractor vs Permanent',
     desc: 'Is £500/day outside IR35 better than £80k permanent? Real numbers, not guesses.',
     tag: 'Most used',
@@ -21,7 +21,7 @@ const TOOLS = [
   {
     href: '/calculators/offer',
     icon: BarChart3,
-    color: '#a78bfa',
+    color: '#818cf8',
     label: 'Offer Comparison',
     desc: 'Two offers look different on paper. This shows the real gap: salary, bonus, pension, equity.',
     tag: null,
@@ -37,7 +37,7 @@ const TOOLS = [
   {
     href: '/salary/software-engineer/london',
     icon: TrendingUp,
-    color: '#22c55e',
+    color: '#34d399',
     label: 'Salary Guides',
     desc: `${ROLES.length} roles × ${LOCATIONS.length} cities. Every page shows gross and net monthly take-home.`,
     tag: null,
@@ -57,19 +57,19 @@ export default function HomePage() {
   const totalPages = ROLES.length * LOCATIONS.length;
 
   return (
-    <main className="min-h-screen bg-[#0a0a0b] text-white">
+    <main className="min-h-screen bg-[#09090f] text-white">
 
       {/* Hero + Quick Calc */}
       <section className="max-w-4xl mx-auto px-4 pt-14 pb-10">
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-10 items-start">
           <div>
             <div className="flex items-center gap-2 mb-5">
-              <div className="w-2 h-2 rounded-full bg-[#22c55e] animate-pulse" />
-              <span className="text-xs text-[#22c55e] font-semibold uppercase tracking-widest">UK Career Intelligence · {new Date().getFullYear()}</span>
+              <div className="w-2 h-2 rounded-full bg-[#34d399] animate-pulse" />
+              <span className="text-xs text-[#34d399] font-semibold uppercase tracking-widest">UK Career Intelligence · {new Date().getFullYear()}</span>
             </div>
             <h1 className="text-4xl sm:text-5xl font-extrabold text-white leading-tight mb-4">
               Know what you<br />
-              <span className="text-[#00d4ff]">actually take home.</span>
+              <span className="text-[#818cf8]">actually take home.</span>
             </h1>
             <p className="text-white/50 text-[16px] max-w-xl leading-relaxed mb-6">
               Gross is what they advertise. Net is what lands in your account.
@@ -77,7 +77,7 @@ export default function HomePage() {
             </p>
             <div className="flex flex-wrap gap-3">
               <Link href="/calculators/contractor"
-                className="px-5 py-2.5 rounded-xl bg-[#00d4ff] text-[#0a0a0b] text-sm font-bold hover:opacity-90 transition-opacity">
+                className="px-5 py-2.5 rounded-xl bg-[#818cf8] text-[#09090f] text-sm font-bold hover:opacity-90 transition-opacity">
                 Contractor Calculator
               </Link>
               <Link href="/salary"
@@ -123,7 +123,7 @@ export default function HomePage() {
       <section className="max-w-4xl mx-auto px-4 pb-12">
         <div className="flex items-center justify-between mb-4">
           <p className="text-xs text-white/25 font-semibold uppercase tracking-wider">Top Salary Guides</p>
-          <Link href="/salary" className="text-xs text-[#00d4ff] hover:underline">View all {totalPages.toLocaleString()} →</Link>
+          <Link href="/salary" className="text-xs text-[#818cf8] hover:underline">View all {totalPages.toLocaleString()} →</Link>
         </div>
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-2">
           {FEATURED_SALARY_PAGES.map(({ role, location, label }) => (
@@ -161,13 +161,13 @@ export default function HomePage() {
             {[
               {
                 icon: Zap,
-                color: '#00d4ff',
+                color: '#818cf8',
                 title: 'Net pay, not gross',
                 body: 'Every salary site shows gross. We show what actually lands in your account each month — after income tax, National Insurance, pension, and student loan. Those four deductions take 35–45% of a typical tech salary.',
               },
               {
                 icon: BarChart3,
-                color: '#22c55e',
+                color: '#34d399',
                 title: 'London rarely wins on disposable income',
                 body: "London pays tech workers 35% more gross. After £2,100/month rent, it loses on disposable income for most roles below £120k. Our compare pages show this city by city — not the conclusion most salary sites reach.",
               },

@@ -12,7 +12,7 @@ export const metadata = {
 
 export default function OfferComparePage() {
   return (
-    <main className="min-h-screen bg-[#0a0a0b] text-white">
+    <main className="min-h-screen bg-[#09090f] text-white">
       <div className="max-w-4xl mx-auto px-4 pt-4">
         <AdSlot slot="leaderboard" className="mb-2" />
       </div>
@@ -26,7 +26,7 @@ export default function OfferComparePage() {
         </nav>
 
         <div className="mb-8">
-          <span className="px-2.5 py-1 rounded-full bg-[#a78bfa20] border border-[#a78bfa30] text-[11px] font-semibold text-[#a78bfa] uppercase tracking-wider">Calculator</span>
+          <span className="px-2.5 py-1 rounded-full bg-[#818cf820] border border-[#818cf830] text-[11px] font-semibold text-[#818cf8] uppercase tracking-wider">Calculator</span>
           <h1 className="text-2xl sm:text-3xl font-extrabold text-white mt-3 mb-2">
             Job Offer Comparison Calculator UK
           </h1>
@@ -53,7 +53,7 @@ export default function OfferComparePage() {
               { title: "Remote saving is underrated", body: "A London commute at £250/month is £3,000/year net. A fully remote role effectively adds that back. This calculator adds £2,400 for remote roles as a conservative estimate." },
             ].map(({ title, body }) => (
               <div key={title} className="flex gap-3">
-                <span className="mt-1.5 w-1.5 h-1.5 rounded-full bg-[#a78bfa] flex-shrink-0" />
+                <span className="mt-1.5 w-1.5 h-1.5 rounded-full bg-[#818cf8] flex-shrink-0" />
                 <div>
                   <p className="text-sm font-semibold text-white">{title}</p>
                   <p className="text-sm text-white/50 leading-relaxed mt-0.5">{body}</p>

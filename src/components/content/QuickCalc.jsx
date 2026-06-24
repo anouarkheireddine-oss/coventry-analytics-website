@@ -29,7 +29,7 @@ export default function QuickCalc() {
             value={raw}
             onChange={e => setRaw(e.target.value)}
             placeholder="65,000"
-            className="w-full bg-white/[0.04] border border-white/[0.10] rounded-xl pl-8 pr-4 py-3 text-white font-semibold text-sm placeholder-white/20 focus:outline-none focus:border-[#00d4ff50] transition-colors"
+            className="w-full bg-white/[0.04] border border-white/[0.10] rounded-xl pl-8 pr-4 py-3 text-white font-semibold text-sm placeholder-white/20 focus:outline-none focus:border-[#818cf850] transition-colors"
           />
         </div>
         <span className="text-xs text-white/30 font-medium whitespace-nowrap">per year</span>
@@ -37,9 +37,9 @@ export default function QuickCalc() {
 
       {result ? (
         <div className="space-y-2.5">
-          <div className="flex items-center justify-between px-4 py-3.5 rounded-xl bg-[#22c55e08] border border-[#22c55e25]">
+          <div className="flex items-center justify-between px-4 py-3.5 rounded-xl bg-[#34d39908] border border-[#34d39925]">
             <span className="text-sm text-white/60">Monthly take-home</span>
-            <span className="text-2xl font-extrabold text-[#22c55e]">{formatGBP(result.netMonthly)}</span>
+            <span className="text-2xl font-extrabold text-[#34d399]">{formatGBP(result.netMonthly)}</span>
           </div>
           <div className="grid grid-cols-3 gap-2">
             {[
@@ -54,7 +54,7 @@ export default function QuickCalc() {
             ))}
           </div>
           <Link href="/salary/software-engineer/london"
-            className="flex items-center justify-center gap-1.5 text-xs text-[#00d4ff]/70 hover:text-[#00d4ff] transition-colors pt-0.5">
+            className="flex items-center justify-center gap-1.5 text-xs text-[#818cf8]/70 hover:text-[#818cf8] transition-colors pt-0.5">
             Full breakdown by city <ArrowRight size={11} />
           </Link>
         </div>

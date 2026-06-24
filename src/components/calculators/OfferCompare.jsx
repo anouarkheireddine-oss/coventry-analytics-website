@@ -13,7 +13,7 @@ function OfferInput({ label, value, onChange }) {
         value={value.label}
         onChange={e => set('label', e.target.value)}
         placeholder={label}
-        className="w-full bg-transparent text-base font-bold text-white placeholder-white/20 border-b border-white/[0.08] pb-2 mb-4 focus:outline-none focus:border-[#00d4ff40]"
+        className="w-full bg-transparent text-base font-bold text-white placeholder-white/20 border-b border-white/[0.08] pb-2 mb-4 focus:outline-none focus:border-[#818cf840]"
       />
       <div className="grid grid-cols-2 gap-3">
         {[
@@ -31,7 +31,7 @@ function OfferInput({ label, value, onChange }) {
                 value={value[k]}
                 onChange={e => set(k, +e.target.value || 0)}
                 step={step}
-                className={`w-full bg-white/[0.05] border border-white/[0.08] rounded-xl ${prefix ? 'pl-7' : 'pl-3'} pr-3 py-2 text-sm font-semibold text-white focus:outline-none focus:border-[#00d4ff40]`}
+                className={`w-full bg-white/[0.05] border border-white/[0.08] rounded-xl ${prefix ? 'pl-7' : 'pl-3'} pr-3 py-2 text-sm font-semibold text-white focus:outline-none focus:border-[#818cf840]`}
               />
               {suffix && <span className="absolute right-3 top-1/2 -translate-y-1/2 text-white/35 text-sm">{suffix}</span>}
             </div>
@@ -40,7 +40,7 @@ function OfferInput({ label, value, onChange }) {
       </div>
       <label className="flex items-center gap-2 mt-3 cursor-pointer">
         <input type="checkbox" checked={value.remote} onChange={e => set('remote', e.target.checked)}
-          className="w-4 h-4 accent-[#00d4ff] rounded" />
+          className="w-4 h-4 accent-[#818cf8] rounded" />
         <span className="text-xs text-white/40">Remote / hybrid (saves ~£2,400/yr commute)</span>
       </label>
     </div>
@@ -75,9 +75,9 @@ export default function OfferCompare() {
 
       {/* Verdict */}
       {(a.salary > 0 || b.salary > 0) && (
-        <div className={`rounded-2xl border p-5 ${winner === 'a' ? 'border-[#22c55e30] bg-[#22c55e08]' : 'border-[#00d4ff30] bg-[#00d4ff08]'}`}>
+        <div className={`rounded-2xl border p-5 ${winner === 'a' ? 'border-[#34d39930] bg-[#34d39908]' : 'border-[#818cf830] bg-[#818cf808]'}`}>
           <p className="text-sm font-bold text-white mb-1">
-            <span style={{ color: winner === 'a' ? '#22c55e' : '#00d4ff' }}>
+            <span style={{ color: winner === 'a' ? '#34d399' : '#818cf8' }}>
               {winner === 'a' ? (a.label || 'Offer A') : (b.label || 'Offer B')}
             </span>{' '}
             is worth <strong>{formatGBP(diff)}/year more</strong> in total compensation.
@@ -109,10 +109,10 @@ export default function OfferCompare() {
             ].map(({ label, va, vb, fmt, highlight, total }) => (
               <tr key={label} className={`border-b border-white/[0.04] ${total ? 'bg-white/[0.04] font-bold' : highlight ? 'bg-white/[0.02]' : ''}`}>
                 <td className={`px-4 py-3 ${total ? 'text-white font-bold' : 'text-white/60'}`}>{label}</td>
-                <td className={`px-4 py-3 text-right ${winner === 'a' && total ? 'text-[#22c55e] font-bold text-base' : 'text-white/70'}`}>
+                <td className={`px-4 py-3 text-right ${winner === 'a' && total ? 'text-[#34d399] font-bold text-base' : 'text-white/70'}`}>
                   {fmt ? formatGBP(va) : va}
                 </td>
-                <td className={`px-4 py-3 text-right ${winner === 'b' && total ? 'text-[#00d4ff] font-bold text-base' : 'text-white/70'}`}>
+                <td className={`px-4 py-3 text-right ${winner === 'b' && total ? 'text-[#818cf8] font-bold text-base' : 'text-white/70'}`}>
                   {fmt ? formatGBP(vb) : vb}
                 </td>
               </tr>

@@ -63,7 +63,7 @@ export default async function CompareRolePage({ params }) {
     <>
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumb) }} />
 
-      <main className="min-h-screen bg-[#0a0a0b] text-white">
+      <main className="min-h-screen bg-[#09090f] text-white">
         <div className="max-w-4xl mx-auto px-4 pt-4">
           <AdSlot slot="leaderboard" className="mb-2" />
         </div>
@@ -82,11 +82,11 @@ export default async function CompareRolePage({ params }) {
         {/* Hero */}
         <div className="max-w-4xl mx-auto px-4 pt-6">
           <div className="flex items-center gap-2 mb-3">
-            <span className="px-2.5 py-1 rounded-full bg-[#00d4ff15] border border-[#00d4ff25] text-[11px] font-semibold text-[#00d4ff] uppercase tracking-wider">{role.sector}</span>
+            <span className="px-2.5 py-1 rounded-full bg-[#818cf815] border border-[#818cf825] text-[11px] font-semibold text-[#818cf8] uppercase tracking-wider">{role.sector}</span>
           </div>
           <h1 className="text-2xl sm:text-3xl font-extrabold text-white leading-tight mb-4">
             {role.title} Salary by City, UK ({year})<br />
-            <span className="text-[#00d4ff]">Where Do You Actually Take Home the Most?</span>
+            <span className="text-[#818cf8]">Where Do You Actually Take Home the Most?</span>
           </h1>
           <p className="text-white/65 text-[15px] leading-relaxed max-w-2xl mb-6">
             London pays the highest gross salary for a {role.title} — but after income tax, National Insurance,
@@ -96,16 +96,16 @@ export default async function CompareRolePage({ params }) {
 
           {/* Key insight cards */}
           <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 mb-8">
-            <div className="rounded-2xl border border-[#22c55e25] bg-[#22c55e08] p-4">
-              <p className="text-xs text-[#22c55e]/70 font-semibold uppercase tracking-wider mb-1">Best City (Disposable)</p>
-              <p className="text-xl font-extrabold text-[#22c55e]">{best.loc.name}</p>
+            <div className="rounded-2xl border border-[#34d39925] bg-[#34d39908] p-4">
+              <p className="text-xs text-[#34d399]/70 font-semibold uppercase tracking-wider mb-1">Best City (Disposable)</p>
+              <p className="text-xl font-extrabold text-[#34d399]">{best.loc.name}</p>
               <p className="text-sm text-white/60 mt-1">{formatGBP(best.disposable)}/mo disposable</p>
               <p className="text-xs text-white/30 mt-0.5">{formatGBP(best.gross)} gross</p>
             </div>
             {londonRow && (
-              <div className="rounded-2xl border border-[#00d4ff25] bg-[#00d4ff08] p-4">
-                <p className="text-xs text-[#00d4ff]/70 font-semibold uppercase tracking-wider mb-1">London (Gross Leader)</p>
-                <p className="text-xl font-extrabold text-[#00d4ff]">{formatGBP(londonRow.gross)}</p>
+              <div className="rounded-2xl border border-[#818cf825] bg-[#818cf808] p-4">
+                <p className="text-xs text-[#818cf8]/70 font-semibold uppercase tracking-wider mb-1">London (Gross Leader)</p>
+                <p className="text-xl font-extrabold text-[#818cf8]">{formatGBP(londonRow.gross)}</p>
                 <p className="text-sm text-white/60 mt-1">{formatGBP(londonRow.disposable)}/mo disposable</p>
                 <p className="text-xs text-white/30 mt-0.5">Rank #{rows.findIndex(r => r.loc.slug === 'london') + 1} by take-home</p>
               </div>
@@ -134,9 +134,9 @@ export default async function CompareRolePage({ params }) {
                 </thead>
                 <tbody>
                   {rows.map(({ loc, gross, monthly, effectiveRate, disposable, costs }, i) => (
-                    <tr key={loc.slug} className={`border-b border-white/[0.04] ${i === 0 ? 'bg-[#22c55e06]' : i % 2 === 0 ? '' : 'bg-white/[0.01]'} hover:bg-white/[0.03] transition-colors`}>
+                    <tr key={loc.slug} className={`border-b border-white/[0.04] ${i === 0 ? 'bg-[#34d39906]' : i % 2 === 0 ? '' : 'bg-white/[0.01]'} hover:bg-white/[0.03] transition-colors`}>
                       <td className="px-4 py-3">
-                        <span className={`text-xs font-bold ${i === 0 ? 'text-[#22c55e]' : 'text-white/25'}`}>#{i + 1}</span>
+                        <span className={`text-xs font-bold ${i === 0 ? 'text-[#34d399]' : 'text-white/25'}`}>#{i + 1}</span>
                       </td>
                       <td className="px-4 py-3">
                         <Link href={`/salary/${role.slug}/${loc.slug}`} className="font-semibold text-white/85 hover:text-white transition-colors">
@@ -145,11 +145,11 @@ export default async function CompareRolePage({ params }) {
                         <p className="text-[10px] text-white/25">{loc.region}</p>
                       </td>
                       <td className="px-4 py-3 text-white/60 text-xs">{formatGBP(gross)}</td>
-                      <td className="px-4 py-3 font-semibold text-[#00d4ff]">{formatGBP(monthly)}</td>
+                      <td className="px-4 py-3 font-semibold text-[#818cf8]">{formatGBP(monthly)}</td>
                       <td className="px-4 py-3 text-white/40 text-xs">{effectiveRate}%</td>
                       <td className="px-4 py-3 text-white/40 text-xs">{formatGBP(costs?.total ?? 0)}</td>
                       <td className="px-4 py-3">
-                        <span className={`font-bold ${i === 0 ? 'text-[#22c55e] text-base' : disposable > 500 ? 'text-white/70' : 'text-[#ef4444]'}`}>
+                        <span className={`font-bold ${i === 0 ? 'text-[#34d399] text-base' : disposable > 500 ? 'text-white/70' : 'text-[#ef4444]'}`}>
                           {formatGBP(disposable)}
                         </span>
                       </td>

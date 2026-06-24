@@ -23,11 +23,11 @@ export default function SalaryHubPage() {
   const totalPages = ROLES.length * LOCATIONS.length;
 
   return (
-    <main className="min-h-screen bg-[#0a0a0b] text-white px-4 py-10 max-w-5xl mx-auto">
+    <main className="min-h-screen bg-[#09090f] text-white px-4 py-10 max-w-5xl mx-auto">
 
       <div className="mb-10">
         <div className="flex items-center gap-3 mb-3">
-          <p className="text-xs text-[#00d4ff] font-semibold uppercase tracking-widest">Salary Intelligence · 2026</p>
+          <p className="text-xs text-[#818cf8] font-semibold uppercase tracking-widest">Salary Intelligence · 2026</p>
           <span className="text-[10px] px-2 py-0.5 rounded-full bg-white/[0.05] border border-white/[0.08] text-white/30 font-medium">HMRC 2025/26 rates</span>
         </div>
         <h1 className="text-3xl font-extrabold text-white mb-3">UK Salary Guides</h1>
@@ -45,7 +45,7 @@ export default function SalaryHubPage() {
           { label: 'UK cities', value: LOCATIONS.length },
         ].map(({ label, value }) => (
           <div key={label} className="rounded-xl border border-white/[0.07] bg-white/[0.03] p-4 text-center">
-            <p className="text-2xl font-extrabold text-[#00d4ff]">{value}</p>
+            <p className="text-2xl font-extrabold text-[#818cf8]">{value}</p>
             <p className="text-xs text-white/35 mt-1">{label}</p>
           </div>
         ))}
@@ -60,11 +60,11 @@ export default function SalaryHubPage() {
               <div className="flex items-center justify-between mb-2">
                 <span className="text-xs text-white/35 font-medium">{role.sector}</span>
                 <span className={`text-[10px] font-bold uppercase px-2 py-0.5 rounded-full ${
-                  role.demand === 'high' ? 'bg-[#22c55e15] text-[#22c55e]' : 'bg-white/[0.05] text-white/30'
+                  role.demand === 'high' ? 'bg-[#34d39915] text-[#34d399]' : 'bg-white/[0.05] text-white/30'
                 }`}>{role.demand} demand</span>
               </div>
               <p className="font-bold text-white mb-1">{role.title}</p>
-              <p className="text-sm text-[#00d4ff] font-semibold mb-3">{fmt(role.nationalAverage)} national avg</p>
+              <p className="text-sm text-[#818cf8] font-semibold mb-3">{fmt(role.nationalAverage)} national avg</p>
               <div className="flex flex-wrap gap-1.5">
                 {FEATURED_LOCATIONS.slice(0, 3).map(locSlug => {
                   const loc = LOCATIONS.find(l => l.slug === locSlug);

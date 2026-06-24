@@ -30,12 +30,12 @@ const NAV = [
 
 export default function Footer() {
   return (
-    <footer className="border-t border-white/[0.05] bg-[#0a0a0b]">
+    <footer className="border-t border-white/[0.05] bg-[#09090f]">
       <div className="max-w-5xl mx-auto px-4 py-12">
         <div className="flex flex-col sm:flex-row justify-between gap-10 mb-10">
           <div className="max-w-xs">
             <a href="/" className="text-base font-extrabold text-white">
-              Salary<span className="text-[#00d4ff]">Stack</span>
+              Salary<span className="text-[#818cf8]">Stack</span>
             </a>
             <p className="text-xs text-white/35 mt-2.5 leading-relaxed">
               UK salary intelligence for tech, data, and analytics careers.

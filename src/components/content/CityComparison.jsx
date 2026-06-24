@@ -39,19 +39,19 @@ export default function CityComparison({ role, currentLocationSlug }) {
                 return (
                   <tr
                     key={loc.slug}
-                    className={`border-b border-white/[0.04] transition-colors ${isCurrent ? 'bg-[#00d4ff08] border-[#00d4ff15]' : i % 2 === 0 ? '' : 'bg-white/[0.01]'} hover:bg-white/[0.03]`}
+                    className={`border-b border-white/[0.04] transition-colors ${isCurrent ? 'bg-[#818cf808] border-[#818cf815]' : i % 2 === 0 ? '' : 'bg-white/[0.01]'} hover:bg-white/[0.03]`}
                   >
                     <td className="px-4 py-3 text-white/30 font-mono text-xs">{i + 1}</td>
                     <td className="px-4 py-3">
                       <Link href={`/salary/${role.slug}/${loc.slug}`} className="font-semibold text-white/80 hover:text-white transition-colors">
-                        {loc.name} {isCurrent && <span className="text-[10px] text-[#00d4ff] ml-1">← current</span>}
+                        {loc.name} {isCurrent && <span className="text-[10px] text-[#818cf8] ml-1">← current</span>}
                       </Link>
                     </td>
                     <td className="px-4 py-3 text-white/50 text-xs">{formatGBP(gross)}</td>
-                    <td className="px-4 py-3 font-semibold text-[#00d4ff]">{formatGBP(monthly)}</td>
+                    <td className="px-4 py-3 font-semibold text-[#818cf8]">{formatGBP(monthly)}</td>
                     <td className="px-4 py-3 text-white/40 text-xs">{formatGBP(costs?.total ?? 0)}</td>
                     <td className="px-4 py-3">
-                      <span className={`font-bold text-sm ${disposable > 1000 ? 'text-[#22c55e]' : disposable > 0 ? 'text-[#f59e0b]' : 'text-[#ef4444]'}`}>
+                      <span className={`font-bold text-sm ${disposable > 1000 ? 'text-[#34d399]' : disposable > 0 ? 'text-[#f59e0b]' : 'text-[#ef4444]'}`}>
                         {formatGBP(disposable ?? 0)}
                       </span>
                     </td>

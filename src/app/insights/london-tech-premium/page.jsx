@@ -67,7 +67,7 @@ export default function LondonTechPremiumPage() {
   const londonTopHalf = allRanks.filter(r => r <= COMPARISON_CITIES.length / 2).length;
 
   return (
-    <main className="min-h-screen bg-[#0a0a0b] text-white">
+    <main className="min-h-screen bg-[#09090f] text-white">
       <div className="max-w-3xl mx-auto px-4 pt-4">
         <AdSlot slot="leaderboard" className="mb-2" />
       </div>
@@ -89,7 +89,7 @@ export default function LondonTechPremiumPage() {
           </div>
           <h1 className="text-2xl sm:text-3xl font-extrabold text-white leading-tight mb-4">
             Is London Still Worth It for Tech Careers?<br />
-            <span className="text-[#00d4ff]">The Real Numbers, {year}</span>
+            <span className="text-[#818cf8]">The Real Numbers, {year}</span>
           </h1>
           <p className="text-white/65 text-[16px] leading-relaxed">
             London pays tech workers {Math.round((londonMultiplier - 1) * 100)}% more than the UK average.
@@ -105,8 +105,8 @@ export default function LondonTechPremiumPage() {
           <div className="rounded-2xl border border-[#f59e0b30] bg-[#f59e0b08] p-6 mb-8">
             <p className="text-xs text-[#f59e0b] font-semibold uppercase tracking-wider mb-2">Key Finding</p>
             <p className="text-lg font-bold text-white leading-snug">
-              A software engineer in <span className="text-[#22c55e]">{sweBest.city}</span> takes home{' '}
-              <span className="text-[#22c55e]">{formatGBP(sweBest.disposable)}/month</span> disposable income —
+              A software engineer in <span className="text-[#34d399]">{sweBest.city}</span> takes home{' '}
+              <span className="text-[#34d399]">{formatGBP(sweBest.disposable)}/month</span> disposable income —
               vs <span className="text-[#f59e0b]">{formatGBP(sweLondon.disposable)}/month</span> in London,
               despite earning <span className="text-white/60">{formatGBP(sweLondon.gross - sweBest.gross)}/year less gross</span>.
             </p>
@@ -142,19 +142,19 @@ export default function LondonTechPremiumPage() {
                     </thead>
                     <tbody>
                       {ranked.map(({ city, slug, gross, netMonthly, costs, disposable }, i) => (
-                        <tr key={slug} className={`border-b border-white/[0.03] ${slug === 'london' ? 'bg-[#f59e0b06]' : i === 0 ? 'bg-[#22c55e06]' : ''} hover:bg-white/[0.02] transition-colors`}>
+                        <tr key={slug} className={`border-b border-white/[0.03] ${slug === 'london' ? 'bg-[#f59e0b06]' : i === 0 ? 'bg-[#34d39906]' : ''} hover:bg-white/[0.02] transition-colors`}>
                           <td className="px-3 py-2.5">
                             <Link href={`/salary/${role.slug}/${slug}`} className="font-semibold text-white/80 hover:text-white transition-colors">
                               {city}
-                              {i === 0 && <span className="ml-1.5 text-[9px] font-bold text-[#22c55e] uppercase">best</span>}
+                              {i === 0 && <span className="ml-1.5 text-[9px] font-bold text-[#34d399] uppercase">best</span>}
                               {slug === 'london' && <span className="ml-1.5 text-[9px] font-bold text-[#f59e0b] uppercase">london</span>}
                             </Link>
                           </td>
                           <td className="px-3 py-2.5 text-white/40 text-xs">{formatGBP(gross)}</td>
-                          <td className="px-3 py-2.5 text-[#00d4ff] font-semibold">{formatGBP(netMonthly)}</td>
+                          <td className="px-3 py-2.5 text-[#818cf8] font-semibold">{formatGBP(netMonthly)}</td>
                           <td className="px-3 py-2.5 text-white/35 text-xs">{formatGBP(costs)}</td>
                           <td className="px-3 py-2.5">
-                            <span className={`font-bold ${i === 0 ? 'text-[#22c55e]' : slug === 'london' ? 'text-[#f59e0b]' : 'text-white/60'}`}>
+                            <span className={`font-bold ${i === 0 ? 'text-[#34d399]' : slug === 'london' ? 'text-[#f59e0b]' : 'text-white/60'}`}>
                               {formatGBP(disposable)}
                             </span>
                           </td>
@@ -217,7 +217,7 @@ export default function LondonTechPremiumPage() {
         </section>
 
         {/* Verdict */}
-        <div className="rounded-2xl border border-[#00d4ff20] bg-[#00d4ff06] p-6 mb-8">
+        <div className="rounded-2xl border border-[#818cf820] bg-[#818cf806] p-6 mb-8">
           <h2 className="text-lg font-bold text-white mb-3">The {year} Verdict</h2>
           <p className="text-white/65 text-[15px] leading-relaxed mb-3">
             For the majority of tech, data, and analytics roles below £120k: <strong className="text-white">London is no longer

@@ -10,10 +10,10 @@ const JOB_BOARDS = [
 
 export default function JobBoardCTA({ roleTitle, locationName }) {
   return (
-    <section className="my-8 rounded-2xl border border-[#00d4ff20] bg-[#00d4ff08] p-6">
+    <section className="my-8 rounded-2xl border border-[#818cf820] bg-[#818cf808] p-6">
       <div className="flex items-start gap-3 mb-5">
-        <div className="w-10 h-10 rounded-xl bg-[#00d4ff15] border border-[#00d4ff25] flex items-center justify-center flex-shrink-0">
-          <Briefcase size={18} className="text-[#00d4ff]" />
+        <div className="w-10 h-10 rounded-xl bg-[#818cf815] border border-[#818cf825] flex items-center justify-center flex-shrink-0">
+          <Briefcase size={18} className="text-[#818cf8]" />
         </div>
         <div>
           <h3 className="text-base font-bold text-white">Find {roleTitle} Jobs in {locationName}</h3>

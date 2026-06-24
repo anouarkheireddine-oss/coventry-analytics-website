@@ -73,7 +73,7 @@ export default async function SalaryPage({ params }) {
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(faqSchema) }} />
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbSchema) }} />
 
-      <main className="min-h-screen bg-[#0a0a0b] text-white">
+      <main className="min-h-screen bg-[#09090f] text-white">
         <div className="max-w-3xl mx-auto px-4 pt-4">
           <AdSlot slot="leaderboard" className="mb-2" />
         </div>
@@ -94,9 +94,9 @@ export default async function SalaryPage({ params }) {
         {/* Hero */}
         <div className="max-w-3xl mx-auto px-4 pt-6 pb-2">
           <div className="flex items-center gap-2 mb-3">
-            <span className="px-2.5 py-1 rounded-full bg-[#00d4ff15] border border-[#00d4ff25] text-[11px] font-semibold text-[#00d4ff] uppercase tracking-wider">{role.sector}</span>
+            <span className="px-2.5 py-1 rounded-full bg-[#818cf815] border border-[#818cf825] text-[11px] font-semibold text-[#818cf8] uppercase tracking-wider">{role.sector}</span>
             <span className={`px-2.5 py-1 rounded-full text-[11px] font-semibold uppercase tracking-wider ${
-              role.demand === 'high' ? 'bg-[#22c55e15] border border-[#22c55e25] text-[#22c55e]' : 'bg-white/[0.05] border border-white/[0.08] text-white/40'
+              role.demand === 'high' ? 'bg-[#34d39915] border border-[#34d39925] text-[#34d399]' : 'bg-white/[0.05] border border-white/[0.08] text-white/40'
             }`}>{role.demand} demand · {role.growth}/yr</span>
           </div>
 
@@ -107,8 +107,8 @@ export default async function SalaryPage({ params }) {
           {/* Key stat row — gross + take-home side by side */}
           <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 my-6">
             {[
-              { label: 'Average Gross', value: formatGBP(salaries.mid), color: '#00d4ff', sub: 'per year' },
-              { label: 'Monthly Take-Home', value: formatGBP(tax.netMonthly), color: '#22c55e', sub: 'after tax + NI' },
+              { label: 'Average Gross', value: formatGBP(salaries.mid), color: '#818cf8', sub: 'per year' },
+              { label: 'Monthly Take-Home', value: formatGBP(tax.netMonthly), color: '#34d399', sub: 'after tax + NI' },
               { label: 'Entry Level', value: formatGBP(salaries.entry), color: '#ffffff60', sub: 'per year' },
               { label: 'Senior Level', value: formatGBP(salaries.senior), color: '#f59e0b', sub: 'per year' },
             ].map(({ label, value, color, sub }) => (
@@ -122,17 +122,17 @@ export default async function SalaryPage({ params }) {
 
           {/* Take-home insight callout */}
           {disposable && (
-            <div className="rounded-xl border border-[#22c55e20] bg-[#22c55e06] px-4 py-3 mb-4 flex items-start gap-3">
-              <TrendingUp size={16} className="text-[#22c55e] flex-shrink-0 mt-0.5" />
+            <div className="rounded-xl border border-[#34d39920] bg-[#34d39906] px-4 py-3 mb-4 flex items-start gap-3">
+              <TrendingUp size={16} className="text-[#34d399] flex-shrink-0 mt-0.5" />
               <p className="text-sm text-white/70 leading-relaxed">
                 After income tax and National Insurance, a {role.title} in {location.name} takes home{' '}
-                <strong className="text-[#22c55e]">{formatGBP(tax.netMonthly)}/month</strong>.
+                <strong className="text-[#34d399]">{formatGBP(tax.netMonthly)}/month</strong>.
                 After estimated living costs of {formatGBP(disposable.totalCosts)}/month,
                 disposable income is approximately{' '}
-                <strong className={disposable.disposable > 500 ? 'text-[#22c55e]' : 'text-[#f59e0b]'}>
+                <strong className={disposable.disposable > 500 ? 'text-[#34d399]' : 'text-[#f59e0b]'}>
                   {formatGBP(disposable.disposable)}/month
                 </strong>.{' '}
-                <Link href={`/compare/${role.slug}`} className="text-[#00d4ff] hover:underline">
+                <Link href={`/compare/${role.slug}`} className="text-[#818cf8] hover:underline">
                   See how {location.name} compares to other cities →
                 </Link>
               </p>
@@ -179,8 +179,8 @@ export default async function SalaryPage({ params }) {
                         return (
                           <tr key={j} className={`border-b border-white/[0.04] ${j % 2 === 0 ? '' : 'bg-white/[0.015]'}`}>
                             <td className="px-4 py-3 text-white/80 font-medium">{level}</td>
-                            <td className="px-4 py-3 text-right font-bold text-[#00d4ff]">{formatGBP(salary)}</td>
-                            <td className="px-4 py-3 text-right font-semibold text-[#22c55e]">{formatGBP(t.netMonthly)}</td>
+                            <td className="px-4 py-3 text-right font-bold text-[#818cf8]">{formatGBP(salary)}</td>
+                            <td className="px-4 py-3 text-right font-semibold text-[#34d399]">{formatGBP(t.netMonthly)}</td>
                           </tr>
                         );
                       })}
@@ -193,7 +193,7 @@ export default async function SalaryPage({ params }) {
                 <ul className="mt-3 space-y-2">
                   {section.bullets.map((b, j) => (
                     <li key={j} className="flex items-start gap-2.5">
-                      <span className="mt-1.5 w-1.5 h-1.5 rounded-full bg-[#00d4ff] flex-shrink-0" />
+                      <span className="mt-1.5 w-1.5 h-1.5 rounded-full bg-[#818cf8] flex-shrink-0" />
                       <span className="text-white/65 text-[15px] leading-relaxed">{b}</span>
                     </li>
                   ))}
@@ -206,15 +206,15 @@ export default async function SalaryPage({ params }) {
                     const t = calcTakeHome(salary);
                     return (
                       <div key={j} className="flex items-center gap-3 p-3 rounded-xl border border-white/[0.06] bg-white/[0.02]">
-                        <div className="w-6 h-6 rounded-full bg-[#00d4ff15] border border-[#00d4ff25] flex items-center justify-center flex-shrink-0">
-                          <TrendingUp size={12} className="text-[#00d4ff]" />
+                        <div className="w-6 h-6 rounded-full bg-[#818cf815] border border-[#818cf825] flex items-center justify-center flex-shrink-0">
+                          <TrendingUp size={12} className="text-[#818cf8]" />
                         </div>
                         <div className="flex-1">
                           <p className="text-sm font-semibold text-white">{stage}</p>
                           <p className="text-xs text-white/40">{years}</p>
                         </div>
                         <div className="text-right">
-                          <p className="text-sm font-bold text-[#22c55e]">{formatGBP(salary)}</p>
+                          <p className="text-sm font-bold text-[#34d399]">{formatGBP(salary)}</p>
                           <p className="text-xs text-white/30">{formatGBP(t.netMonthly)}/mo net</p>
                         </div>
                       </div>
@@ -277,9 +277,9 @@ export default async function SalaryPage({ params }) {
                   </Link>
                 ))}
                 <Link href={`/compare/${role.slug}`}
-                  className="flex items-center justify-between p-3 rounded-xl border border-[#00d4ff20] bg-[#00d4ff06] hover:bg-[#00d4ff10] transition-colors group">
-                  <span className="text-sm text-[#00d4ff] font-semibold">View all cities comparison</span>
-                  <ArrowRight size={13} className="text-[#00d4ff]" />
+                  className="flex items-center justify-between p-3 rounded-xl border border-[#818cf820] bg-[#818cf806] hover:bg-[#818cf810] transition-colors group">
+                  <span className="text-sm text-[#818cf8] font-semibold">View all cities comparison</span>
+                  <ArrowRight size={13} className="text-[#818cf8]" />
                 </Link>
               </div>
             </div>

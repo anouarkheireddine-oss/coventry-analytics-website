@@ -29,12 +29,12 @@ export default function RootLayout({ children }) {
           <script async src={`https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=${adsenseId}`} crossOrigin="anonymous" />
         )}
       </head>
-      <body className="bg-[#0a0a0b] text-white min-h-screen antialiased">
+      <body className="bg-[#09090f] text-white min-h-screen antialiased">
         {/* Persistent top nav */}
-        <header className="sticky top-0 z-50 border-b border-white/[0.06] bg-[#0a0a0b]/90 backdrop-blur-xl">
+        <header className="sticky top-0 z-50 border-b border-white/[0.06] bg-[#09090f]/90 backdrop-blur-xl">
           <div className="max-w-5xl mx-auto px-4 h-12 flex items-center justify-between">
             <a href="/" className="text-base font-extrabold text-white">
-              Salary<span className="text-[#00d4ff]">Stack</span>
+              Salary<span className="text-[#818cf8]">Stack</span>
             </a>
             <nav className="flex items-center gap-1">
               {[

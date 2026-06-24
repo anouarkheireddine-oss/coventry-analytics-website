@@ -51,13 +51,13 @@ export function calcOutsideIR35(dayRate, daysPerYear = DEFAULT_BILLING_DAYS, ann
     netMonthly,
     effectiveRate,
     breakdown: [
-      { label: 'Gross Income',       value: grossAnnual,      sign: '+', color: '#22c55e' },
+      { label: 'Gross Income',       value: grossAnnual,      sign: '+', color: '#34d399' },
       { label: 'Director Salary',    value: -salary,          sign: '−', color: '#ffffff60' },
       { label: 'Employer NI',        value: -employerNI,      sign: '−', color: '#ef4444' },
       { label: 'Overheads',          value: -annualOverheads, sign: '−', color: '#ef4444' },
       { label: 'Corporation Tax',    value: -corpTax,         sign: '−', color: '#f59e0b' },
       { label: 'Dividend Tax',       value: -dividendTax,     sign: '−', color: '#f59e0b' },
-      { label: 'Net Take-Home',      value: netAnnual,        sign: '=', color: '#00d4ff' },
+      { label: 'Net Take-Home',      value: netAnnual,        sign: '=', color: '#818cf8' },
     ],
   };
 }
@@ -77,12 +77,12 @@ export function calcInsideIR35(dayRate, daysPerYear = DEFAULT_BILLING_DAYS, umbr
     umbrellaFee,
     ...tax,
     breakdown: [
-      { label: 'Gross Income',    value: grossAnnual,          sign: '+', color: '#22c55e' },
+      { label: 'Gross Income',    value: grossAnnual,          sign: '+', color: '#34d399' },
       { label: 'Umbrella Fee',    value: -umbrellaFee,         sign: '−', color: '#ef4444' },
       { label: 'Income Tax',      value: -tax.incomeTax,       sign: '−', color: '#f59e0b' },
       { label: 'National Ins.',   value: -tax.ni,              sign: '−', color: '#f59e0b' },
-      { label: 'Pension (5%)',    value: -tax.pensionContrib,  sign: '−', color: '#a78bfa' },
-      { label: 'Net Take-Home',   value: tax.netAnnual,        sign: '=', color: '#00d4ff' },
+      { label: 'Pension (5%)',    value: -tax.pensionContrib,  sign: '−', color: '#818cf8' },
+      { label: 'Net Take-Home',   value: tax.netAnnual,        sign: '=', color: '#818cf8' },
     ],
   };
 }
@@ -98,11 +98,11 @@ export function calcPermanent(salary) {
     employerPension,
     ...tax,
     breakdown: [
-      { label: 'Gross Salary',       value: salary,               sign: '+', color: '#22c55e' },
+      { label: 'Gross Salary',       value: salary,               sign: '+', color: '#34d399' },
       { label: 'Income Tax',         value: -tax.incomeTax,       sign: '−', color: '#f59e0b' },
       { label: 'National Ins.',      value: -tax.ni,              sign: '−', color: '#f59e0b' },
-      { label: 'Pension (5%)',       value: -tax.pensionContrib,  sign: '−', color: '#a78bfa' },
-      { label: 'Net Take-Home',      value: tax.netAnnual,        sign: '=', color: '#00d4ff' },
+      { label: 'Pension (5%)',       value: -tax.pensionContrib,  sign: '−', color: '#818cf8' },
+      { label: 'Net Take-Home',      value: tax.netAnnual,        sign: '=', color: '#818cf8' },
     ],
   };
 }

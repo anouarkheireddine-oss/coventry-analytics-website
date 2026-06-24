@@ -23,7 +23,7 @@ const NI_BANDS = [
 
 export default function MethodologyPage() {
   return (
-    <main className="min-h-screen bg-[#0a0a0b] text-white">
+    <main className="min-h-screen bg-[#09090f] text-white">
       <article className="max-w-3xl mx-auto px-4 py-10">
         <nav className="flex items-center gap-2 text-xs text-white/30 mb-8">
           <Link href="/" className="hover:text-white/60 transition-colors">Home</Link>
@@ -112,7 +112,7 @@ export default function MethodologyPage() {
                   <tr key={band} className="border-b border-white/[0.04]">
                     <td className="px-4 py-2.5 text-white/70 font-medium">{band}</td>
                     <td className="px-4 py-2.5 text-white/45">{range}</td>
-                    <td className="px-4 py-2.5 font-bold text-[#00d4ff]">{rate}</td>
+                    <td className="px-4 py-2.5 font-bold text-[#818cf8]">{rate}</td>
                     <td className="px-4 py-2.5 text-white/35 text-xs">{note}</td>
                   </tr>
                 ))}
@@ -145,7 +145,7 @@ export default function MethodologyPage() {
                   <tr key={band} className="border-b border-white/[0.04]">
                     <td className="px-4 py-2.5 text-white/70 font-medium">{band}</td>
                     <td className="px-4 py-2.5 text-white/45">{range}</td>
-                    <td className="px-4 py-2.5 font-bold text-[#00d4ff]">{rate}</td>
+                    <td className="px-4 py-2.5 font-bold text-[#818cf8]">{rate}</td>
                   </tr>
                 ))}
               </tbody>
@@ -184,7 +184,7 @@ export default function MethodologyPage() {
                 { item: 'Groceries', detail: 'ONS household expenditure estimates for a single adult. £250–£320/mo depending on city.' },
               ].map(({ item, detail }) => (
                 <li key={item} className="flex gap-3">
-                  <span className="mt-1.5 w-1.5 h-1.5 rounded-full bg-[#00d4ff] flex-shrink-0" />
+                  <span className="mt-1.5 w-1.5 h-1.5 rounded-full bg-[#818cf8] flex-shrink-0" />
                   <span><strong className="text-white/70">{item}:</strong> {detail}</span>
                 </li>
               ))}

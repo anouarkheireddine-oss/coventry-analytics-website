@@ -10,8 +10,8 @@ export default function SalaryRangeBar({ entry, mid, senior, lead }) {
 
   const levels = [
     { label: 'Entry', value: entry, color: '#ffffff30' },
-    { label: 'Mid', value: mid, color: '#00d4ff' },
-    { label: 'Senior', value: senior, color: '#22c55e' },
+    { label: 'Mid', value: mid, color: '#818cf8' },
+    { label: 'Senior', value: senior, color: '#34d399' },
     { label: 'Lead', value: lead, color: '#f59e0b' },
   ];
 

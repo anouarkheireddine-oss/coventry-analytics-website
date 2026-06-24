@@ -24,7 +24,7 @@ export default function ContractorCalculatorPage() {
   return (
     <>
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(faqSchema) }} />
-      <main className="min-h-screen bg-[#0a0a0b] text-white">
+      <main className="min-h-screen bg-[#09090f] text-white">
         <div className="max-w-4xl mx-auto px-4 pt-4">
           <AdSlot slot="leaderboard" className="mb-2" />
         </div>
@@ -38,7 +38,7 @@ export default function ContractorCalculatorPage() {
           </nav>
 
           <div className="mb-8">
-            <span className="px-2.5 py-1 rounded-full bg-[#00d4ff15] border border-[#00d4ff25] text-[11px] font-semibold text-[#00d4ff] uppercase tracking-wider">Calculator</span>
+            <span className="px-2.5 py-1 rounded-full bg-[#818cf815] border border-[#818cf825] text-[11px] font-semibold text-[#818cf8] uppercase tracking-wider">Calculator</span>
             <h1 className="text-2xl sm:text-3xl font-extrabold text-white mt-3 mb-2">
               Contractor vs Permanent Calculator UK
             </h1>
