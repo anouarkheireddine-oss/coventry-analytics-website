@@ -31,7 +31,7 @@ const localBusinessSchema = {
     '@type': 'City',
     name: 'Coventry',
   },
-  email: 'hello@coventryanalytics.co.uk',
+  email: 'info.coventryanalytics@gmail.com',
   priceRange: '££',
   serviceType: [
     'Business Clarity Audit',

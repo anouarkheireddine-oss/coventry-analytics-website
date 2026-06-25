@@ -16,6 +16,8 @@ export default function Home() {
     document.getElementById(id)?.scrollIntoView({ behavior: 'smooth' });
   };
 
+  const EMAIL = 'info.coventryanalytics@gmail.com';
+
   const onSubmit = (e) => {
     e.preventDefault();
     setSubmitted(true);
@@ -29,7 +31,7 @@ export default function Home() {
           <a href="#top" className="ca-logo" onClick={to('top')}>
             Coventry <span>Analytics</span>
           </a>
-          <a href="#contact" className="ca-pill" onClick={to('contact')}>
+          <a href={`mailto:${EMAIL}?subject=Free Audit Enquiry`} className="ca-pill">
             Book Free Audit
           </a>
         </div>
@@ -51,7 +53,7 @@ export default function Home() {
             <a href="#services" className="ca-btn-primary" onClick={to('services')}>
               See How It Works
             </a>
-            <a href="#contact" className="ca-btn-ghost" onClick={to('contact')}>
+            <a href={`mailto:${EMAIL}?subject=Free Audit Enquiry`} className="ca-btn-ghost">
               Book Free Audit
             </a>
           </div>
@@ -92,7 +94,7 @@ export default function Home() {
                 <span className="ca-card__type">One-off</span>
               </div>
               <h3 className="ca-card__name">Business Clarity Audit</h3>
-              <p className="ca-card__price">£297</p>
+              <p className="ca-card__timing">Delivered within 5 working days</p>
               <p className="ca-card__promise">
                 Find out exactly where your money is going — and what to fix first.
               </p>
@@ -108,8 +110,8 @@ export default function Home() {
                   <li key={item}><span className="ca-tick">✓</span>{item}</li>
                 ))}
               </ul>
-              <a href="#contact" className="ca-card-cta ca-card-cta--plain" onClick={to('contact')}>
-                Book Clarity Audit — £297
+              <a href={`mailto:${EMAIL}?subject=Business Clarity Audit Enquiry`} className="ca-card-cta ca-card-cta--plain">
+                Book Your Audit
               </a>
               <p className="ca-card__note">Most clients convert to monthly reports after their audit.</p>
             </div>
@@ -121,9 +123,7 @@ export default function Home() {
                 <span className="ca-card__type">Monthly</span>
               </div>
               <h3 className="ca-card__name">Monthly Intelligence Report</h3>
-              <p className="ca-card__price">
-                From £149<span className="ca-card__unit">/month</span>
-              </p>
+              <p className="ca-card__timing">Delivered by the 5th of every month</p>
               <p className="ca-card__promise">
                 Know exactly how your business performed — every month, in plain English.
               </p>
@@ -139,8 +139,8 @@ export default function Home() {
                   <li key={item}><span className="ca-tick ca-tick--amber">✓</span>{item}</li>
                 ))}
               </ul>
-              <a href="#contact" className="ca-card-cta ca-card-cta--amber" onClick={to('contact')}>
-                Start Monthly Reports — From £149
+              <a href={`mailto:${EMAIL}?subject=Monthly Intelligence Report Enquiry`} className="ca-card-cta ca-card-cta--amber">
+                Get Started
               </a>
               <p className="ca-card__note">No contracts. Cancel anytime.</p>
             </div>
@@ -309,7 +309,7 @@ export default function Home() {
               ) : (
                 <form className="ca-form" onSubmit={onSubmit}>
                   <h3 className="ca-form__title">Get in touch</h3>
-                  <p className="ca-form__sub">We respond within 1 business day.</p>
+                  <p className="ca-form__sub">We respond within 1 business day. No commitment required.</p>
                   <div className="ca-field">
                     <label>Your name</label>
                     <input type="text" placeholder="Sarah Ahmed" required />
@@ -380,8 +380,8 @@ export default function Home() {
           </nav>
           <div className="ca-footer__legal">
             <p>© 2026 Coventry Analytics. All rights reserved.</p>
-            <a href="mailto:hello@coventryanalytics.co.uk">
-              hello@coventryanalytics.co.uk
+            <a href={`mailto:${EMAIL}`}>
+              {EMAIL}
             </a>
           </div>
         </div>
