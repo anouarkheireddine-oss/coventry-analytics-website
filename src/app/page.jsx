@@ -272,7 +272,13 @@ export default function Home() {
         <div className="ca-wrap">
           <div className="ca-about__grid">
             <div className="ca-about__photo">
-              <div className="ca-about__avatar" aria-label="Anouar Kheireddine, founder of Coventry Analytics" />
+              <img
+                src="/about-anouar.jpg"
+                alt="Anouar Kheireddine, founder of Coventry Analytics"
+                className="ca-about__img"
+                width={180}
+                height={220}
+              />
             </div>
             <div className="ca-about__text">
               <p className="ca-sh-kicker">Who we are</p>

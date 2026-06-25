@@ -1066,27 +1066,15 @@ details[open] .ca-faq__q::after {
   justify-content: center;
 }
 
-.ca-about__avatar {
-  width: 180px;
-  height: 180px;
-  border-radius: 50%;
-  background: linear-gradient(135deg, var(--ca-navy) 0%, #2a4a6e 100%);
+.ca-about__img {
+  width: 200px;
+  height: 240px;
+  object-fit: cover;
+  object-position: center top;
+  border-radius: 16px;
   border: 3px solid var(--ca-amber-bd);
-  position: relative;
-  overflow: hidden;
-}
-
-.ca-about__avatar::after {
-  content: 'AK';
-  position: absolute;
-  inset: 0;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 48px;
-  font-weight: 900;
-  color: rgba(255,255,255,0.9);
-  letter-spacing: -0.03em;
+  display: block;
+  box-shadow: 0 8px 32px rgba(0,168,232,0.12);
 }
 
 .ca-about__text .ca-sh-kicker { margin-bottom: 12px; }
