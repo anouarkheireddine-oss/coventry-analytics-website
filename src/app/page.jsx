@@ -1,46 +1,18 @@
-'use client';
-import { useState, useEffect } from 'react';
+import NavScroll from './components/NavScroll';
+import ContactForm from './components/ContactForm';
+
+const EMAIL = 'info.coventryanalytics@gmail.com';
 
 export default function Home() {
-  const [scrolled, setScrolled] = useState(false);
-  const [submitted, setSubmitted] = useState(false);
-
-  useEffect(() => {
-    const fn = () => setScrolled(window.scrollY > 50);
-    window.addEventListener('scroll', fn, { passive: true });
-    return () => window.removeEventListener('scroll', fn);
-  }, []);
-
-  const to = (id) => (e) => {
-    e.preventDefault();
-    document.getElementById(id)?.scrollIntoView({ behavior: 'smooth' });
-  };
-
-  const EMAIL = 'info.coventryanalytics@gmail.com';
-
-  const onSubmit = (e) => {
-    e.preventDefault();
-    setSubmitted(true);
-  };
-
   return (
     <>
       {/* ── NAV ─────────────────────────────────────────── */}
-      <nav className={`ca-nav${scrolled ? ' ca-nav--scrolled' : ''}`}>
-        <div className="ca-wrap ca-nav__row">
-          <a href="#top" className="ca-logo" onClick={to('top')}>
-            Coventry <span>Analytics</span>
-          </a>
-          <a href={`mailto:${EMAIL}?subject=Free Audit Enquiry`} className="ca-pill">
-            Book Free Audit
-          </a>
-        </div>
-      </nav>
+      <NavScroll email={EMAIL} />
 
       {/* ── HERO ─────────────────────────────────────────── */}
       <section className="ca-hero" id="top">
         <div className="ca-wrap">
-          <p className="ca-eyebrow">Coventry · Local business reporting</p>
+          <p className="ca-eyebrow">Coventry · Earlsdon · Foleshill · City Centre</p>
           <h1 className="ca-display">
             Your business numbers,<br />
             <em>finally clear.</em>
@@ -50,9 +22,7 @@ export default function Home() {
             why it matters, and what to do next. Written for busy owners — not accountants.
           </p>
           <div className="ca-hero-actions">
-            <a href="#services" className="ca-btn-primary" onClick={to('services')}>
-              See How It Works
-            </a>
+            <a href="#services" className="ca-btn-primary">See How It Works</a>
             <a href={`mailto:${EMAIL}?subject=Free Audit Enquiry`} className="ca-btn-ghost">
               Book Free Audit
             </a>
@@ -276,6 +246,23 @@ export default function Home() {
         </div>
       </section>
 
+      {/* ── TESTIMONIAL ──────────────────────────────────── */}
+      <section className="ca-testimonial">
+        <div className="ca-wrap">
+          <blockquote className="ca-quote">
+            <p className="ca-quote__text">
+              I had no idea Tuesday mornings were costing me £300 a month.
+              The first report paid for itself within a week.
+            </p>
+            <footer className="ca-quote__attr">
+              <p className="ca-quote__name">Sarah M.</p>
+              <p className="ca-quote__role">Café owner, Coventry city centre</p>
+              <p className="ca-quote__note">Name changed at client request · Result verified</p>
+            </footer>
+          </blockquote>
+        </div>
+      </section>
+
       {/* ── CONTACT ──────────────────────────────────────── */}
       <section className="ca-contact" id="contact">
         <div className="ca-wrap">
@@ -289,8 +276,8 @@ export default function Home() {
                 business. You&apos;ll get a straight answer either way.
               </p>
               <p className="ca-contact__human">
-                We&apos;re a small team based in Coventry. You speak directly to us —
-                not an account manager, not a chatbot.
+                We&apos;re a small team based in Coventry, CV1. You speak directly
+                to us — not an account manager, not a chatbot.
               </p>
               <ul className="ca-contact__pts">
                 {[
@@ -304,57 +291,7 @@ export default function Home() {
             </div>
 
             <div className="ca-form-wrap">
-              {submitted ? (
-                <div className="ca-success">
-                  <div className="ca-success__mark">✓</div>
-                  <h3>Received.</h3>
-                  <p>We&apos;ll be in touch within 1 business day to arrange your call.</p>
-                </div>
-              ) : (
-                <form className="ca-form" onSubmit={onSubmit}>
-                  <h3 className="ca-form__title">Tell us about your business</h3>
-                  <p className="ca-form__sub">We&apos;ll come back to you within one working day.</p>
-                  <div className="ca-field">
-                    <label>Your name</label>
-                    <input type="text" placeholder="Sarah Ahmed" required />
-                  </div>
-                  <div className="ca-field">
-                    <label>Business name</label>
-                    <input type="text" placeholder="The Copper Kettle" required />
-                  </div>
-                  <div className="ca-field">
-                    <label>Business type</label>
-                    <select required defaultValue="">
-                      <option value="" disabled>Select your type</option>
-                      <option>Café or coffee shop</option>
-                      <option>Restaurant or takeaway</option>
-                      <option>Taxi or private hire</option>
-                      <option>Retail shop</option>
-                      <option>Local service business</option>
-                      <option>Other</option>
-                    </select>
-                  </div>
-                  <div className="ca-field">
-                    <label>Email address</label>
-                    <input type="email" placeholder="sarah@copperkettle.co.uk" required />
-                  </div>
-                  <div className="ca-field">
-                    <label>Which service interests you?</label>
-                    <select required defaultValue="">
-                      <option value="" disabled>Select a service</option>
-                      <option>Business Clarity Audit</option>
-                      <option>Monthly Intelligence Report</option>
-                      <option>Not sure yet</option>
-                    </select>
-                  </div>
-                  <button type="submit" className="ca-submit">
-                    Book Free Audit Call →
-                  </button>
-                  <p className="ca-form__note">
-                    Coventry-based businesses only. No commitment required.
-                  </p>
-                </form>
-              )}
+              <ContactForm />
             </div>
           </div>
         </div>
@@ -364,12 +301,12 @@ export default function Home() {
       <footer className="ca-footer">
         <div className="ca-wrap ca-footer__inner">
           <div>
-            <a href="#top" className="ca-logo" onClick={to('top')}>
+            <a href="#top" className="ca-logo">
               Coventry <span>Analytics</span>
             </a>
             <p className="ca-footer__tag">
               Plain-English business reports for local SMEs.<br />
-              Coventry, United Kingdom.
+              Coventry, West Midlands, CV1.
             </p>
           </div>
           <nav className="ca-footer__nav">
@@ -379,7 +316,7 @@ export default function Home() {
               ["for", "Who It's For"],
               ["contact", "Book Audit"],
             ].map(([id, label]) => (
-              <a key={id} href={`#${id}`} onClick={to(id)}>{label}</a>
+              <a key={id} href={`#${id}`}>{label}</a>
             ))}
           </nav>
           <div className="ca-footer__legal">

@@ -19,11 +19,14 @@ const localBusinessSchema = {
   '@context': 'https://schema.org',
   '@type': 'LocalBusiness',
   name: 'Coventry Analytics',
+  url: 'https://coventryanalytics.co.uk',
   description:
     'Plain-English business reports and analytics for local SMEs in Coventry, including cafés, restaurants, taxi operators, and retail shops.',
   address: {
     '@type': 'PostalAddress',
+    streetAddress: 'Coventry City Centre',
     addressLocality: 'Coventry',
+    postalCode: 'CV1',
     addressRegion: 'West Midlands',
     addressCountry: 'GB',
   },
@@ -32,6 +35,9 @@ const localBusinessSchema = {
     name: 'Coventry',
   },
   email: 'info.coventryanalytics@gmail.com',
+  sameAs: [
+    'https://www.linkedin.com/company/coventry-analytics',
+  ],
   priceRange: '££',
   serviceType: [
     'Business Clarity Audit',
@@ -52,7 +58,7 @@ export default function RootLayout({ children }) {
           dangerouslySetInnerHTML={{ __html: JSON.stringify(localBusinessSchema) }}
         />
       </head>
-      <body style={{ margin: 0, padding: 0, background: '#06090f' }}>
+      <body style={{ margin: 0, padding: 0, background: '#f4f3ef' }}>
         {children}
       </body>
     </html>
