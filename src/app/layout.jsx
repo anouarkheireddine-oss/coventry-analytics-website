@@ -58,7 +58,7 @@ export default function RootLayout({ children }) {
           dangerouslySetInnerHTML={{ __html: JSON.stringify(localBusinessSchema) }}
         />
       </head>
-      <body style={{ margin: 0, padding: 0, background: '#f4f3ef' }}>
+      <body style={{ margin: 0, padding: 0, background: '#FAF7F2' }}>
         {children}
       </body>
     </html>

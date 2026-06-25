@@ -80,29 +80,29 @@ input[type="number"]::-webkit-outer-spin-button {
 /* =============================================
    COVENTRY ANALYTICS — MARKETING PAGE
    Design: Rams · Jobs · Eyal · Fishkin
-   CCFC Sky Blue on light — local, warm, trusted
+   Option 3: Deep Cream — unanimous expert pick
    ============================================= */
 
 /* ── DESIGN TOKENS ─────────────────────────── */
 :root {
-  --ca-bg:        #f4f3ef;
-  --ca-surf:      #ffffff;
-  --ca-card:      #ecedef;
-  --ca-border:    rgba(14,21,37,0.09);
-  --ca-soft:      rgba(14,21,37,0.05);
+  --ca-bg:        #FAF7F2;
+  --ca-surf:      #FFFDF9;
+  --ca-card:      #F0EDE6;
+  --ca-border:    rgba(26,26,26,0.09);
+  --ca-soft:      rgba(26,26,26,0.05);
   --ca-amber:     #00a8e8;
   --ca-amber-lt:  #33bcf0;
   --ca-amber-dim: rgba(0,168,232,0.08);
   --ca-amber-bd:  rgba(0,168,232,0.22);
-  --ca-sky-tint:  #e4f4fb;
-  --ca-navy:      #0e1525;
+  --ca-sky-tint:  #EEF5FB;
+  --ca-navy:      #1A2C45;
   --ca-green:     #16a34a;
-  --ca-w:         #0e1525;
-  --ca-w65:       rgba(14,21,37,0.65);
-  --ca-w45:       rgba(14,21,37,0.45);
-  --ca-w25:       rgba(14,21,37,0.25);
-  --ca-w10:       rgba(14,21,37,0.10);
-  --ca-w06:       rgba(14,21,37,0.06);
+  --ca-w:         #1A1A1A;
+  --ca-w65:       rgba(26,26,26,0.65);
+  --ca-w45:       rgba(26,26,26,0.45);
+  --ca-w25:       rgba(26,26,26,0.25);
+  --ca-w10:       rgba(26,26,26,0.10);
+  --ca-w06:       rgba(26,26,26,0.06);
   --ca-r:         14px;
   --ca-rl:        20px;
 }
@@ -149,7 +149,7 @@ html { scroll-behavior: smooth; }
   border-bottom: 1px solid transparent;
 }
 .ca-nav--scrolled {
-  background: rgba(244,243,239,0.95);
+  background: rgba(250,247,242,0.96);
   backdrop-filter: blur(16px);
   -webkit-backdrop-filter: blur(16px);
   padding: 14px 0;
@@ -269,10 +269,12 @@ html { scroll-behavior: smooth; }
 /* ── PROBLEM ───────────────────────────────── */
 .ca-problem {
   padding: 80px 0;
-  background: var(--ca-sky-tint);
-  border-top: 1px solid rgba(0,168,232,0.14);
-  border-bottom: 1px solid rgba(0,168,232,0.14);
+  background: var(--ca-navy);
+  border-top: none;
+  border-bottom: none;
 }
+.ca-problem .ca-problem__quote { color: rgba(240,244,248,0.70); }
+.ca-problem .ca-problem__fix   { color: var(--ca-amber); }
 .ca-problem__inner {
   text-align: center;
   max-width: 700px;
@@ -681,8 +683,8 @@ html { scroll-behavior: smooth; }
 .ca-testimonial {
   padding: 80px 0;
   background: var(--ca-sky-tint);
-  border-top: 1px solid rgba(0,168,232,0.14);
-  border-bottom: 1px solid rgba(0,168,232,0.14);
+  border-top: 1px solid rgba(0,168,232,0.12);
+  border-bottom: 1px solid rgba(0,168,232,0.12);
 }
 .ca-quote {
   max-width: 680px;
@@ -874,7 +876,7 @@ html { scroll-behavior: smooth; }
 
 /* ── FOOTER ────────────────────────────────── */
 .ca-footer {
-  background: #060c18;
+  background: #0d1520;
   padding: 56px 0 36px;
   border-top: 1px solid rgba(255,255,255,0.06);
 }
