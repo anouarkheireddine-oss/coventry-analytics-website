@@ -263,6 +263,49 @@ export default function Home() {
         </div>
       </section>
 
+      {/* ── FAQ ──────────────────────────────────────────── */}
+      <section className="ca-faq" id="faq">
+        <div className="ca-wrap">
+          <div className="ca-sh">
+            <p className="ca-sh-kicker">Common questions</p>
+            <h2 className="ca-h2">Straight answers</h2>
+          </div>
+          <div className="ca-faq__list">
+            {[
+              {
+                q: "How much does a business report cost?",
+                a: "We don't publish prices on the site because every business is different — a café with one location needs a different report to a taxi operator with twelve drivers. The free audit call lets us give you an exact figure. Most clients tell us the first month pays for itself.",
+              },
+              {
+                q: "What data do I need to provide?",
+                a: "If you use a till system like Square, Zettle, or Lightspeed — one data export is enough. No specialist software needed. If you work from spreadsheets or paper records, we'll tell you exactly what to send on the audit call.",
+              },
+              {
+                q: "Is this right for a café with just one location?",
+                a: "Yes. Most of our clients are single-location businesses. The reports are most valuable when you're too busy running the business to analyse it yourself — which is exactly the situation most solo owners are in.",
+              },
+              {
+                q: "How is this different from my accountant?",
+                a: "Your accountant tells you what happened after the year ends — for tax purposes. We tell you what's happening now, month by month, in plain English, with one specific action to take. It's operational clarity, not compliance reporting.",
+              },
+              {
+                q: "Do you work with businesses outside Coventry?",
+                a: "Right now we focus exclusively on Coventry and the immediate surrounding area — Earlsdon, Foleshill, Kenilworth, Rugby. This lets us give local context that a national service can't. If you're nearby, get in touch and we'll let you know if we can help.",
+              },
+              {
+                q: "What if I want to cancel?",
+                a: "No contracts. No lock-in. Cancel the monthly report with one email, any time. We ask for 30 days' notice so we can finalise your last report properly — that's it.",
+              },
+            ].map(({ q, a }) => (
+              <details className="ca-faq__item" key={q}>
+                <summary className="ca-faq__q">{q}</summary>
+                <p className="ca-faq__a">{a}</p>
+              </details>
+            ))}
+          </div>
+        </div>
+      </section>
+
       {/* ── CONTACT ──────────────────────────────────────── */}
       <section className="ca-contact" id="contact">
         <div className="ca-wrap">
@@ -314,6 +357,7 @@ export default function Home() {
               ["services", "Services"],
               ["process", "How It Works"],
               ["for", "Who It's For"],
+              ["faq", "FAQ"],
               ["contact", "Book Audit"],
             ].map(([id, label]) => (
               <a key={id} href={`#${id}`}>{label}</a>
