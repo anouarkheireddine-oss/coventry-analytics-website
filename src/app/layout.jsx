@@ -1,22 +1,58 @@
 import './globals.css';
 
 export const metadata = {
-  title: 'Coventry Analytics | Operational Control Systems for SMEs',
-  description: 'We build real-time operational control systems that give SME leaders instant visibility into business performance — deployed in 5 days.',
+  title: 'Coventry Analytics | Business Reports for Local SMEs in Coventry',
+  description:
+    'Plain-English monthly business reports for cafés, restaurants, taxi operators and retailers in Coventry. Find out where your money is going — and what to do next.',
+  keywords:
+    'business analytics Coventry, monthly business report Coventry, café analytics, restaurant reporting, taxi business analytics, SME reporting Coventry, business intelligence Coventry',
+  openGraph: {
+    title: 'Coventry Analytics | Business Reports for Local SMEs',
+    description:
+      'A clear monthly report showing what changed in your business, why it matters, and what to do next. For busy owners in Coventry — not accountants.',
+    type: 'website',
+    locale: 'en_GB',
+  },
+};
+
+const localBusinessSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'LocalBusiness',
+  name: 'Coventry Analytics',
+  description:
+    'Plain-English business reports and analytics for local SMEs in Coventry, including cafés, restaurants, taxi operators, and retail shops.',
+  address: {
+    '@type': 'PostalAddress',
+    addressLocality: 'Coventry',
+    addressRegion: 'West Midlands',
+    addressCountry: 'GB',
+  },
+  areaServed: {
+    '@type': 'City',
+    name: 'Coventry',
+  },
+  email: 'hello@coventryanalytics.co.uk',
+  priceRange: '££',
+  serviceType: [
+    'Business Clarity Audit',
+    'Monthly Intelligence Report',
+    'SME Business Analytics',
+    'Business Reporting',
+  ],
 };
 
 export default function RootLayout({ children }) {
   return (
-    <html lang="en">
+    <html lang="en-GB">
       <head>
         <link rel="preconnect" href="https://fonts.googleapis.com" />
         <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
-        <link
-          href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap"
-          rel="stylesheet"
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(localBusinessSchema) }}
         />
       </head>
-      <body style={{ margin: 0, padding: 0, background: '#0a0f1e' }}>
+      <body style={{ margin: 0, padding: 0, background: '#06090f' }}>
         {children}
       </body>
     </html>
