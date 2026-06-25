@@ -1,7 +1,7 @@
 'use client';
 import { useState, useEffect } from 'react';
 
-export default function NavScroll({ email }) {
+export default function NavScroll({ email, phone }) {
   const [scrolled, setScrolled] = useState(false);
 
   useEffect(() => {
@@ -16,9 +16,16 @@ export default function NavScroll({ email }) {
         <a href="#top" className="ca-logo">
           Coventry <span>Analytics</span>
         </a>
-        <a href={`mailto:${email}?subject=Free Audit Enquiry`} className="ca-pill">
-          Book Free Audit
-        </a>
+        <div className="ca-nav__actions">
+          {phone && (
+            <a href={`tel:${phone.replace(/\s/g, '')}`} className="ca-nav__phone">
+              {phone}
+            </a>
+          )}
+          <a href={`mailto:${email}?subject=Free Audit Enquiry`} className="ca-pill">
+            Book Free Audit
+          </a>
+        </div>
       </div>
     </nav>
   );

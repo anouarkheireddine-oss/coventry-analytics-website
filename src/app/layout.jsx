@@ -6,7 +6,7 @@ export const metadata = {
   description:
     'Plain-English monthly business reports for cafés, restaurants, taxi operators and retailers in Coventry. Find out where your money is going — and what to do next.',
   keywords:
-    'business analytics Coventry, monthly business report Coventry, café analytics, restaurant reporting, taxi business analytics, SME reporting Coventry, business intelligence Coventry',
+    'business analytics Coventry, monthly business report Coventry, café analytics Coventry, restaurant reporting Coventry, taxi business analytics Coventry, SME reporting Coventry, business intelligence Coventry, small business reports Warwickshire, business analytics Earlsdon, business analytics Foleshill, local business reporting West Midlands, business clarity audit Coventry',
   alternates: {
     canonical: 'https://coventryanalytics.co.uk',
   },
@@ -38,7 +38,7 @@ export const metadata = {
 
 const localBusinessSchema = {
   '@context': 'https://schema.org',
-  '@type': 'LocalBusiness',
+  '@type': 'ProfessionalService',
   name: 'Coventry Analytics',
   url: 'https://coventryanalytics.co.uk',
   description:
@@ -51,15 +51,51 @@ const localBusinessSchema = {
     addressRegion: 'West Midlands',
     addressCountry: 'GB',
   },
-  areaServed: {
-    '@type': 'City',
-    name: 'Coventry',
+  geo: {
+    '@type': 'GeoCoordinates',
+    latitude: 52.4068,
+    longitude: -1.5197,
   },
+  areaServed: [
+    { '@type': 'City', name: 'Coventry' },
+    { '@type': 'Place', name: 'Earlsdon' },
+    { '@type': 'Place', name: 'Foleshill' },
+    { '@type': 'Place', name: 'Tile Hill' },
+    { '@type': 'Place', name: 'Binley' },
+    { '@type': 'Place', name: 'Coundon' },
+    { '@type': 'Place', name: 'Cheylesmore' },
+    { '@type': 'Place', name: 'Canley' },
+    { '@type': 'City', name: 'Kenilworth' },
+    { '@type': 'City', name: 'Rugby' },
+    { '@type': 'City', name: 'Warwick' },
+    { '@type': 'City', name: 'Leamington Spa' },
+    { '@type': 'AdministrativeArea', name: 'Warwickshire' },
+    { '@type': 'AdministrativeArea', name: 'West Midlands' },
+  ],
   email: 'info.coventryanalytics@gmail.com',
+  telephone: '+44-24-0000-0000',
+  openingHoursSpecification: [
+    {
+      '@type': 'OpeningHoursSpecification',
+      dayOfWeek: ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday'],
+      opens: '09:00',
+      closes: '18:00',
+    },
+  ],
   sameAs: [
     'https://www.linkedin.com/company/coventry-analytics',
   ],
   priceRange: '££',
+  knowsAbout: [
+    'Business Analytics',
+    'Small Business Reporting',
+    'Café Analytics',
+    'Restaurant Business Intelligence',
+    'Taxi Operator Analytics',
+    'Retail Business Reports',
+    'SME Financial Reporting',
+    'Business KPIs',
+  ],
   serviceType: [
     'Business Clarity Audit',
     'Monthly Intelligence Report',

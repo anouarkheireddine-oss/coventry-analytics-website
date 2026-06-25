@@ -2,12 +2,13 @@ import NavScroll from './components/NavScroll';
 import ContactForm from './components/ContactForm';
 
 const EMAIL = 'info.coventryanalytics@gmail.com';
+const PHONE = '024 0000 0000';
 
 export default function Home() {
   return (
     <>
       {/* ── NAV ─────────────────────────────────────────── */}
-      <NavScroll email={EMAIL} />
+      <NavScroll email={EMAIL} phone={PHONE} />
 
       {/* ── HERO ─────────────────────────────────────────── */}
       <section className="ca-hero" id="top">
@@ -217,17 +218,20 @@ export default function Home() {
           </div>
           <div className="ca-industries">
             {[
-              { label: "Cafés & Coffee Shops", desc: "Identify dead hours, labour cost vs. revenue, and your most profitable items." },
-              { label: "Restaurants & Takeaways", desc: "Track covers, food cost %, delivery platform margin erosion, and peak night performance." },
-              { label: "Taxi & Private Hire", desc: "Driver efficiency, peak utilisation, dead miles, and revenue-per-hour by shift." },
-              { label: "Retail Shops", desc: "Dead stock, basket size trends, footfall conversion, and slow-moving product flags." },
-              { label: "Local Service Businesses", desc: "Job profitability, repeat client tracking, and seasonal demand patterns." },
+              { label: "Cafés & Coffee Shops", desc: "Identify dead hours, labour cost vs. revenue, and your most profitable items.", href: "/business-analytics-coventry-cafes" },
+              { label: "Restaurants & Takeaways", desc: "Track covers, food cost %, delivery platform margin erosion, and peak night performance.", href: "/business-analytics-coventry-restaurants" },
+              { label: "Taxi & Private Hire", desc: "Driver efficiency, peak utilisation, dead miles, and revenue-per-hour by shift.", href: "/business-analytics-coventry-taxi" },
+              { label: "Retail Shops", desc: "Dead stock, basket size trends, footfall conversion, and slow-moving product flags.", href: null },
+              { label: "Local Service Businesses", desc: "Job profitability, repeat client tracking, and seasonal demand patterns.", href: null },
             ].map((ind) => (
               <div className="ca-industry" key={ind.label}>
                 <div className="ca-industry__accent" />
                 <div>
                   <p className="ca-industry__label">{ind.label}</p>
                   <p className="ca-industry__desc">{ind.desc}</p>
+                  {ind.href && (
+                    <a href={ind.href} className="ca-industry__link">See what we track →</a>
+                  )}
                 </div>
               </div>
             ))}
@@ -260,6 +264,36 @@ export default function Home() {
               <p className="ca-quote__note">Name changed at client request · Result verified</p>
             </footer>
           </blockquote>
+        </div>
+      </section>
+
+      {/* ── ABOUT ────────────────────────────────────────── */}
+      <section className="ca-about" id="about">
+        <div className="ca-wrap">
+          <div className="ca-about__grid">
+            <div className="ca-about__photo">
+              <div className="ca-about__avatar" aria-label="Anouar Kheireddine, founder of Coventry Analytics" />
+            </div>
+            <div className="ca-about__text">
+              <p className="ca-sh-kicker">Who we are</p>
+              <h2 className="ca-h2">A Coventry analyst,<br />not a faceless agency</h2>
+              <p className="ca-about__bio">
+                I&apos;m Anouar, and I started Coventry Analytics because I kept seeing local
+                business owners make costly decisions without reliable numbers — not because they
+                didn&apos;t care, but because nobody had made the data easy to understand.
+              </p>
+              <p className="ca-about__bio">
+                I work directly with every client. You won&apos;t speak to an account manager.
+                You won&apos;t receive a generic template. Every report I write is specific to
+                your business, your figures, and your situation in Coventry.
+              </p>
+              <div className="ca-about__badges">
+                <span className="ca-about__badge">Based in Coventry CV1</span>
+                <span className="ca-about__badge">Analytics background</span>
+                <span className="ca-about__badge">Local business specialist</span>
+              </div>
+            </div>
+          </div>
         </div>
       </section>
 
@@ -337,6 +371,39 @@ export default function Home() {
               <ContactForm />
             </div>
           </div>
+        </div>
+      </section>
+
+      {/* ── AREAS SERVED ─────────────────────────────────── */}
+      <section className="ca-areas">
+        <div className="ca-wrap">
+          <p className="ca-areas__label">Areas we serve</p>
+          <div className="ca-areas__grid">
+            {[
+              { area: "Coventry City Centre", post: "CV1" },
+              { area: "Earlsdon", post: "CV5" },
+              { area: "Foleshill", post: "CV6" },
+              { area: "Tile Hill", post: "CV4" },
+              { area: "Binley", post: "CV3" },
+              { area: "Coundon", post: "CV6" },
+              { area: "Cheylesmore", post: "CV3" },
+              { area: "Canley", post: "CV4" },
+              { area: "Kenilworth", post: "CV8" },
+              { area: "Rugby", post: "CV21–22" },
+              { area: "Warwick", post: "CV34" },
+              { area: "Leamington Spa", post: "CV31–32" },
+            ].map(({ area, post }) => (
+              <div className="ca-areas__item" key={area}>
+                <span className="ca-areas__name">{area}</span>
+                <span className="ca-areas__post">{post}</span>
+              </div>
+            ))}
+          </div>
+          <p className="ca-areas__note">
+            Not sure if we cover your area?{' '}
+            <a href={`mailto:${EMAIL}?subject=Area Enquiry`}>Get in touch</a> — if you&apos;re in
+            Warwickshire or the West Midlands, we can almost certainly help.
+          </p>
         </div>
       </section>
 
