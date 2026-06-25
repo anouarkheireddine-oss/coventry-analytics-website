@@ -25,7 +25,7 @@ export default function Home() {
 
   return (
     <>
-      {/* ── NAV ────────────────────────────────────────── */}
+      {/* ── NAV ─────────────────────────────────────────── */}
       <nav className={`ca-nav${scrolled ? ' ca-nav--scrolled' : ''}`}>
         <div className="ca-wrap ca-nav__row">
           <a href="#top" className="ca-logo" onClick={to('top')}>
@@ -37,10 +37,10 @@ export default function Home() {
         </div>
       </nav>
 
-      {/* ── HERO ───────────────────────────────────────── */}
+      {/* ── HERO ─────────────────────────────────────────── */}
       <section className="ca-hero" id="top">
         <div className="ca-wrap">
-          <p className="ca-eyebrow">Business reporting for Coventry SMEs</p>
+          <p className="ca-eyebrow">Coventry · Local business reporting</p>
           <h1 className="ca-display">
             Your business numbers,<br />
             <em>finally clear.</em>
@@ -64,7 +64,7 @@ export default function Home() {
         </div>
       </section>
 
-      {/* ── PROBLEM ────────────────────────────────────── */}
+      {/* ── PROBLEM ──────────────────────────────────────── */}
       <section className="ca-problem">
         <div className="ca-wrap">
           <div className="ca-problem__inner">
@@ -77,11 +77,11 @@ export default function Home() {
         </div>
       </section>
 
-      {/* ── SERVICES ───────────────────────────────────── */}
+      {/* ── SERVICES ─────────────────────────────────────── */}
       <section className="ca-services" id="services">
         <div className="ca-wrap">
           <div className="ca-sh">
-            <span className="ca-label">Two simple services</span>
+            <p className="ca-sh-kicker">Two simple services</p>
             <h2 className="ca-h2">Choose where to start</h2>
             <p className="ca-sh-sub">We offer two things. Nothing more.</p>
           </div>
@@ -148,11 +148,11 @@ export default function Home() {
         </div>
       </section>
 
-      {/* ── PROCESS ────────────────────────────────────── */}
+      {/* ── PROCESS ──────────────────────────────────────── */}
       <section className="ca-process" id="process">
         <div className="ca-wrap">
           <div className="ca-sh">
-            <span className="ca-label">Simple process</span>
+            <p className="ca-sh-kicker">How it works</p>
             <h2 className="ca-h2">Three steps to clarity</h2>
           </div>
           <div className="ca-steps">
@@ -185,11 +185,11 @@ export default function Home() {
         </div>
       </section>
 
-      {/* ── REPORT ANATOMY ─────────────────────────────── */}
+      {/* ── REPORT ANATOMY ───────────────────────────────── */}
       <section className="ca-report" id="report">
         <div className="ca-wrap">
           <div className="ca-sh">
-            <span className="ca-label">What you receive</span>
+            <p className="ca-sh-kicker">What you receive</p>
             <h2 className="ca-h2">Inside your monthly report</h2>
             <p className="ca-sh-sub">
               Every report follows the same five-part structure. Consistent. Clear. Actionable.
@@ -220,13 +220,13 @@ export default function Home() {
 
             <div className="ca-report__pts">
               {[
-                { icon: "📋", title: "Plain English", body: "No analytics jargon. No technical terms. Written the same way you'd explain it to a trusted friend." },
-                { icon: "⚡", title: "One action, always", body: "Every report ends with one specific recommendation and what it's estimated to save or earn you." },
-                { icon: "📐", title: "Industry-specific", body: "Your KPIs match your business type. A café report looks different from a taxi operator report." },
-                { icon: "📬", title: "Delivered monthly", body: "In your inbox by the 5th. Optional 15-minute walkthrough call included." },
+                { title: "Plain English", body: "No analytics jargon. No technical terms. Written the same way you'd explain it to a trusted friend." },
+                { title: "One action, always", body: "Every report ends with one specific recommendation and what it's estimated to save or earn you." },
+                { title: "Industry-specific", body: "Your KPIs match your business type. A café report looks different from a taxi operator report." },
+                { title: "Delivered monthly", body: "In your inbox by the 5th. Optional 15-minute walkthrough call included." },
               ].map((pt) => (
                 <div className="ca-report__pt" key={pt.title}>
-                  <span className="ca-report__pt-icon">{pt.icon}</span>
+                  <div className="ca-report__pt-line" />
                   <div>
                     <p className="ca-report__pt-title">{pt.title}</p>
                     <p className="ca-report__pt-body">{pt.body}</p>
@@ -238,23 +238,23 @@ export default function Home() {
         </div>
       </section>
 
-      {/* ── WHO IT'S FOR ───────────────────────────────── */}
+      {/* ── WHO IT'S FOR ─────────────────────────────────── */}
       <section className="ca-for" id="for">
         <div className="ca-wrap">
           <div className="ca-sh">
-            <span className="ca-label">Who it&apos;s for</span>
+            <p className="ca-sh-kicker">Who it&apos;s for</p>
             <h2 className="ca-h2">Local Coventry businesses</h2>
           </div>
           <div className="ca-industries">
             {[
-              { icon: "☕", label: "Cafés & Coffee Shops", desc: "Identify dead hours, labour cost vs. revenue, and your most profitable items." },
-              { icon: "🍽", label: "Restaurants & Takeaways", desc: "Track covers, food cost %, delivery platform margin erosion, and peak night performance." },
-              { icon: "🚕", label: "Taxi & Private Hire", desc: "Driver efficiency, peak utilisation, dead miles, and revenue-per-hour by shift." },
-              { icon: "🛍", label: "Retail Shops", desc: "Dead stock, basket size trends, footfall conversion, and slow-moving product flags." },
-              { icon: "🔧", label: "Local Service Businesses", desc: "Job profitability, repeat client tracking, and seasonal demand patterns." },
+              { label: "Cafés & Coffee Shops", desc: "Identify dead hours, labour cost vs. revenue, and your most profitable items." },
+              { label: "Restaurants & Takeaways", desc: "Track covers, food cost %, delivery platform margin erosion, and peak night performance." },
+              { label: "Taxi & Private Hire", desc: "Driver efficiency, peak utilisation, dead miles, and revenue-per-hour by shift." },
+              { label: "Retail Shops", desc: "Dead stock, basket size trends, footfall conversion, and slow-moving product flags." },
+              { label: "Local Service Businesses", desc: "Job profitability, repeat client tracking, and seasonal demand patterns." },
             ].map((ind) => (
               <div className="ca-industry" key={ind.label}>
-                <span className="ca-industry__icon">{ind.icon}</span>
+                <div className="ca-industry__accent" />
                 <div>
                   <p className="ca-industry__label">{ind.label}</p>
                   <p className="ca-industry__desc">{ind.desc}</p>
@@ -276,17 +276,21 @@ export default function Home() {
         </div>
       </section>
 
-      {/* ── CONTACT ────────────────────────────────────── */}
+      {/* ── CONTACT ──────────────────────────────────────── */}
       <section className="ca-contact" id="contact">
         <div className="ca-wrap">
           <div className="ca-contact__grid">
             <div className="ca-contact__text">
-              <span className="ca-label ca-label--light">Free to start</span>
+              <p className="ca-contact__kicker">Free · 20 minutes · No obligation</p>
               <h2 className="ca-h2">Book your free<br />audit call</h2>
               <p className="ca-contact__sub">
-                20 minutes. Free. We&apos;ll look at your current numbers and tell you exactly
-                what we&apos;d report on — and whether it would be worth it for your business.
-                No obligation.
+                We&apos;ll look at your current numbers and tell you exactly
+                what we&apos;d report on — and whether it would be worth it for your
+                business. You&apos;ll get a straight answer either way.
+              </p>
+              <p className="ca-contact__human">
+                We&apos;re a small team based in Coventry. You speak directly to us —
+                not an account manager, not a chatbot.
               </p>
               <ul className="ca-contact__pts">
                 {[
@@ -304,12 +308,12 @@ export default function Home() {
                 <div className="ca-success">
                   <div className="ca-success__mark">✓</div>
                   <h3>Received.</h3>
-                  <p>We&apos;ll be in touch within 1 business day to schedule your call.</p>
+                  <p>We&apos;ll be in touch within 1 business day to arrange your call.</p>
                 </div>
               ) : (
                 <form className="ca-form" onSubmit={onSubmit}>
-                  <h3 className="ca-form__title">Get in touch</h3>
-                  <p className="ca-form__sub">We respond within 1 business day. No commitment required.</p>
+                  <h3 className="ca-form__title">Tell us about your business</h3>
+                  <p className="ca-form__sub">We&apos;ll come back to you within one working day.</p>
                   <div className="ca-field">
                     <label>Your name</label>
                     <input type="text" placeholder="Sarah Ahmed" required />
@@ -338,8 +342,8 @@ export default function Home() {
                     <label>Which service interests you?</label>
                     <select required defaultValue="">
                       <option value="" disabled>Select a service</option>
-                      <option>Business Clarity Audit — £297</option>
-                      <option>Monthly Intelligence Report — From £149/month</option>
+                      <option>Business Clarity Audit</option>
+                      <option>Monthly Intelligence Report</option>
                       <option>Not sure yet</option>
                     </select>
                   </div>
@@ -347,7 +351,7 @@ export default function Home() {
                     Book Free Audit Call →
                   </button>
                   <p className="ca-form__note">
-                    Coventry-based businesses only. We respond within 1 working day.
+                    Coventry-based businesses only. No commitment required.
                   </p>
                 </form>
               )}
@@ -356,7 +360,7 @@ export default function Home() {
         </div>
       </section>
 
-      {/* ── FOOTER ─────────────────────────────────────── */}
+      {/* ── FOOTER ───────────────────────────────────────── */}
       <footer className="ca-footer">
         <div className="ca-wrap ca-footer__inner">
           <div>
@@ -380,9 +384,7 @@ export default function Home() {
           </nav>
           <div className="ca-footer__legal">
             <p>© 2026 Coventry Analytics. All rights reserved.</p>
-            <a href={`mailto:${EMAIL}`}>
-              {EMAIL}
-            </a>
+            <a href={`mailto:${EMAIL}`}>{EMAIL}</a>
           </div>
         </div>
       </footer>
