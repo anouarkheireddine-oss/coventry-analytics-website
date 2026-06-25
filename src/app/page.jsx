@@ -1,589 +1,356 @@
 'use client';
-
-import { motion } from 'framer-motion';
-import {
-  ArrowRight, AlertTriangle, CheckCircle2, Clock,
-  TrendingUp, Layers, Zap, Users, Package, Truck,
-  CalendarCheck, Database, BarChart3, Bell, ChevronRight,
-} from 'lucide-react';
-
-const fadeUp = (delay = 0) => ({
-  initial: { opacity: 0, y: 24 },
-  whileInView: { opacity: 1, y: 0 },
-  viewport: { once: true },
-  transition: { duration: 0.6, delay },
-});
-
-function SectionLabel({ children }) {
-  return (
-    <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full border border-[#00d4ff30] bg-[#00d4ff08] text-[#00d4ff] text-xs font-semibold uppercase tracking-widest mb-5">
-      <span className="w-1 h-1 rounded-full bg-[#00d4ff]" />
-      {children}
-    </span>
-  );
-}
-
-function GlassCard({ children, className = '', delay = 0 }) {
-  return (
-    <motion.div
-      {...fadeUp(delay)}
-      className={`glass rounded-2xl p-6 ${className}`}
-    >
-      {children}
-    </motion.div>
-  );
-}
+import { useEffect, useState } from 'react';
 
 export default function Home() {
-  const handleAnchor = (e, href) => {
+  const [scrolled, setScrolled] = useState(false);
+  const [submitted, setSubmitted] = useState(false);
+
+  useEffect(() => {
+    const onScroll = () => setScrolled(window.scrollY > 40);
+    window.addEventListener('scroll', onScroll);
+    return () => window.removeEventListener('scroll', onScroll);
+  }, []);
+
+  function smoothScroll(e, id) {
     e.preventDefault();
-    const el = document.querySelector(href);
-    if (el) el.scrollIntoView({ behavior: 'smooth', block: 'start' });
-  };
+    document.getElementById(id)?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+  }
+
+  function handleSubmit(e) {
+    e.preventDefault();
+    setSubmitted(true);
+  }
 
   return (
-    <main className="overflow-x-hidden">
-
-      {/* ─── HERO ─────────────────────────────────────────────────────── */}
-      <section id="hero" className="relative min-h-screen flex items-center pt-16">
-        <div className="max-w-6xl mx-auto px-6 py-24 md:py-32 w-full">
-          <div className="max-w-4xl">
-            <motion.div {...fadeUp(0)}>
-              <SectionLabel>UK Operational Intelligence Consultancy</SectionLabel>
-            </motion.div>
-
-            <motion.h1
-              {...fadeUp(0.1)}
-              className="text-4xl md:text-6xl lg:text-7xl font-black leading-[1.05] tracking-tight text-balance mb-6"
-            >
-              Stop Running Your Business on{' '}
-              <span className="neon-text">Yesterday's Numbers</span>
-            </motion.h1>
-
-            <motion.p
-              {...fadeUp(0.2)}
-              className="text-lg md:text-xl text-white/60 leading-relaxed max-w-2xl mb-10"
-            >
-              We deploy real-time Operational Control Systems for SME leaders in logistics,
-              operations, and e-commerce — giving you instant visibility into every corner
-              of your business performance. Operational in{' '}
-              <span className="text-white/90 font-semibold">5 days</span>.
-            </motion.p>
-
-            <motion.div {...fadeUp(0.3)} className="flex flex-col sm:flex-row gap-4 mb-16">
-              <a
-                href="#contact"
-                onClick={(e) => handleAnchor(e, '#contact')}
-                className="inline-flex items-center justify-center gap-2 px-7 py-4 rounded-xl bg-[#00d4ff] text-black font-bold text-base hover:bg-[#00bfe8] transition-all shadow-[0_0_30px_rgba(0,212,255,0.35)] hover:shadow-[0_0_40px_rgba(0,212,255,0.5)]"
-              >
-                Book Operational Leak Audit
-                <ArrowRight size={18} />
-              </a>
-              <a
-                href="#offer"
-                onClick={(e) => handleAnchor(e, '#offer')}
-                className="inline-flex items-center justify-center gap-2 px-7 py-4 rounded-xl border border-white/[0.12] text-white/70 font-medium text-base hover:border-white/25 hover:text-white transition-all"
-              >
-                See the 5-Day Offer
-                <ChevronRight size={18} />
-              </a>
-            </motion.div>
-
-            {/* Social proof bar */}
-            <motion.div
-              {...fadeUp(0.4)}
-              className="flex flex-wrap items-center gap-x-8 gap-y-3"
-            >
-              {[
-                { icon: Clock, text: '5-Day Deployment' },
-                { icon: Zap,   text: 'No IT Dependency' },
-                { icon: Users, text: 'Built for SME Operators' },
-              ].map(({ icon: Icon, text }) => (
-                <div key={text} className="flex items-center gap-2 text-sm text-white/40">
-                  <Icon size={14} className="text-[#00d4ff]" />
-                  <span>{text}</span>
-                </div>
-              ))}
-            </motion.div>
-          </div>
-
-          {/* Hero metrics strip */}
-          <motion.div
-            {...fadeUp(0.5)}
-            className="grid grid-cols-2 md:grid-cols-4 gap-3 mt-20"
-          >
-            {[
-              { value: '5',     unit: 'Days',   label: 'Average deployment time' },
-              { value: '100%',  unit: '',        label: 'Real-time data visibility' },
-              { value: '0',     unit: 'IT staff', label: 'Required to maintain it' },
-              { value: '1',     unit: 'View',    label: 'Decision-ready daily brief' },
-            ].map(({ value, unit, label }) => (
-              <div
-                key={label}
-                className="glass rounded-2xl px-5 py-5 border border-white/[0.06]"
-              >
-                <p className="text-3xl font-black text-white">
-                  {value}
-                  <span className="text-base font-semibold text-[#00d4ff] ml-1">{unit}</span>
-                </p>
-                <p className="text-xs text-white/40 mt-1 leading-snug">{label}</p>
-              </div>
-            ))}
-          </motion.div>
-        </div>
-      </section>
-
-      {/* ─── PROBLEM ──────────────────────────────────────────────────── */}
-      <section id="problem" className="scroll-mt-16 py-24 md:py-32">
-        <div className="max-w-6xl mx-auto px-6">
-          <motion.div {...fadeUp(0)} className="max-w-2xl mb-16">
-            <SectionLabel>The Problem</SectionLabel>
-            <h2 className="text-3xl md:text-5xl font-black leading-tight tracking-tight mb-5">
-              You're Making £1M+ Decisions on{' '}
-              <span className="text-white/40">Outdated Information</span>
-            </h2>
-            <p className="text-white/50 text-lg leading-relaxed">
-              Most SME operators we speak to face the same three operational failures —
-              and they're costing more than they realise.
-            </p>
-          </motion.div>
-
-          <div className="grid md:grid-cols-3 gap-4 mb-16">
-            {[
-              {
-                icon: AlertTriangle,
-                color: '#f59e0b',
-                title: 'Decision Lag',
-                body: "By the time your reports are compiled and reviewed, the problem has compounded. You're always reacting — never in control.",
-              },
-              {
-                icon: Layers,
-                color: '#ef4444',
-                title: 'Excel Chaos',
-                body: "Spreadsheets that no-one fully understands, version conflicts, manual errors, and hours wasted each week just to produce a number that's already stale.",
-              },
-              {
-                icon: Clock,
-                color: '#8b5cf6',
-                title: 'Visibility Gaps',
-                body: "You don't know what's happening in your logistics, fulfilment, or cashflow until end-of-day — or worse, end-of-week. Blind spots become costly surprises.",
-              },
-            ].map(({ icon: Icon, color, title, body }, i) => (
-              <GlassCard key={title} delay={0.1 * i} className="border border-white/[0.06]">
-                <div
-                  className="w-10 h-10 rounded-xl flex items-center justify-center mb-4"
-                  style={{ background: `${color}15` }}
-                >
-                  <Icon size={20} style={{ color }} />
-                </div>
-                <h3 className="text-base font-bold text-white mb-2">{title}</h3>
-                <p className="text-sm text-white/50 leading-relaxed">{body}</p>
-              </GlassCard>
-            ))}
-          </div>
-
-          {/* Pull quote */}
-          <motion.div
-            {...fadeUp(0.3)}
-            className="glass rounded-2xl px-8 py-8 border border-[#00d4ff15] max-w-3xl"
-          >
-            <p className="text-xl md:text-2xl font-semibold text-white/80 leading-snug mb-4">
-              "We had twelve spreadsheets across three departments and still couldn't
-              answer the question: are we profitable this week?"
-            </p>
-            <p className="text-sm text-white/30">— Operations Director, Logistics SME, West Midlands</p>
-          </motion.div>
-        </div>
-      </section>
-
-      {/* ─── SOLUTION ─────────────────────────────────────────────────── */}
-      <section id="solution" className="scroll-mt-16 py-24 md:py-32 border-t border-white/[0.04]">
-        <div className="max-w-6xl mx-auto px-6">
-          <div className="grid md:grid-cols-2 gap-16 items-center">
-            <div>
-              <motion.div {...fadeUp(0)}>
-                <SectionLabel>Our Approach</SectionLabel>
-              </motion.div>
-              <motion.h2 {...fadeUp(0.1)} className="text-3xl md:text-5xl font-black leading-tight tracking-tight mb-6">
-                Operational Control Systems —{' '}
-                <span className="neon-text">Not Just Dashboards</span>
-              </motion.h2>
-              <motion.p {...fadeUp(0.2)} className="text-white/55 text-lg leading-relaxed mb-8">
-                A dashboard shows you data. An Operational Control System changes how
-                fast you can act on it. We build the complete infrastructure: automated
-                data pipelines, structured KPI frameworks, and a decision-ready daily
-                operational view — all powered by Power BI.
-              </motion.p>
-              <motion.div {...fadeUp(0.3)} className="space-y-4">
-                {[
-                  'Real-time visibility into every operational metric that matters',
-                  'Decisions in minutes, not after the next Monday morning meeting',
-                  'One unified view replacing multiple disconnected spreadsheets',
-                  'Automated data flow — no manual exports, no human error',
-                ].map((point) => (
-                  <div key={point} className="flex items-start gap-3">
-                    <CheckCircle2 size={16} className="text-[#00d4ff] mt-0.5 flex-shrink-0" />
-                    <span className="text-sm text-white/60 leading-relaxed">{point}</span>
-                  </div>
-                ))}
-              </motion.div>
-            </div>
-
-            {/* Visual representation */}
-            <motion.div {...fadeUp(0.2)} className="relative">
-              <div className="glass rounded-2xl p-6 border border-[#00d4ff15]">
-                <div className="flex items-center justify-between mb-5">
-                  <div>
-                    <p className="text-xs text-white/30 uppercase tracking-widest font-medium">Operational Control</p>
-                    <p className="text-sm font-semibold text-white mt-0.5">Live Business View</p>
-                  </div>
-                  <div className="flex items-center gap-1.5">
-                    <span className="w-2 h-2 rounded-full bg-[#22c55e] shadow-[0_0_8px_#22c55e]" />
-                    <span className="text-xs text-[#22c55e] font-medium">Live</span>
-                  </div>
-                </div>
-                <div className="space-y-3">
-                  {[
-                    { label: 'Fulfilment Rate',   value: '98.2%',  change: '+1.4%',  up: true  },
-                    { label: 'Revenue Today',      value: '£12,840', change: '+8.3%', up: true  },
-                    { label: 'Orders in Progress', value: '147',    change: '-3',     up: false },
-                    { label: 'Cash Position',      value: '£84.2k', change: '+£2.1k', up: true  },
-                  ].map(({ label, value, change, up }) => (
-                    <div
-                      key={label}
-                      className="flex items-center justify-between px-4 py-3 rounded-xl bg-white/[0.03] border border-white/[0.05]"
-                    >
-                      <span className="text-xs text-white/40 font-medium">{label}</span>
-                      <div className="flex items-center gap-3">
-                        <span className={`text-xs font-semibold ${up ? 'text-[#22c55e]' : 'text-[#f59e0b]'}`}>
-                          {change}
-                        </span>
-                        <span className="text-sm font-bold text-white">{value}</span>
-                      </div>
-                    </div>
-                  ))}
-                </div>
-                <div className="mt-4 pt-4 border-t border-white/[0.06] flex items-center gap-2">
-                  <Bell size={12} className="text-[#00d4ff]" />
-                  <p className="text-xs text-white/30">Fulfilment alert triggered at 09:14 — auto-notified ops team</p>
-                </div>
-              </div>
-              {/* Glow */}
-              <div className="absolute -inset-4 bg-[#00d4ff] opacity-[0.03] rounded-3xl blur-2xl -z-10" />
-            </motion.div>
-          </div>
-        </div>
-      </section>
-
-      {/* ─── CORE OFFER ───────────────────────────────────────────────── */}
-      <section id="offer" className="scroll-mt-16 py-24 md:py-32 border-t border-white/[0.04]">
-        <div className="max-w-6xl mx-auto px-6">
-          <div className="text-center max-w-2xl mx-auto mb-16">
-            <motion.div {...fadeUp(0)}>
-              <SectionLabel>Core Offer</SectionLabel>
-            </motion.div>
-            <motion.h2 {...fadeUp(0.1)} className="text-3xl md:text-5xl font-black leading-tight tracking-tight mb-5">
-              The 5-Day Operational{' '}
-              <span className="neon-text">Control System</span>
-            </motion.h2>
-            <motion.p {...fadeUp(0.2)} className="text-white/50 text-lg leading-relaxed">
-              We design and deploy a complete real-time control system tailored to your
-              most critical business function — ready in 5 working days.
-            </motion.p>
-          </div>
-
-          <div className="grid md:grid-cols-2 gap-6 mb-8">
-            {/* Deliverables */}
-            <GlassCard delay={0.1} className="border border-[#00d4ff15]">
-              <div className="flex items-center gap-2 mb-6">
-                <div className="w-8 h-8 rounded-lg bg-[#00d4ff15] flex items-center justify-center">
-                  <CheckCircle2 size={16} className="text-[#00d4ff]" />
-                </div>
-                <h3 className="text-base font-bold text-white">What's Included</h3>
-              </div>
-              <div className="space-y-4">
-                {[
-                  {
-                    icon: BarChart3,
-                    title: 'Power BI Operational View',
-                    desc: 'Tailored to one core function: logistics, revenue, fulfilment, or cashflow.',
-                  },
-                  {
-                    icon: Database,
-                    title: 'Automated Data Pipeline',
-                    desc: 'Excel or existing systems → Power BI. Fully automated. No manual exports.',
-                  },
-                  {
-                    icon: TrendingUp,
-                    title: 'KPI System Design',
-                    desc: 'We define the metrics that actually drive your operational performance.',
-                  },
-                  {
-                    icon: CalendarCheck,
-                    title: 'Decision-Ready Daily View',
-                    desc: 'A single operational brief you can act on within minutes each morning.',
-                  },
-                  {
-                    icon: Bell,
-                    title: 'Optional Automated Alerts',
-                    desc: 'Email or Slack-style notifications when critical thresholds are breached.',
-                  },
-                ].map(({ icon: Icon, title, desc }, i) => (
-                  <div key={title} className="flex items-start gap-3">
-                    <div className="w-8 h-8 rounded-lg bg-white/[0.04] flex items-center justify-center flex-shrink-0 mt-0.5">
-                      <Icon size={14} className="text-[#00d4ff]" />
-                    </div>
-                    <div>
-                      <p className="text-sm font-semibold text-white">{title}</p>
-                      <p className="text-xs text-white/40 mt-0.5 leading-relaxed">{desc}</p>
-                    </div>
-                  </div>
-                ))}
-              </div>
-            </GlassCard>
-
-            {/* Positioning */}
-            <div className="flex flex-col gap-4">
-              <GlassCard delay={0.2} className="border border-white/[0.06] flex-1">
-                <p className="text-xs font-semibold text-white/30 uppercase tracking-widest mb-3">The Positioning Shift</p>
-                <div className="space-y-3">
-                  {[
-                    { from: 'Weekly Excel report', to: 'Live operational intelligence' },
-                    { from: 'End-of-day summaries', to: 'Real-time decision triggers' },
-                    { from: "Guessing what's wrong", to: 'Knowing exactly where to act' },
-                    { from: 'Data prepared by someone', to: 'Data that flows automatically' },
-                  ].map(({ from, to }) => (
-                    <div key={from} className="flex items-center gap-3 text-sm">
-                      <span className="text-white/30 line-through flex-1">{from}</span>
-                      <ArrowRight size={12} className="text-[#00d4ff] flex-shrink-0" />
-                      <span className="text-white/80 flex-1 font-medium">{to}</span>
-                    </div>
-                  ))}
-                </div>
-              </GlassCard>
-
-              <GlassCard delay={0.3} className="border border-[#22c55e20] bg-[#22c55e04]">
-                <div className="flex items-start gap-3">
-                  <Zap size={18} className="text-[#22c55e] flex-shrink-0 mt-0.5" />
-                  <div>
-                    <p className="text-sm font-bold text-white mb-1">Ready in 5 Working Days</p>
-                    <p className="text-sm text-white/50 leading-relaxed">
-                      No lengthy consultancy engagements. No IT dependency. We work with
-                      your existing data sources and hand over a fully operational system
-                      within one working week.
-                    </p>
-                  </div>
-                </div>
-              </GlassCard>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* ─── PROCESS ──────────────────────────────────────────────────── */}
-      <section id="process" className="scroll-mt-16 py-24 md:py-32 border-t border-white/[0.04]">
-        <div className="max-w-6xl mx-auto px-6">
-          <div className="max-w-2xl mb-16">
-            <motion.div {...fadeUp(0)}>
-              <SectionLabel>How It Works</SectionLabel>
-            </motion.div>
-            <motion.h2 {...fadeUp(0.1)} className="text-3xl md:text-5xl font-black leading-tight tracking-tight mb-5">
-              From Discovery to{' '}
-              <span className="neon-text">Operational Control</span>{' '}
-              in 5 Days
-            </motion.h2>
-            <motion.p {...fadeUp(0.2)} className="text-white/50 text-lg">
-              A structured delivery process designed to minimise disruption and
-              maximise impact for your team.
-            </motion.p>
-          </div>
-
-          <div className="grid md:grid-cols-4 gap-4">
-            {[
-              {
-                day: 'Day 1',
-                title: 'Discovery & Audit',
-                body: 'We map your current reporting, identify operational blind spots, and agree the one core function to control first.',
-                color: '#00d4ff',
-              },
-              {
-                day: 'Days 2–3',
-                title: 'Design & Build',
-                body: 'We design your KPI framework and build the Power BI operational view. Tailored to your business, not a template.',
-                color: '#22c55e',
-              },
-              {
-                day: 'Day 4',
-                title: 'Pipeline & Automation',
-                body: 'We connect your data sources and automate the flow. Your system starts pulling live data — no manual intervention required.',
-                color: '#f59e0b',
-              },
-              {
-                day: 'Day 5',
-                title: 'Deploy & Handover',
-                body: "We go live, brief your team, and hand over full control. You're operational — with complete visibility from day one.",
-                color: '#8b5cf6',
-              },
-            ].map(({ day, title, body, color }, i) => (
-              <GlassCard key={day} delay={0.1 * i} className="border border-white/[0.06] relative">
-                <div
-                  className="text-xs font-bold uppercase tracking-widest mb-3"
-                  style={{ color }}
-                >
-                  {day}
-                </div>
-                <h3 className="text-base font-bold text-white mb-3">{title}</h3>
-                <p className="text-sm text-white/50 leading-relaxed">{body}</p>
-                <div
-                  className="absolute top-0 left-0 w-full h-0.5 rounded-t-2xl"
-                  style={{ background: `linear-gradient(90deg, ${color}, transparent)` }}
-                />
-              </GlassCard>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* ─── WHO IT'S FOR ─────────────────────────────────────────────── */}
-      <section id="who" className="scroll-mt-16 py-24 md:py-32 border-t border-white/[0.04]">
-        <div className="max-w-6xl mx-auto px-6">
-          <div className="text-center max-w-2xl mx-auto mb-16">
-            <motion.div {...fadeUp(0)}>
-              <SectionLabel>Who It's For</SectionLabel>
-            </motion.div>
-            <motion.h2 {...fadeUp(0.1)} className="text-3xl md:text-5xl font-black leading-tight tracking-tight mb-5">
-              Built for Operators Who{' '}
-              <span className="neon-text">Can't Afford to Guess</span>
-            </motion.h2>
-            <motion.p {...fadeUp(0.2)} className="text-white/50 text-lg">
-              We work exclusively with SMEs where operational speed is a competitive
-              advantage — and where reporting delays are costing real money.
-            </motion.p>
-          </div>
-
-          <div className="grid md:grid-cols-3 gap-6">
-            {[
-              {
-                icon: Truck,
-                color: '#00d4ff',
-                segment: 'Logistics SMEs',
-                description: 'Haulage, freight, and distribution businesses managing routes, capacity, driver performance, and delivery SLAs — where a one-hour delay in visibility becomes a one-day operational problem.',
-                signals: ['Route efficiency visibility', 'Driver & vehicle utilisation', 'Delivery SLA tracking', 'Cost-per-drop analysis'],
-              },
-              {
-                icon: Users,
-                color: '#22c55e',
-                segment: 'Operations-Heavy Businesses',
-                description: 'Manufacturing, warehousing, or multi-site service businesses where operational throughput, staffing, and resource allocation decisions happen daily and must be made fast.',
-                signals: ['Throughput & capacity view', 'Labour cost management', 'Cross-site performance', 'Bottleneck identification'],
-              },
-              {
-                icon: Package,
-                color: '#f59e0b',
-                segment: 'E-commerce & Fulfilment',
-                description: 'Online retailers and third-party logistics providers managing order volumes, pick & pack rates, returns, and customer SLAs where daily operational decisions directly impact margin.',
-                signals: ['Order fulfilment rate', 'Pick & pack efficiency', 'Returns performance', 'Revenue vs. margin daily'],
-              },
-            ].map(({ icon: Icon, color, segment, description, signals }, i) => (
-              <GlassCard
-                key={segment}
-                delay={0.1 * i}
-                className="border border-white/[0.06] hover:border-white/[0.12] transition-colors group"
-              >
-                <div
-                  className="w-12 h-12 rounded-xl flex items-center justify-center mb-5"
-                  style={{ background: `${color}12`, boxShadow: `0 0 20px ${color}15` }}
-                >
-                  <Icon size={22} style={{ color }} />
-                </div>
-                <h3 className="text-lg font-bold text-white mb-3">{segment}</h3>
-                <p className="text-sm text-white/50 leading-relaxed mb-5">{description}</p>
-                <div className="space-y-2">
-                  {signals.map((s) => (
-                    <div key={s} className="flex items-center gap-2">
-                      <div className="w-1 h-1 rounded-full flex-shrink-0" style={{ background: color }} />
-                      <span className="text-xs text-white/40">{s}</span>
-                    </div>
-                  ))}
-                </div>
-              </GlassCard>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* ─── CTA ──────────────────────────────────────────────────────── */}
-      <section id="contact" className="scroll-mt-16 py-24 md:py-32 border-t border-white/[0.04]">
-        <div className="max-w-6xl mx-auto px-6">
-          <div className="relative glass rounded-3xl p-10 md:p-16 border border-[#00d4ff15] overflow-hidden text-center max-w-3xl mx-auto">
-            {/* Background glow */}
-            <div className="absolute inset-0 bg-[#00d4ff] opacity-[0.02] blur-3xl" />
-            <div className="relative z-10">
-              <motion.div {...fadeUp(0)}>
-                <SectionLabel>Free Audit — 20 Minutes</SectionLabel>
-              </motion.div>
-              <motion.h2 {...fadeUp(0.1)} className="text-3xl md:text-5xl font-black leading-tight tracking-tight mb-5">
-                Book Your{' '}
-                <span className="neon-text">Operational Leak Audit</span>
-              </motion.h2>
-              <motion.p {...fadeUp(0.2)} className="text-white/55 text-lg leading-relaxed mb-8 max-w-xl mx-auto">
-                In 20 minutes, we'll identify the exact inefficiencies, blind spots,
-                and decision delays in your current reporting setup — and show you
-                what an Operational Control System would look like for your business.
-                No commitment. No sales pitch. Just operational clarity.
-              </motion.p>
-
-              <motion.div {...fadeUp(0.3)} className="flex flex-col sm:flex-row gap-3 justify-center items-center mb-10">
-                <a
-                  href="mailto:info.coventryanalytics@gmail.com?subject=Operational Leak Audit Request"
-                  className="inline-flex items-center gap-2 px-8 py-4 rounded-xl bg-[#00d4ff] text-black font-bold text-base hover:bg-[#00bfe8] transition-all shadow-[0_0_30px_rgba(0,212,255,0.4)] hover:shadow-[0_0_45px_rgba(0,212,255,0.55)]"
-                >
-                  Book Your Free Audit
-                  <ArrowRight size={18} />
-                </a>
-              </motion.div>
-
-              <motion.div
-                {...fadeUp(0.4)}
-                className="grid grid-cols-3 gap-4 text-center"
-              >
-                {[
-                  { label: 'Duration', value: '20 minutes' },
-                  { label: 'Cost',     value: 'Complimentary' },
-                  { label: 'Format',   value: 'Video call' },
-                ].map(({ label, value }) => (
-                  <div key={label}>
-                    <p className="text-base font-bold text-white">{value}</p>
-                    <p className="text-xs text-white/30 mt-0.5">{label}</p>
-                  </div>
-                ))}
-              </motion.div>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* ─── FOOTER ───────────────────────────────────────────────────── */}
-      <footer className="border-t border-white/[0.06] py-8">
-        <div className="max-w-6xl mx-auto px-6 flex flex-col md:flex-row items-center justify-between gap-4">
-          <div className="flex items-center gap-2.5">
-            <div className="w-6 h-6 rounded-md bg-[#00d4ff] flex items-center justify-center">
-              <BarChart3 size={12} className="text-black" strokeWidth={2.5} />
-            </div>
-            <span className="text-sm font-bold text-white">Coventry Analytics</span>
-          </div>
-          <p className="text-xs text-white/25">
-            © {new Date().getFullYear()} Coventry Analytics. UK-based operational intelligence consultancy.
-          </p>
-          <a
-            href="mailto:info.coventryanalytics@gmail.com"
-            className="text-xs text-white/30 hover:text-[#00d4ff] transition-colors"
-          >
-            info.coventryanalytics@gmail.com
+    <>
+      {/* NAV */}
+      <nav className={`ca-nav${scrolled ? ' ca-nav--scrolled' : ''}`} id="nav">
+        <div className="ca-container ca-nav__inner">
+          <a href="#hero" className="ca-nav__logo" onClick={e => smoothScroll(e, 'hero')}>
+            Coventry <span>Analytics</span>
+          </a>
+          <a href="#audit" className="ca-btn ca-btn--sm ca-btn--primary" onClick={e => smoothScroll(e, 'audit')}>
+            Book Free Audit
           </a>
         </div>
-      </footer>
+      </nav>
 
-    </main>
+      {/* HERO */}
+      <section className="ca-hero" id="hero">
+        <div className="ca-container ca-hero__inner">
+          <div className="ca-hero__tag">Operational Intelligence for UK SMEs</div>
+          <h1 className="ca-hero__headline">
+            Know Your Business Position<br />
+            <span className="ca-highlight">By 8am. Every Morning.</span>
+          </h1>
+          <p className="ca-hero__sub">
+            We build real-time operational control systems for logistics, fulfilment, and
+            operations-heavy SMEs — so your decisions are driven by today&apos;s data, not
+            last week&apos;s spreadsheet.
+          </p>
+          <div className="ca-hero__ctas">
+            <a href="#audit" className="ca-btn ca-btn--primary ca-btn--lg" onClick={e => smoothScroll(e, 'audit')}>
+              Book Operational Leak Audit <span className="ca-btn__tag">20 min · No commitment</span>
+            </a>
+            <a href="#offer" className="ca-btn ca-btn--ghost ca-btn--lg" onClick={e => smoothScroll(e, 'offer')}>
+              See the 5-Day System
+            </a>
+          </div>
+          <div className="ca-hero__trust">
+            <span>Power BI</span>
+            <span className="ca-dot">·</span>
+            <span>Automated Data Pipelines</span>
+            <span className="ca-dot">·</span>
+            <span>Deployed in 5 Days</span>
+          </div>
+        </div>
+      </section>
+
+      {/* PROBLEM */}
+      <section className="ca-problem" id="problem">
+        <div className="ca-container">
+          <div className="ca-section-label">The Problem</div>
+          <h2 className="ca-section-title">
+            You&apos;re Making <em>Yesterday&apos;s</em> Decisions<br />With Yesterday&apos;s Data.
+          </h2>
+          <div className="ca-problem__grid">
+            {[
+              { icon: '⏱', title: 'Decision Lag', desc: "Your ops data is 2–3 days old by the time it reaches you. You’re reacting, not leading." },
+              { icon: '📊', title: 'Excel Chaos', desc: "Multiple spreadsheets, manual updates, version conflicts. You can’t trust the numbers — so you don’t act on them." },
+              { icon: '🔦', title: 'Operational Blind Spots', desc: "Fulfilment delays, revenue dips, cashflow gaps — you’re finding out too late to do anything about them." },
+              { icon: '🔁', title: 'Reporting Overhead', desc: "Someone is spending hours each week compiling reports that are already outdated the moment they’re sent." },
+            ].map(card => (
+              <div className="ca-problem__card" key={card.title}>
+                <div className="ca-problem__icon">{card.icon}</div>
+                <h3>{card.title}</h3>
+                <p>{card.desc}</p>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* SOLUTION */}
+      <section className="ca-solution" id="solution">
+        <div className="ca-container ca-solution__inner">
+          <div className="ca-solution__text">
+            <div className="ca-section-label">The Solution</div>
+            <h2 className="ca-section-title">An Operational Control System.<br />Not a Dashboard.</h2>
+            <p>A dashboard shows you data. An <strong>Operational Control System</strong> gives you command of your business.</p>
+            <p>We replace your fragmented Excel-based reporting with a single, live operational view — built around how your business actually runs. You see what matters. You act immediately. You stop guessing.</p>
+            <ul className="ca-solution__list">
+              <li><span className="ca-check">✓</span> Real-time visibility into your core operations</li>
+              <li><span className="ca-check">✓</span> Decision-ready data by 8am every morning</li>
+              <li><span className="ca-check">✓</span> Automated — no manual input, no spreadsheet maintenance</li>
+              <li><span className="ca-check">✓</span> Built on Microsoft Power BI — no new software to learn</li>
+            </ul>
+          </div>
+          <div className="ca-solution__visual">
+            <div className="ca-mockup">
+              <div className="ca-mockup__bar">
+                <span /><span /><span />
+              </div>
+              <div className="ca-mockup__body">
+                <div className="ca-mockup__kpi-row">
+                  <div className="ca-mockup__kpi ca-mockup__kpi--green">
+                    <div className="ca-mockup__kpi-label">Today&apos;s Revenue</div>
+                    <div className="ca-mockup__kpi-value">£24,830</div>
+                    <div className="ca-mockup__kpi-change">↑ 12% vs yesterday</div>
+                  </div>
+                  <div className="ca-mockup__kpi ca-mockup__kpi--amber">
+                    <div className="ca-mockup__kpi-label">Fulfilment Rate</div>
+                    <div className="ca-mockup__kpi-value">94.2%</div>
+                    <div className="ca-mockup__kpi-change">↓ 2.1% — action needed</div>
+                  </div>
+                </div>
+                <div className="ca-mockup__kpi-row">
+                  <div className="ca-mockup__kpi ca-mockup__kpi--blue">
+                    <div className="ca-mockup__kpi-label">Orders in Transit</div>
+                    <div className="ca-mockup__kpi-value">387</div>
+                    <div className="ca-mockup__kpi-change">On track</div>
+                  </div>
+                  <div className="ca-mockup__kpi ca-mockup__kpi--green">
+                    <div className="ca-mockup__kpi-label">Cash Position</div>
+                    <div className="ca-mockup__kpi-value">£142K</div>
+                    <div className="ca-mockup__kpi-change">↑ Healthy</div>
+                  </div>
+                </div>
+                <div className="ca-mockup__chart">
+                  <div className="ca-mockup__chart-label">7-Day Performance Trend</div>
+                  <div className="ca-mockup__bars">
+                    {[55, 70, 60, 80, 75, 90, 95].map((h, i) => (
+                      <div
+                        key={i}
+                        className={`ca-mockup__bar-item${i === 6 ? ' ca-mockup__bar-item--active' : ''}`}
+                        style={{ height: `${h}%` }}
+                      />
+                    ))}
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* OFFER */}
+      <section className="ca-offer" id="offer">
+        <div className="ca-container">
+          <div className="ca-section-label">Core Offer</div>
+          <h2 className="ca-section-title">The 5-Day Operational<br />Control System</h2>
+          <p className="ca-section-sub">
+            We design and deploy your operational control system in 5 working days. You go
+            from Excel chaos to full operational visibility — without disrupting how your team works.
+          </p>
+          <div className="ca-offer__grid">
+            <div className="ca-offer__includes">
+              <h3>What&apos;s Included</h3>
+              <ul className="ca-offer__list">
+                {[
+                  { n: '01', title: 'Power BI Operational Control System', desc: 'Tailored to your core function — logistics, revenue, fulfilment, or cashflow.' },
+                  { n: '02', title: 'Automated Data Pipeline', desc: 'Excel or existing data sources connected and automated. No manual updates.' },
+                  { n: '03', title: 'KPI System Design', desc: 'We define the right metrics for your operation — not vanity numbers, decision drivers.' },
+                  { n: '04', title: 'Daily Operational View', desc: 'Decision-ready view of your business, refreshed and waiting for you each morning.' },
+                  { n: '05', title: 'Operational Alerts (Optional)', desc: 'Email or Slack notifications when KPIs fall outside your defined thresholds.' },
+                ].map(item => (
+                  <li key={item.n}>
+                    <div className="ca-offer__item-icon">{item.n}</div>
+                    <div>
+                      <strong>{item.title}</strong>
+                      <p>{item.desc}</p>
+                    </div>
+                  </li>
+                ))}
+              </ul>
+            </div>
+            <div className="ca-offer__sidebar">
+              <div className="ca-offer__card">
+                <div className="ca-offer__card-badge">5 Working Days</div>
+                <h3>Start Seeing Your Business Clearly</h3>
+                <p>From kickoff to live operational control system — in one working week.</p>
+                <div className="ca-offer__suitable">
+                  <div className="ca-offer__suitable-title">Built for:</div>
+                  <span className="ca-tag">Logistics SMEs</span>
+                  <span className="ca-tag">E-commerce &amp; Fulfilment</span>
+                  <span className="ca-tag">Operations-heavy businesses</span>
+                  <span className="ca-tag">10–200 person companies</span>
+                </div>
+                <a href="#audit" className="ca-btn ca-btn--primary ca-btn--full" onClick={e => smoothScroll(e, 'audit')}>
+                  Book Operational Leak Audit
+                </a>
+                <p className="ca-offer__card-note">Free · 20 minutes · No obligation</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* PROCESS */}
+      <section className="ca-process" id="process">
+        <div className="ca-container">
+          <div className="ca-section-label">How It Works</div>
+          <h2 className="ca-section-title">From Kickoff to Control<br />in 5 Days</h2>
+          <div className="ca-process__steps">
+            {[
+              { day: 'Day 1', title: 'Discovery & KPI Design', desc: 'We map your operation, identify decision bottlenecks, and design the KPI framework that will power your control system.' },
+              { day: 'Day 2', title: 'Data Pipeline Build', desc: 'We connect your data sources and automate the flow — eliminating manual reporting from day two.' },
+              { day: 'Day 3–4', title: 'Control System Build & Test', desc: 'Your Power BI operational system is built, configured, and stress-tested against your live data.' },
+              { day: 'Day 5', title: 'Handover & Go Live', desc: 'Full walkthrough with your team. You go live with complete operational visibility and the confidence to act on it.' },
+            ].map((step, i, arr) => (
+              <div key={step.day} style={{ display: 'contents' }}>
+                <div className="ca-process__step">
+                  <div className="ca-process__step-num">{step.day}</div>
+                  <div className="ca-process__step-content">
+                    <h3>{step.title}</h3>
+                    <p>{step.desc}</p>
+                  </div>
+                </div>
+                {i < arr.length - 1 && <div className="ca-process__connector" />}
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* WHO IT'S FOR */}
+      <section className="ca-for" id="for">
+        <div className="ca-container">
+          <div className="ca-section-label">Who It&apos;s For</div>
+          <h2 className="ca-section-title">Built for Operators,<br />Not IT Departments.</h2>
+          <div className="ca-for__grid">
+            {[
+              { icon: '🚚', title: 'Logistics & Distribution SMEs', desc: "You're managing routes, capacity, and delivery performance across shifting demand. You need live visibility, not a Monday morning report." },
+              { icon: '📦', title: 'E-commerce & Fulfilment Operations', desc: "Order volumes fluctuate. Fulfilment rates need to stay near-perfect. You need to know exactly where you stand before your team starts each shift." },
+              { icon: '⚙️', title: 'Operations-Heavy Businesses', desc: "If your business runs on people, processes, and throughput — and your current reporting can't keep up — this system was built for you." },
+            ].map(card => (
+              <div className="ca-for__card" key={card.title}>
+                <div className="ca-for__icon">{card.icon}</div>
+                <h3>{card.title}</h3>
+                <p>{card.desc}</p>
+              </div>
+            ))}
+          </div>
+          <div className="ca-for__qualifier">
+            <p>You&apos;re a good fit if:</p>
+            <ul>
+              <li>Your team is still using Excel for core operational reporting</li>
+              <li>You&apos;re making decisions based on data that&apos;s 24–72 hours old</li>
+              <li>You have 10–200 employees and operations that generate daily data</li>
+              <li>You want control of your business — not just a prettier spreadsheet</li>
+            </ul>
+          </div>
+        </div>
+      </section>
+
+      {/* AUDIT CTA */}
+      <section className="ca-audit" id="audit">
+        <div className="ca-container ca-audit__inner">
+          <div className="ca-audit__text">
+            <div className="ca-section-label ca-section-label--light">Free Diagnostic</div>
+            <h2 className="ca-section-title ca-section-title--light">Operational Leak Audit</h2>
+            <p className="ca-audit__sub">
+              In 20 minutes, we&apos;ll identify the inefficiencies, blind spots, and decision
+              delays in your current reporting — and show you exactly what an improved
+              control system would look like for your business.
+            </p>
+            <ul className="ca-audit__list">
+              <li><span className="ca-check ca-check--light">✓</span> Identify your biggest operational blind spots</li>
+              <li><span className="ca-check ca-check--light">✓</span> Pinpoint where decision lag is costing you</li>
+              <li><span className="ca-check ca-check--light">✓</span> See a clear picture of what your control system would look like</li>
+              <li><span className="ca-check ca-check--light">✓</span> No obligation. No sales pressure.</li>
+            </ul>
+          </div>
+          <div className="ca-audit__form">
+            <div className="ca-form-card">
+              <h3>Book Your Audit</h3>
+              <p>20 minutes. Free. Immediate value.</p>
+              {submitted ? (
+                <div className="ca-form-success">
+                  <div className="ca-form-success__icon">✓</div>
+                  <p>Request sent! We&apos;ll be in touch within 1 business day.</p>
+                </div>
+              ) : (
+                <form onSubmit={handleSubmit}>
+                  <div className="ca-form-group">
+                    <label>Your Name</label>
+                    <input type="text" placeholder="James Richardson" required />
+                  </div>
+                  <div className="ca-form-group">
+                    <label>Business Email</label>
+                    <input type="email" placeholder="james@yourcompany.co.uk" required />
+                  </div>
+                  <div className="ca-form-group">
+                    <label>Company Name</label>
+                    <input type="text" placeholder="Richardson Logistics Ltd" required />
+                  </div>
+                  <div className="ca-form-group">
+                    <label>What&apos;s your biggest operational challenge?</label>
+                    <select required defaultValue="">
+                      <option value="" disabled>Select one</option>
+                      <option>Delayed or unreliable reporting</option>
+                      <option>No real-time view of operations</option>
+                      <option>Excel chaos / manual data work</option>
+                      <option>Can&apos;t track KPIs effectively</option>
+                      <option>Other</option>
+                    </select>
+                  </div>
+                  <button type="submit" className="ca-btn ca-btn--primary ca-btn--full ca-btn--lg">
+                    Book My Free Audit →
+                  </button>
+                  <p className="ca-form-note">We&apos;ll respond within 1 business day to schedule your 20-minute call.</p>
+                </form>
+              )}
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* FOOTER */}
+      <footer className="ca-footer">
+        <div className="ca-container ca-footer__inner">
+          <div className="ca-footer__brand">
+            <a href="#hero" className="ca-nav__logo" onClick={e => smoothScroll(e, 'hero')}>
+              Coventry <span>Analytics</span>
+            </a>
+            <p>Operational Control Systems for UK SMEs.<br />Powered by Power BI. Delivered in 5 days.</p>
+          </div>
+          <div className="ca-footer__links">
+            {[
+              ['problem', 'The Problem'],
+              ['solution', 'The Solution'],
+              ['offer', '5-Day System'],
+              ['process', 'Process'],
+              ['audit', 'Book Audit'],
+            ].map(([id, label]) => (
+              <a key={id} href={`#${id}`} onClick={e => smoothScroll(e, id)}>{label}</a>
+            ))}
+          </div>
+          <div className="ca-footer__legal">
+            <p>© 2026 Coventry Analytics Ltd. All rights reserved.</p>
+            <p>Coventry, United Kingdom · <a href="mailto:hello@coventryanalytics.co.uk">hello@coventryanalytics.co.uk</a></p>
+          </div>
+        </div>
+      </footer>
+    </>
   );
 }
