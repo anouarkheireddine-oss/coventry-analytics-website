@@ -80,27 +80,27 @@ input[type="number"]::-webkit-outer-spin-button {
 /* =============================================
    COVENTRY ANALYTICS — MARKETING PAGE
    Design: Rams · Jobs · Eyal · Fishkin
-   Amber palette — warmth, value, trust
+   CCFC Sky Blue — local, trusted, Coventry
    ============================================= */
 
 /* ── DESIGN TOKENS ─────────────────────────── */
 :root {
-  --ca-bg:        #06090f;
-  --ca-surf:      #0c1119;
-  --ca-card:      #101720;
+  --ca-bg:        #05080e;
+  --ca-surf:      #0a0f1a;
+  --ca-card:      #0e1523;
   --ca-border:    rgba(255,255,255,0.07);
   --ca-soft:      rgba(255,255,255,0.04);
-  --ca-amber:     #f59e0b;
-  --ca-amber-lt:  #fbbf24;
-  --ca-amber-dim: rgba(245,158,11,0.10);
-  --ca-amber-bd:  rgba(245,158,11,0.20);
+  --ca-amber:     #00a8e8;
+  --ca-amber-lt:  #33bcf0;
+  --ca-amber-dim: rgba(0,168,232,0.10);
+  --ca-amber-bd:  rgba(0,168,232,0.22);
   --ca-green:     #22c55e;
-  --ca-w:         #f9fafb;
-  --ca-w65:       rgba(249,250,251,0.65);
-  --ca-w45:       rgba(249,250,251,0.45);
-  --ca-w25:       rgba(249,250,251,0.25);
-  --ca-w10:       rgba(249,250,251,0.10);
-  --ca-w06:       rgba(249,250,251,0.06);
+  --ca-w:         #f0f4f8;
+  --ca-w65:       rgba(240,244,248,0.65);
+  --ca-w45:       rgba(240,244,248,0.45);
+  --ca-w25:       rgba(240,244,248,0.25);
+  --ca-w10:       rgba(240,244,248,0.10);
+  --ca-w06:       rgba(240,244,248,0.06);
   --ca-r:         14px;
   --ca-rl:        20px;
 }
@@ -169,7 +169,7 @@ input[type="number"]::-webkit-outer-spin-button {
   align-items: center;
   padding: 9px 20px;
   background: var(--ca-amber);
-  color: #000;
+  color: #fff;
   font-size: 14px;
   font-weight: 700;
   border-radius: 100px;
@@ -185,11 +185,31 @@ input[type="number"]::-webkit-outer-spin-button {
   display: flex;
   align-items: center;
   padding: 160px 0 100px;
+  position: relative;
+  overflow: hidden;
   background: var(--ca-bg);
-  background-image:
-    radial-gradient(ellipse 55% 45% at 8% 65%, rgba(245,158,11,0.05) 0%, transparent 70%),
-    radial-gradient(ellipse 45% 35% at 92% 18%, rgba(245,158,11,0.03) 0%, transparent 60%);
 }
+.ca-hero::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background-image: url('https://images.unsplash.com/photo-1486325212027-8081e485255e?w=1600&q=80&auto=format&fit=crop');
+  background-size: cover;
+  background-position: center 40%;
+  opacity: 0.07;
+  z-index: 0;
+}
+.ca-hero::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background:
+    radial-gradient(ellipse 70% 60% at 0% 100%, rgba(0,168,232,0.08) 0%, transparent 60%),
+    radial-gradient(ellipse 50% 40% at 100% 0%, rgba(0,168,232,0.04) 0%, transparent 60%),
+    linear-gradient(to bottom, transparent 60%, var(--ca-bg) 100%);
+  z-index: 0;
+}
+.ca-hero .ca-wrap { position: relative; z-index: 1; }
 .ca-eyebrow {
   font-size: 12px;
   font-weight: 700;
@@ -228,7 +248,7 @@ input[type="number"]::-webkit-outer-spin-button {
   align-items: center;
   padding: 14px 28px;
   background: var(--ca-amber);
-  color: #000;
+  color: #fff;
   font-size: 15px;
   font-weight: 700;
   border-radius: 10px;
@@ -451,7 +471,7 @@ input[type="number"]::-webkit-outer-spin-button {
 }
 .ca-card-cta--amber {
   background: var(--ca-amber);
-  color: #000;
+  color: #fff;
   border: 1.5px solid var(--ca-amber);
 }
 .ca-card-cta--amber:hover {
@@ -677,7 +697,7 @@ input[type="number"]::-webkit-outer-spin-button {
 .ca-contact {
   padding: 100px 0;
   background: var(--ca-bg);
-  background-image: radial-gradient(ellipse 60% 50% at 0% 100%, rgba(245,158,11,0.04) 0%, transparent 60%);
+  background-image: radial-gradient(ellipse 60% 50% at 0% 100%, rgba(0,168,232,0.04) 0%, transparent 60%);
 }
 .ca-contact__grid {
   display: grid;
@@ -764,14 +784,14 @@ input[type="number"]::-webkit-outer-spin-button {
 .ca-field input:focus,
 .ca-field select:focus {
   outline: none;
-  border-color: #f59e0b;
-  box-shadow: 0 0 0 3px rgba(245,158,11,0.12);
+  border-color: #00a8e8;
+  box-shadow: 0 0 0 3px rgba(0,168,232,0.12);
 }
 .ca-submit {
   width: 100%;
   padding: 14px;
-  background: #f59e0b;
-  color: #000;
+  background: #00a8e8;
+  color: #fff;
   font-size: 15px;
   font-weight: 700;
   border: none;
@@ -783,8 +803,8 @@ input[type="number"]::-webkit-outer-spin-button {
   letter-spacing: -0.01em;
 }
 .ca-submit:hover {
-  background: #fbbf24;
-  box-shadow: 0 6px 24px rgba(245,158,11,0.30);
+  background: #33bcf0;
+  box-shadow: 0 6px 24px rgba(0,168,232,0.30);
 }
 .ca-form__note {
   font-size: 12px;
@@ -862,7 +882,7 @@ input[type="number"]::-webkit-outer-spin-button {
   margin-top: 4px;
   transition: color 0.15s;
 }
-.ca-footer__legal a:hover { color: var(--ca-amber); }
+.ca-footer__legal a:hover { color: var(--ca-amber-lt); }
 
 /* ── RESPONSIVE ────────────────────────────── */
 @media (max-width: 900px) {
