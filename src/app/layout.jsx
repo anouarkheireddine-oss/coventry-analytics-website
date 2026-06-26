@@ -171,6 +171,7 @@ export default function RootLayout({ children }) {
   return (
     <html lang="en-GB">
       <head>
+        <meta name="google-site-verification" content="jnxVoUXV2eWQW4XoiWaiHlbjV7v7lx2pg5V0eVCahYQ" />
         <link rel="preconnect" href="https://fonts.googleapis.com" />
         <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
         <script
