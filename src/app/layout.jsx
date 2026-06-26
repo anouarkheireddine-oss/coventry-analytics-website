@@ -81,7 +81,7 @@ const localBusinessSchema = {
     { '@type': 'AdministrativeArea', name: 'West Midlands' },
   ],
   email: 'info.coventryanalytics@gmail.com',
-  telephone: '+44-24-0000-0000',
+  telephone: '+44-7405-091054',
   openingHoursSpecification: [
     {
       '@type': 'OpeningHoursSpecification',

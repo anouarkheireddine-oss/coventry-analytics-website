@@ -2,7 +2,7 @@ import NavScroll from '../components/NavScroll';
 import ContactForm from '../components/ContactForm';
 
 const EMAIL = 'info.coventryanalytics@gmail.com';
-const PHONE = '024 0000 0000';
+const PHONE = '07405 091054';
 
 export const metadata = {
   title: 'Business Analytics for Coventry Taxi & Private Hire Operators | Coventry Analytics',
