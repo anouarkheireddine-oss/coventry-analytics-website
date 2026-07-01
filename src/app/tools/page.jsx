@@ -1,10 +1,10 @@
 import Link from 'next/link'
-import { BarChart3, TrendingUp, Settings, Cpu, Target, Calculator, Database, ArrowRight, Clock, Lock } from 'lucide-react'
+import { BarChart3, TrendingUp, TrendingDown, Settings, Cpu, Target, Calculator, Database, ArrowRight, Clock, Lock, Brain, Table } from 'lucide-react'
 import { TOOLS } from '@/lib/tools'
 
 export const metadata = { title: 'Free Tools', description: 'Free business analytics tools for UK SMEs.' }
 
-const iconMap = { BarChart3, TrendingUp, Settings, Cpu, Target, Calculator, Database }
+const iconMap = { BarChart3, TrendingUp, TrendingDown, Settings, Cpu, Target, Calculator, Database, Brain, Table }
 
 export default function ToolsPage() {
   return (
@@ -42,11 +42,11 @@ export default function ToolsPage() {
                     <Clock className="w-3.5 h-3.5" /> {tool.time}
                   </span>
                   {isLive ? (
-                    <Link href={tool.href} className="inline-flex items-center gap-1.5 text-sm font-medium text-brand-400 hover:text-brand-300 transition-colors">
-                      Start <ArrowRight className="w-4 h-4" />
+                    <Link href={tool.href} className="inline-flex items-center gap-1.5 text-sm font-semibold px-3 py-1.5 rounded-lg bg-brand-600 hover:bg-brand-500 text-white transition-colors">
+                      Start Now <ArrowRight className="w-3.5 h-3.5" />
                     </Link>
                   ) : (
-                    <span className="text-xs text-slate-500">Coming soon</span>
+                    <button disabled className="text-xs font-medium px-3 py-1.5 rounded-lg bg-navy-800 text-slate-500 border border-navy-700 cursor-not-allowed">Notify Me</button>
                   )}
                 </div>
               </div>

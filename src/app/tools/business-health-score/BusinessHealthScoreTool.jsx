@@ -38,6 +38,8 @@ export default function BusinessHealthScoreTool() {
 
   const handleEmailSubmit = (e) => {
     e.preventDefault()
+    // TODO: connect to email provider (ConvertKit/Mailchimp)
+    console.log({ email, source: 'bhs-results' })
     setStage(STAGES.RESULTS)
   }
 

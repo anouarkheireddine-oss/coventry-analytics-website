@@ -14,6 +14,7 @@ export const metadata = {
   keywords: ['business intelligence', 'analytics', 'SME', 'UK', 'dashboard', 'KPI', 'operational control'],
   authors: [{ name: 'Coventry Analytics' }],
   creator: 'Coventry Analytics',
+  metadataBase: new URL('https://coventryanalytics.co.uk'),
   openGraph: {
     type: 'website',
     locale: 'en_GB',

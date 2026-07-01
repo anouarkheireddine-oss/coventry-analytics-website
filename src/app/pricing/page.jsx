@@ -1,38 +1,38 @@
 import Link from 'next/link'
-import { CheckCircle, ArrowRight, Zap } from 'lucide-react'
+import { CheckCircle, ArrowRight, Zap, ChevronDown } from 'lucide-react'
 
 export const metadata = { title: 'Pricing', description: 'Simple, transparent pricing for UK SMEs.' }
 
 const plans = [
   {
-    name: 'Free Audit',
+    name: 'Free Strategy Session',
     price: '£0',
     period: '',
     description: 'A no-cost, no-obligation 30-minute call to assess your current data setup and identify quick wins.',
     features: [
-      '30-minute video call',
-      'Current state assessment',
+      '30-min discovery call',
+      'Current state review',
       'Top 3 opportunities identified',
       'Written summary report',
-      'No strings attached',
+      'No commitment required',
     ],
-    cta: 'Book Free Audit',
+    cta: 'Book Free Session',
     href: '/book',
     highlighted: false,
     badge: null,
   },
   {
-    name: '5-Day System',
+    name: 'Operational Intelligence System',
     price: '£2,500',
     period: 'one-time',
     description: 'A fully built operational control system, live in 5 working days. The fastest route from data chaos to data clarity.',
     features: [
-      'Full discovery and system design',
-      'Live KPI dashboard (5-10 metrics)',
+      'Full discovery & system design',
+      'Live KPI dashboard (5–10 metrics)',
       'Data source integrations (up to 3)',
       'Automated reporting setup',
-      'Team training and documentation',
-      '30 days of post-launch support',
+      'Team training & documentation',
+      '30 days post-launch support',
       'Money-back guarantee if not delivered on time',
     ],
     cta: 'Get Started',
@@ -41,14 +41,14 @@ const plans = [
     badge: 'Most Popular',
   },
   {
-    name: 'Monthly Subscription',
+    name: 'Monthly Intelligence',
     price: '£750',
     period: '/month',
     description: 'Ongoing analytics partnership. Continuous improvement, new dashboards, monthly reporting, and strategic data support.',
     features: [
-      'Everything in 5-Day System',
+      'Everything in Operational System',
       'Monthly strategy session',
-      'Dashboard updates and new metrics',
+      'Dashboard updates & new metrics',
       'Ongoing data pipeline management',
       'Priority support (4hr response)',
       'Quarterly business review',
@@ -57,6 +57,21 @@ const plans = [
     href: '/contact',
     highlighted: false,
     badge: 'Coming Soon',
+  },
+]
+
+const faqs = [
+  {
+    q: 'Can I see the system before committing?',
+    a: "Yes — book a free session and we'll demo existing client systems (anonymised).",
+  },
+  {
+    q: 'What if it\'s not delivered in 5 days?',
+    a: "Full refund. We've never missed a deadline, but we back every project with this guarantee.",
+  },
+  {
+    q: 'What data sources can you connect?',
+    a: 'Xero, QuickBooks, Shopify, HubSpot, Salesforce, Google Analytics, Meta Ads, and most systems with an API or CSV export.',
   },
 ]
 
@@ -108,6 +123,21 @@ export default function PricingPage() {
               <Zap className="w-4 h-4 text-brand-400" />
               All prices exclude VAT. UK businesses only.
             </div>
+          </div>
+        </div>
+      </section>
+
+      {/* FAQ */}
+      <section className="section-padding bg-navy-900/30">
+        <div className="container-max max-w-3xl">
+          <h2 className="text-2xl font-bold text-white text-center mb-10">Frequently asked questions</h2>
+          <div className="space-y-4">
+            {faqs.map(({ q, a }) => (
+              <div key={q} className="p-6 rounded-xl bg-navy-900 border border-navy-800">
+                <h3 className="font-semibold text-white mb-2">{q}</h3>
+                <p className="text-slate-400 text-sm leading-relaxed">{a}</p>
+              </div>
+            ))}
           </div>
         </div>
       </section>
