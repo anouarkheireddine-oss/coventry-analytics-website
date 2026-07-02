@@ -1,9 +1,10 @@
 export default function sitemap() {
-  const base = 'https://coventryanalytics.co.uk';
-  return [
-    { url: base, lastModified: new Date(), changeFrequency: 'monthly', priority: 1 },
-    { url: `${base}/business-analytics-coventry-cafes`, lastModified: new Date(), changeFrequency: 'monthly', priority: 0.8 },
-    { url: `${base}/business-analytics-coventry-restaurants`, lastModified: new Date(), changeFrequency: 'monthly', priority: 0.8 },
-    { url: `${base}/business-analytics-coventry-taxi`, lastModified: new Date(), changeFrequency: 'monthly', priority: 0.8 },
-  ];
+  const baseUrl = 'https://coventryanalytics.co.uk'
+  const routes = ['', '/solutions', '/pricing', '/book', '/about', '/case-studies', '/contact', '/resources', '/tools', '/tools/business-health-score']
+  return routes.map(route => ({
+    url: `${baseUrl}${route}`,
+    lastModified: new Date(),
+    changeFrequency: 'monthly',
+    priority: route === '' ? 1 : 0.8,
+  }))
 }
