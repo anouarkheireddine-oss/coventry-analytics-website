@@ -41,6 +41,29 @@ export default function RootLayout({ children }) {
   return (
     <html lang="en" className="scroll-smooth">
       <body className={`${inter.className} bg-navy-950 text-white antialiased`}>
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{
+            __html: JSON.stringify({
+              "@context": "https://schema.org",
+              "@type": "ProfessionalService",
+              "name": "Coventry Analytics",
+              "description": "Business intelligence and operational control systems for UK SMEs. Delivered in 5 days.",
+              "url": "https://coventryanalytics.co.uk",
+              "telephone": "",
+              "email": "info.coventryanalytics@gmail.com",
+              "address": {
+                "@type": "PostalAddress",
+                "addressLocality": "Coventry",
+                "addressRegion": "West Midlands",
+                "addressCountry": "GB"
+              },
+              "areaServed": "GB",
+              "priceRange": "££",
+              "sameAs": []
+            })
+          }}
+        />
         <Navbar />
         <main>{children}</main>
         <Footer />

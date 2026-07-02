@@ -49,7 +49,7 @@ export default function HomePage() {
         <div className="max-w-4xl mx-auto text-center relative z-10">
           <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-brand-600/20 border border-brand-600/30 text-brand-400 text-sm font-medium mb-6">
             <span className="w-1.5 h-1.5 rounded-full bg-brand-400 animate-pulse" />
-            UK Business Intelligence for SMEs
+            Built by ex-Caterpillar & DHL operators · UK SME specialists
           </div>
           <h1 className="text-5xl sm:text-6xl lg:text-7xl font-bold tracking-tight mb-6 text-white">
             Stop Guessing. Start Running Your Business With Data.
@@ -77,6 +77,19 @@ export default function HomePage() {
               <p className="text-sm text-slate-400">{label}</p>
             </div>
           ))}
+        </div>
+      </section>
+
+      {/* Credibility band */}
+      <section className="border-b border-navy-800 bg-navy-900/30 py-6 px-4 sm:px-6 lg:px-8">
+        <div className="max-w-5xl mx-auto text-center">
+          <p className="text-slate-500 text-sm mb-4">Operational experience from</p>
+          <div className="flex flex-wrap items-center justify-center gap-8">
+            {['Caterpillar', 'DHL eCommerce', 'daals'].map(co => (
+              <span key={co} className="text-slate-400 font-semibold text-sm tracking-wide">{co}</span>
+            ))}
+          </div>
+          <p className="text-slate-600 text-xs mt-3">Real operations experience · Not just analytics theory</p>
         </div>
       </section>
 

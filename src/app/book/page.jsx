@@ -23,14 +23,25 @@ export default function BookPage() {
   const [selected, setSelected] = useState([])
   const [form, setForm] = useState({ name: '', company: '', email: '', phone: '', message: '' })
   const [submitted, setSubmitted] = useState(false)
+  const [loading, setLoading] = useState(false)
 
   const toggle = (c) => setSelected(prev => prev.includes(c) ? prev.filter(x => x !== c) : [...prev, c])
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault()
-    // TODO: connect to CRM / email provider
-    console.log({ ...form, challenges: selected, source: 'book-page' })
-    setSubmitted(true)
+    setLoading(true)
+    try {
+      await fetch('/api/book', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ ...form, challenges: selected, service: new URLSearchParams(typeof window !== 'undefined' ? window.location.search : '').get('service') }),
+      })
+    } catch (err) {
+      console.error('Booking error:', err)
+    } finally {
+      setLoading(false)
+      setSubmitted(true)
+    }
   }
 
   if (submitted) {
@@ -108,8 +119,8 @@ export default function BookPage() {
                   </div>
                 </div>
 
-                <button type="submit" className="w-full py-4 rounded-xl bg-brand-600 hover:bg-brand-500 text-white font-semibold text-lg transition-all hover:shadow-lg hover:shadow-brand-500/25 flex items-center justify-center gap-2">
-                  Book Free Strategy Call <ArrowRight className="w-5 h-5" />
+                <button type="submit" disabled={loading} className="w-full py-4 rounded-xl bg-brand-600 hover:bg-brand-500 text-white font-semibold text-lg transition-all hover:shadow-lg hover:shadow-brand-500/25 flex items-center justify-center gap-2 disabled:opacity-60">
+                  {loading ? 'Sending...' : <><span>Book Free Strategy Call</span> <ArrowRight className="w-5 h-5" /></>}
                 </button>
                 <p className="text-center text-xs text-slate-500">No spam, no pressure. We will be in touch within 2 hours.</p>
               </form>

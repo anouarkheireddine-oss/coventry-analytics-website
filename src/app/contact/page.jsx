@@ -5,8 +5,24 @@ import { CheckCircle, Mail, MapPin, ArrowRight } from 'lucide-react'
 export default function ContactPage() {
   const [form, setForm] = useState({ name: '', email: '', subject: '', message: '' })
   const [submitted, setSubmitted] = useState(false)
+  const [loading, setLoading] = useState(false)
 
-  const handleSubmit = (e) => { e.preventDefault(); setSubmitted(true) }
+  const handleSubmit = async (e) => {
+    e.preventDefault()
+    setLoading(true)
+    try {
+      await fetch('/api/contact', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(form),
+      })
+    } catch (err) {
+      console.error('Contact error:', err)
+    } finally {
+      setLoading(false)
+      setSubmitted(true)
+    }
+  }
 
   if (submitted) {
     return (
@@ -39,7 +55,7 @@ export default function ContactPage() {
                 </div>
                 <div>
                   <h3 className="font-semibold text-white mb-1">Email</h3>
-                  <p className="text-slate-400 text-sm">hello@coventryanalytics.co.uk</p>
+                  <p className="text-slate-400 text-sm">info.coventryanalytics@gmail.com</p>
                 </div>
               </div>
               <div className="flex items-start gap-4">
@@ -72,8 +88,8 @@ export default function ContactPage() {
                   value={form.message} onChange={e => setForm(p => ({ ...p, message: e.target.value }))} required
                   className="w-full px-4 py-3 rounded-lg bg-navy-800 border border-navy-700 text-white placeholder-slate-500 focus:outline-none focus:border-brand-500 transition-colors text-sm resize-none" />
               </div>
-              <button type="submit" className="w-full py-3 rounded-xl bg-brand-600 hover:bg-brand-500 text-white font-semibold transition-all flex items-center justify-center gap-2">
-                Send Message <ArrowRight className="w-4 h-4" />
+              <button type="submit" disabled={loading} className="w-full py-3 rounded-xl bg-brand-600 hover:bg-brand-500 text-white font-semibold transition-all flex items-center justify-center gap-2 disabled:opacity-60">
+                {loading ? 'Sending...' : <><span>Send Message</span> <ArrowRight className="w-4 h-4" /></>}
               </button>
             </form>
           </div>
