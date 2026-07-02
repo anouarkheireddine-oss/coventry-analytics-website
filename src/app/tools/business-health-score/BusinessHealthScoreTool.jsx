@@ -25,7 +25,7 @@ export default function BusinessHealthScoreTool() {
 
   const handleNext = () => {
     if (currentStep < totalSteps - 1) {
-      setCurrentStep(prev => prev + 1)
+      window.scrollTo({ top: 0, behavior: 'smooth' }); setCurrentStep(prev => prev + 1)
     } else {
       const computed = calculateScores(answers)
       setScores(computed)
@@ -34,7 +34,7 @@ export default function BusinessHealthScoreTool() {
   }
 
   const handlePrev = () => {
-    if (currentStep > 0) setCurrentStep(prev => prev - 1)
+    if (currentStep > 0) { window.scrollTo({ top: 0, behavior: 'smooth' }); setCurrentStep(prev => prev - 1) }
   }
 
   const handleEmailSubmit = (email) => {

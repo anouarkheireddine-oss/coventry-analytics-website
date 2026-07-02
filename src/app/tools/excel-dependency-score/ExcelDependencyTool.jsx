@@ -21,7 +21,7 @@ export default function ExcelDependencyTool() {
 
   const handleNext = () => {
     if (currentStep < totalSteps - 1) {
-      setCurrentStep(prev => prev + 1)
+      window.scrollTo({ top: 0, behavior: 'smooth' }); setCurrentStep(prev => prev + 1)
     } else {
       const computed = calculateExcelScore(answers)
       setScores(computed)
@@ -96,7 +96,7 @@ export default function ExcelDependencyTool() {
           ))}
         </div>
         <div className="flex justify-between gap-4">
-          <button onClick={() => setCurrentStep(p => p - 1)} disabled={currentStep === 0}
+          <button onClick={() => { window.scrollTo({ top: 0, behavior: 'smooth' }); setCurrentStep(p => p - 1) }} disabled={currentStep === 0}
             className="flex items-center gap-2 px-6 py-3 rounded-xl bg-navy-800 hover:bg-navy-700 text-white font-medium transition-all border border-navy-700 disabled:opacity-40 disabled:cursor-not-allowed">
             <ArrowLeft className="w-4 h-4" /> Back
           </button>
