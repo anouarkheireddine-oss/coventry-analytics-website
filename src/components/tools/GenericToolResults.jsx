@@ -73,28 +73,33 @@ export default function GenericToolResults({
       let y = 0
       let pageNum = 1
 
-      const addPage = () => {
-        doc.addPage()
-        pageNum++
-        // Footer on every page
-        doc.setFillColor(15, 23, 42)
-        doc.rect(0, 285, pageW, 12, 'F')
-        doc.setFontSize(7); doc.setTextColor(71, 85, 105); doc.setFont('helvetica', 'normal')
-        doc.text('Coventry Analytics Ltd · Coventry, UK · coventryanalytics.co.uk · info.coventryanalytics@gmail.com', pageW / 2, 291, { align: 'center' })
+      // ── HELPERS ──────────────────────────────────────────────────────
+      const addInnerPageChrome = () => {
+        doc.setFillColor(15, 23, 42); doc.rect(0, 0, pageW, 14, 'F')
+        doc.setFontSize(7); doc.setTextColor(96, 165, 250); doc.setFont('helvetica', 'bold')
+        doc.text('COVENTRY ANALYTICS', margin, 9)
+        doc.setTextColor(71, 85, 105); doc.setFont('helvetica', 'normal')
+        doc.text(toolTitle, pageW - margin, 9, { align: 'right' })
+        doc.setFillColor(7, 10, 20); doc.rect(0, 284, pageW, 13, 'F')
+        doc.setFontSize(6.5); doc.setTextColor(71, 85, 105)
+        doc.text('Coventry Analytics Ltd  |  coventryanalytics.co.uk  |  info.coventryanalytics@gmail.com', pageW / 2, 291, { align: 'center' })
         doc.text(`Page ${pageNum}`, pageW - margin, 291, { align: 'right' })
-        y = 20
       }
 
-      const checkPage = (needed = 30) => { if (y + needed > 278) { addPage() } }
+      const addPage = () => {
+        doc.addPage(); pageNum++
+        addInnerPageChrome()
+        y = 22
+      }
 
+      const checkPage = (needed = 30) => { if (y + needed > 281) addPage() }
+
+      // T: x is always the anchor; align controls how text hangs from that anchor
       const T = (text, x, yPos, opts = {}) => {
         const { size = 10, color = [30, 41, 59], bold = false, align = 'left', italic = false } = opts
-        doc.setFontSize(size)
-        doc.setTextColor(...color)
+        doc.setFontSize(size); doc.setTextColor(...color)
         doc.setFont('helvetica', bold ? 'bold' : italic ? 'italic' : 'normal')
-        const method = align === 'center' ? { align: 'center' } : align === 'right' ? { align: 'right' } : {}
-        const xPos = align === 'center' ? pageW / 2 : align === 'right' ? x : x
-        doc.text(text, xPos, yPos, method)
+        doc.text(text, x, yPos, align !== 'left' ? { align } : {})
       }
 
       const R = (x, yPos, w, h, fill, r = 2) => {
@@ -104,11 +109,10 @@ export default function GenericToolResults({
       }
 
       const sectionLabel = (label, yPos) => {
-        doc.setDrawColor(37, 99, 235)
-        doc.setLineWidth(0.5)
+        doc.setDrawColor(37, 99, 235); doc.setLineWidth(0.5)
         doc.line(margin, yPos, margin + 4, yPos)
         T(label, margin + 6, yPos + 0.5, { size: 7.5, color: [96, 165, 250], bold: true })
-        return yPos + 7
+        return yPos + 8
       }
 
       const wrapText = (text, x, yPos, maxW, lineH = 4.5, opts = {}) => {
@@ -121,302 +125,311 @@ export default function GenericToolResults({
 
       const dateStr = new Date().toLocaleDateString('en-GB', { day: 'numeric', month: 'long', year: 'numeric' })
       const scoreColor = overallScore >= 70 ? [34, 197, 94] : overallScore >= 40 ? [59, 130, 246] : [239, 68, 68]
+      const sorted = [...dimensionList].sort((a, b) => b.score - a.score)
+      const worstDim = sorted[sorted.length - 1]
+
+      const costRange = overallScore < 30 ? 'GBP 15,000 - 40,000'
+        : overallScore < 50 ? 'GBP 6,000 - 18,000'
+        : overallScore < 70 ? 'GBP 2,000 - 8,000'
+        : 'GBP 1,000 - 4,000'
+      const costNote = overallScore < 30
+        ? 'per year in operational waste, rework, and missed growth decisions'
+        : overallScore < 50
+        ? 'per year in operational inefficiency, delayed decisions, and avoidable rework'
+        : 'per year in addressable waste and unrealised efficiency gains'
 
       // ── PAGE 1: COVER ──────────────────────────────────────────────
       R(0, 0, pageW, 297, [10, 15, 30], 0)
-
-      // Top accent bar
       R(0, 0, pageW, 3, [37, 99, 235], 0)
-
-      // Branding
       T('COVENTRY ANALYTICS', margin, 28, { size: 9, color: [96, 165, 250], bold: true })
       T('Operational Intelligence for UK SMEs', margin, 35, { size: 8, color: [71, 85, 105] })
-
-      // Divider
       doc.setDrawColor(30, 41, 59); doc.setLineWidth(0.3)
       doc.line(margin, 40, pageW - margin, 40)
 
-      // Report title block
-      T(toolTitle.toUpperCase(), margin, 62, { size: 18, color: [255, 255, 255], bold: true })
-      T('Confidential Assessment Report', margin, 72, { size: 10, color: [96, 165, 250] })
+      // Clip title if long
+      const titleText = toolTitle.length > 30 ? toolTitle.toUpperCase() : toolTitle.toUpperCase()
+      T(titleText, margin, 60, { size: 18, color: [255, 255, 255], bold: true })
+      T('Confidential Assessment Report', margin, 70, { size: 10, color: [96, 165, 250] })
 
-      // Score ring (drawn with circles)
-      const cx = pageW / 2, cy = 130, r = 32
-      const circ = 2 * Math.PI * r
-      doc.setFillColor(20, 30, 50); doc.circle(cx, cy, r + 6, 'F')
-      // background ring
-      doc.setDrawColor(30, 41, 59); doc.setLineWidth(5)
-      doc.circle(cx, cy, r, 'S')
-      // score arc approximated with a series of lines — use filled segment
-      doc.setDrawColor(...scoreColor); doc.setLineWidth(5)
+      // Score ring
+      const cx = pageW / 2, cy = 113, ringR = 30
+      doc.setFillColor(18, 28, 48); doc.circle(cx, cy, ringR + 6, 'F')
+      doc.setDrawColor(30, 41, 59); doc.setLineWidth(6); doc.circle(cx, cy, ringR, 'S')
+      doc.setDrawColor(...scoreColor); doc.setLineWidth(6)
       const startAngle = -Math.PI / 2
       const endAngle = startAngle + (overallScore / 100) * 2 * Math.PI
-      const steps = 60
-      for (let i = 0; i < steps; i++) {
-        const a1 = startAngle + (i / steps) * (endAngle - startAngle)
-        const a2 = startAngle + ((i + 1) / steps) * (endAngle - startAngle)
+      for (let i = 0; i < 80; i++) {
+        const a1 = startAngle + (i / 80) * (endAngle - startAngle)
+        const a2 = startAngle + ((i + 1) / 80) * (endAngle - startAngle)
         if (a2 > endAngle) break
-        doc.line(cx + r * Math.cos(a1), cy + r * Math.sin(a1), cx + r * Math.cos(a2), cy + r * Math.sin(a2))
+        doc.line(cx + ringR * Math.cos(a1), cy + ringR * Math.sin(a1), cx + ringR * Math.cos(a2), cy + ringR * Math.sin(a2))
       }
-      // Score number
-      T(`${overallScore}`, cx, cy - 4, { size: 28, color: [255, 255, 255], bold: true, align: 'center' })
-      T('out of 100', cx, cy + 5, { size: 7, color: [148, 163, 184], align: 'center' })
+      T(`${overallScore}`, cx, cy - 3, { size: 26, color: [255, 255, 255], bold: true, align: 'center' })
+      T('/ 100', cx, cy + 5, { size: 7, color: [148, 163, 184], align: 'center' })
 
       // Maturity badge
-      R(cx - 28, cy + 14, 56, 10, [...scoreColor.map(v => Math.round(v * 0.2))], 2)
-      doc.setDrawColor(...scoreColor); doc.setLineWidth(0.5)
-      doc.roundedRect(cx - 28, cy + 14, 56, 10, 2, 2, 'S')
-      T(maturity.level, cx, cy + 21, { size: 9, color: scoreColor, bold: true, align: 'center' })
+      R(cx - 28, cy + 13, 56, 10, [20, 30, 55], 2)
+      doc.setDrawColor(...scoreColor); doc.setLineWidth(0.5); doc.roundedRect(cx - 28, cy + 13, 56, 10, 2, 2, 'S')
+      T(maturity.level, cx, cy + 20, { size: 9, color: scoreColor, bold: true, align: 'center' })
+      doc.setFontSize(8.5); doc.setTextColor(148, 163, 184); doc.setFont('helvetica', 'italic')
+      const mDescLines = doc.splitTextToSize(maturity.description, contentW - 20)
+      doc.text(mDescLines, pageW / 2, cy + 29, { align: 'center' })
 
-      // Maturity description
-      doc.setFontSize(9); doc.setTextColor(148, 163, 184); doc.setFont('helvetica', 'italic')
-      const descLines = doc.splitTextToSize(maturity.description, contentW - 20)
-      doc.text(descLines, pageW / 2, cy + 34, { align: 'center' })
+      // Key Finding callout
+      const kfY = cy + 29 + mDescLines.length * 4.5 + 5
+      R(margin, kfY, contentW, 40, [18, 32, 60], 3)
+      doc.setDrawColor(59, 130, 246); doc.setLineWidth(0.5)
+      doc.roundedRect(margin, kfY, contentW, 40, 3, 3, 'S')
+      R(margin, kfY, 3, 40, [37, 99, 235], 0)
+      T('KEY FINDING', margin + 8, kfY + 8, { size: 7, color: [96, 165, 250], bold: true })
+      T(`Lowest-scoring area: ${worstDim.title} (${worstDim.score}/100)`, margin + 8, kfY + 15, { size: 9.5, color: [255, 255, 255], bold: true })
+      const kfNote = `UK SMEs with a similar profile typically recover ${costRange} ${costNote} once this gap is closed with targeted intervention.`
+      const kfLines = doc.splitTextToSize(kfNote, contentW - 14)
+      doc.setFontSize(7.5); doc.setTextColor(147, 197, 253); doc.setFont('helvetica', 'normal')
+      doc.text(kfLines, margin + 8, kfY + 22)
+      T('See page 3 for gap analysis and recommendations.', margin + 8, kfY + 36, { size: 7, color: [71, 85, 105] })
 
       // Meta info box
-      R(margin, 185, contentW, 34, [15, 23, 42], 3)
-      const metaY = 193
-      T('Report Date', margin + 6, metaY, { size: 7, color: [71, 85, 105] })
-      T(dateStr, margin + 6, metaY + 6, { size: 9, color: [226, 232, 240], bold: true })
-      T('Assessment', margin + contentW / 2, metaY, { size: 7, color: [71, 85, 105], align: 'center' })
-      T(toolTitle, margin + contentW / 2, metaY + 6, { size: 9, color: [226, 232, 240], bold: true, align: 'center' })
-      T('Provider', pageW - margin - 6, metaY, { size: 7, color: [71, 85, 105], align: 'right' })
-      T('Coventry Analytics', pageW - margin - 6, metaY + 6, { size: 9, color: [226, 232, 240], bold: true, align: 'right' })
-      T('Dimensions assessed', margin + 6, metaY + 16, { size: 7, color: [71, 85, 105] })
-      T(`${dimensionList.length}`, margin + 6, metaY + 22, { size: 9, color: [226, 232, 240], bold: true })
-      T('Questions answered', margin + contentW / 2, metaY + 16, { size: 7, color: [71, 85, 105], align: 'center' })
-      T(`${dimensionList.length * 2}`, margin + contentW / 2, metaY + 22, { size: 9, color: [226, 232, 240], bold: true, align: 'center' })
-      T('Maturity Level', pageW - margin - 6, metaY + 16, { size: 7, color: [71, 85, 105], align: 'right' })
-      T(maturity.level, pageW - margin - 6, metaY + 22, { size: 9, color: scoreColor, bold: true, align: 'right' })
+      const metaY = kfY + 46
+      R(margin, metaY, contentW, 36, [15, 23, 42], 3)
+      T('Report Date', margin + 6, metaY + 8, { size: 7, color: [71, 85, 105] })
+      T(dateStr, margin + 6, metaY + 15, { size: 8.5, color: [226, 232, 240], bold: true })
+      T('Assessment', margin + contentW / 2, metaY + 8, { size: 7, color: [71, 85, 105], align: 'center' })
+      T(toolTitle, margin + contentW / 2, metaY + 15, { size: 8, color: [226, 232, 240], bold: true, align: 'center' })
+      T('Provider', pageW - margin - 6, metaY + 8, { size: 7, color: [71, 85, 105], align: 'right' })
+      T('Coventry Analytics', pageW - margin - 6, metaY + 15, { size: 8.5, color: [226, 232, 240], bold: true, align: 'right' })
+      T('Dimensions', margin + 6, metaY + 22, { size: 7, color: [71, 85, 105] })
+      T(`${dimensionList.length}`, margin + 6, metaY + 29, { size: 8.5, color: [226, 232, 240], bold: true })
+      T('Questions', margin + contentW / 2, metaY + 22, { size: 7, color: [71, 85, 105], align: 'center' })
+      T(`${dimensionList.length * 2}`, margin + contentW / 2, metaY + 29, { size: 8.5, color: [226, 232, 240], bold: true, align: 'center' })
+      T('Maturity Level', pageW - margin - 6, metaY + 22, { size: 7, color: [71, 85, 105], align: 'right' })
+      T(maturity.level, pageW - margin - 6, metaY + 29, { size: 8.5, color: scoreColor, bold: true, align: 'right' })
 
-      // Footer
-      R(0, 282, pageW, 15, [7, 10, 20], 0)
-      T('Coventry Analytics Ltd · coventryanalytics.co.uk · info.coventryanalytics@gmail.com', pageW / 2, 290, { size: 7, color: [71, 85, 105], align: 'center' })
+      T('This report is prepared exclusively for the recipient. Not for redistribution.', pageW / 2, 272, { size: 6.5, color: [51, 65, 85], align: 'center' })
+      R(0, 278, pageW, 19, [7, 10, 20], 0)
+      T('Coventry Analytics Ltd  |  coventryanalytics.co.uk  |  info.coventryanalytics@gmail.com', pageW / 2, 290, { size: 7, color: [71, 85, 105], align: 'center' })
       T('Page 1', pageW - margin, 290, { size: 7, color: [71, 85, 105], align: 'right' })
 
-      // Confidential notice
-      T('This report is prepared exclusively for the recipient. Not for redistribution.', pageW / 2, 277, { size: 6.5, color: [51, 65, 85], align: 'center' })
-
-      // ── PAGE 2: EXECUTIVE SUMMARY + DIMENSION SCORES ───────────────
+      // ── PAGE 2: EXECUTIVE SUMMARY + COST OF INACTION + SCORES ──────
       addPage()
-      R(0, 0, pageW, 14, [15, 23, 42], 0)
-      T('COVENTRY ANALYTICS', margin, 9, { size: 7, color: [96, 165, 250], bold: true })
-      T(toolTitle, pageW - margin, 9, { size: 7, color: [71, 85, 105], align: 'right' })
 
-      y = 22
       y = sectionLabel('EXECUTIVE SUMMARY', y)
-
-      // Score summary strip
       R(margin, y, contentW, 18, [20, 30, 55], 3)
-      const scoreHex = overallScore >= 70 ? '#22c55e' : overallScore >= 40 ? '#3b82f6' : '#ef4444'
-      T(`Overall Score: ${overallScore}/100`, margin + 4, y + 7, { size: 11, color: [255, 255, 255], bold: true })
-      T(`Maturity Level: ${maturity.level}`, margin + 4, y + 13.5, { size: 8, color: [96, 165, 250] })
+      T(`Overall Score: ${overallScore}/100  |  Maturity: ${maturity.level}`, margin + 5, y + 7, { size: 10, color: [255, 255, 255], bold: true })
       T(dateStr, pageW - margin - 4, y + 10, { size: 8, color: [100, 116, 139], align: 'right' })
-      y += 22
+      y += 21
 
       y = wrapText(maturity.description, margin, y, contentW, 5, { size: 9, color: [148, 163, 184] })
-      y += 4
+      y += 3
 
-      // What this score means
-      const interpretations = {
-        high: `A score of ${overallScore}/100 places your business in the upper tier of UK SMEs assessed by Coventry Analytics. You have strong foundations and targeted investment in the remaining gaps will compound your existing advantages.`,
-        mid: `A score of ${overallScore}/100 is in line with the median for UK SMEs at your stage. You have areas of genuine strength alongside gaps that are currently costing you time, money, and competitive position. The recommendations in this report are ordered by impact.`,
-        low: `A score of ${overallScore}/100 indicates foundational gaps that, left unaddressed, will limit growth and increase operational risk. The good news: the highest-impact improvements can typically be made within 90 days without large capital outlay.`,
-      }
-      const interp = overallScore >= 70 ? interpretations.high : overallScore >= 40 ? interpretations.mid : interpretations.low
+      const interp = overallScore >= 70
+        ? `A score of ${overallScore}/100 places your business in the upper tier of UK SMEs assessed by Coventry Analytics. Your foundations are strong. The recommendations in this report will help you reach best-in-class performance and protect your competitive advantage.`
+        : overallScore >= 40
+        ? `A score of ${overallScore}/100 is in line with the median for UK SMEs at your stage. You have genuine strengths alongside gaps that are currently costing you time, money, and competitive position. The recommendations below are ordered by impact.`
+        : `A score of ${overallScore}/100 indicates foundational gaps that are currently limiting growth and increasing operational risk. The highest-impact improvements can typically be made within 90 days without large capital outlay.`
       y = wrapText(interp, margin, y, contentW, 5, { size: 9, color: [100, 116, 139] })
-      y += 8
+      y += 6
+
+      // Cost of Inaction box
+      R(margin, y, contentW, 24, [55, 18, 18], 3)
+      doc.setDrawColor(239, 68, 68); doc.setLineWidth(0.5)
+      doc.roundedRect(margin, y, contentW, 24, 3, 3, 'S')
+      R(margin, y, 3, 24, [239, 68, 68], 0)
+      T('COST OF INACTION', margin + 8, y + 8, { size: 7, color: [252, 165, 165], bold: true })
+      T(`Estimated annual loss without improvement: ${costRange}`, margin + 8, y + 15, { size: 9.5, color: [255, 255, 255], bold: true })
+      const costSubLines = doc.splitTextToSize(costNote + '.', contentW - 14)
+      doc.setFontSize(7); doc.setTextColor(252, 165, 165); doc.setFont('helvetica', 'normal')
+      doc.text(costSubLines, margin + 8, y + 20)
+      y += 28
 
       y = sectionLabel('DIMENSION SCORES', y)
       y += 2
 
-      // Score bars — detailed
-      const sorted2 = [...dimensionList].sort((a, b) => b.score - a.score)
       dimensionList.forEach(({ title, score: s }) => {
-        checkPage(22)
+        checkPage(18)
         const barColor = s >= 70 ? [34, 197, 94] : s >= 40 ? [59, 130, 246] : [239, 68, 68]
         const statusLabel = s >= 70 ? 'Strong' : s >= 50 ? 'Developing' : s >= 30 ? 'Needs Work' : 'Critical Gap'
         const statusColor = s >= 70 ? [34, 197, 94] : s >= 50 ? [59, 130, 246] : s >= 30 ? [245, 158, 11] : [239, 68, 68]
-
-        R(margin, y, contentW, 14, [20, 30, 50], 2)
-        R(margin, y, Math.max(contentW * (s / 100), 4), 14, [...barColor.map(v => Math.round(v * 0.35))], 2)
-        // Score fill
-        R(margin, y, Math.max(contentW * (s / 100), 4), 4, barColor, 0)
-
+        R(margin, y, contentW, 13, [20, 30, 50], 2)
+        R(margin, y, Math.max(contentW * (s / 100), 3), 13, [...barColor.map(v => Math.round(v * 0.3))], 2)
+        R(margin, y, Math.max(contentW * (s / 100), 3), 3, barColor, 0)
         T(title, margin + 3, y + 9, { size: 8.5, color: [226, 232, 240], bold: true })
-        T(`${s}/100`, margin + contentW - 3, y + 6, { size: 9, color: [255, 255, 255], bold: true, align: 'right' })
-        T(statusLabel, margin + contentW - 3, y + 12, { size: 7, color: statusColor, align: 'right' })
-        y += 17
+        T(`${s}/100`, margin + contentW - 3, y + 6, { size: 8.5, color: [255, 255, 255], bold: true, align: 'right' })
+        T(statusLabel, margin + contentW - 3, y + 11, { size: 6.5, color: statusColor, align: 'right' })
+        y += 16
       })
 
-      y += 4
-
-      // Score distribution summary
+      y += 3
+      // Score distribution — 2-line labels per column to avoid collision
+      checkPage(22)
       const critCount = dimensionList.filter(d => d.score < 30).length
       const weakCount = dimensionList.filter(d => d.score >= 30 && d.score < 50).length
       const devCount = dimensionList.filter(d => d.score >= 50 && d.score < 70).length
       const strongCount = dimensionList.filter(d => d.score >= 70).length
-
-      checkPage(20)
-      R(margin, y, contentW, 14, [15, 23, 42], 2)
-      const cols = [
-        { label: 'Strong (70+)', val: strongCount, color: [34, 197, 94] },
-        { label: 'Developing (50-69)', val: devCount, color: [59, 130, 246] },
-        { label: 'Needs Work (30-49)', val: weakCount, color: [245, 158, 11] },
-        { label: 'Critical (<30)', val: critCount, color: [239, 68, 68] },
+      R(margin, y, contentW, 20, [15, 23, 42], 2)
+      const distCols = [
+        { l1: 'Strong', l2: '70+', val: strongCount, color: [34, 197, 94] },
+        { l1: 'Developing', l2: '50-69', val: devCount, color: [59, 130, 246] },
+        { l1: 'Needs Work', l2: '30-49', val: weakCount, color: [245, 158, 11] },
+        { l1: 'Critical', l2: 'Below 30', val: critCount, color: [239, 68, 68] },
       ]
-      cols.forEach((col, i) => {
-        const colX = margin + (contentW / 4) * i
-        T(`${col.val}`, colX + (contentW / 8), y + 6, { size: 11, color: col.color, bold: true, align: 'center' })
-        T(col.label, colX + (contentW / 8), y + 11, { size: 6, color: [71, 85, 105], align: 'center' })
+      const colW = contentW / 4
+      distCols.forEach((col, i) => {
+        const cx2 = margin + colW * i + colW / 2
+        T(`${col.val}`, cx2, y + 9, { size: 14, color: col.color, bold: true, align: 'center' })
+        T(col.l1, cx2, y + 14, { size: 6, color: [100, 116, 139], align: 'center' })
+        T(col.l2, cx2, y + 18.5, { size: 5.5, color: [71, 85, 105], align: 'center' })
       })
-      y += 18
+      y += 24
 
-      // ── PAGE 3: STRENGTHS & GAPS ───────────────────────────────────
-      checkPage(60)
-      if (y > 200) { addPage(); R(0, 0, pageW, 14, [15, 23, 42], 0); T('COVENTRY ANALYTICS', margin, 9, { size: 7, color: [96, 165, 250], bold: true }); T(toolTitle, pageW - margin, 9, { size: 7, color: [71, 85, 105], align: 'right' }); y = 22 }
+      // ── PAGE 3: STRENGTHS & GAPS + SERVICE BRIDGE ──────────────────
+      addPage()
 
       y = sectionLabel('YOUR STRENGTHS', y)
-      const strengthDims = sorted2.filter(d => d.score >= 50).slice(0, 3)
+      const strengthDims = sorted.filter(d => d.score >= 50).slice(0, 3)
       if (strengthDims.length === 0) {
-        y = wrapText('No dimensions scored above 50. Focus on the critical gaps below to build your foundation.', margin, y, contentW, 5, { size: 9, color: [100, 116, 139] })
+        y = wrapText('No dimensions scored above 50 in this assessment. Focus on the critical gaps below to build your foundation.', margin, y, contentW, 5, { size: 9, color: [100, 116, 139] })
         y += 4
       } else {
         strengthDims.forEach(({ title, score: s }) => {
-          checkPage(22)
-          R(margin, y, contentW, 16, [14, 40, 25], 2)
+          checkPage(20)
+          R(margin, y, contentW, 15, [12, 38, 22], 2)
           doc.setDrawColor(34, 197, 94); doc.setLineWidth(0.4)
-          doc.roundedRect(margin, y, contentW, 16, 2, 2, 'S')
-          T('✓', margin + 4, y + 10, { size: 10, color: [34, 197, 94], bold: true })
-          T(title, margin + 12, y + 7, { size: 9, color: [226, 232, 240], bold: true })
-          T(`Score: ${s}/100 — This is a genuine strength. Build on it.`, margin + 12, y + 12.5, { size: 7.5, color: [100, 116, 139] })
-          T(`${s}`, pageW - margin - 4, y + 10, { size: 11, color: [34, 197, 94], bold: true, align: 'right' })
-          y += 19
+          doc.roundedRect(margin, y, contentW, 15, 2, 2, 'S')
+          // Green indicator block — no emoji
+          R(margin + 3, y + 4, 5, 7, [34, 197, 94], 1)
+          T(title, margin + 11, y + 7, { size: 9, color: [226, 232, 240], bold: true })
+          T(`Score: ${s}/100 — A genuine competitive advantage. Protect and compound it.`, margin + 11, y + 12, { size: 7.5, color: [100, 116, 139] })
+          T(`${s}`, pageW - margin - 4, y + 9.5, { size: 12, color: [34, 197, 94], bold: true, align: 'right' })
+          y += 18
         })
       }
       y += 4
 
       y = sectionLabel('PRIORITY GAPS', y)
-      const weakDims = [...sorted2].reverse().filter(d => d.score < 70).slice(0, 4)
+      const weakDims = [...sorted].reverse().filter(d => d.score < 70).slice(0, 4)
       weakDims.forEach(({ title, score: s }, idx) => {
-        checkPage(28)
-        const gapColor = s < 30 ? [127, 29, 29] : [92, 45, 10]
-        const borderColor = s < 30 ? [239, 68, 68] : [245, 158, 11]
-        R(margin, y, contentW, 20, gapColor, 2)
-        doc.setDrawColor(...borderColor); doc.setLineWidth(0.4)
-        doc.roundedRect(margin, y, contentW, 20, 2, 2, 'S')
-        const priority = idx === 0 ? 'HIGHEST PRIORITY' : idx === 1 ? 'HIGH PRIORITY' : 'PRIORITY'
-        R(margin + 3, y + 3, 30, 6, [...borderColor.map(v => Math.round(v * 0.4))], 1)
-        T(priority, margin + 18, y + 7.5, { size: 5.5, color: borderColor, bold: true, align: 'center' })
-        T(title, margin + 36, y + 7, { size: 9, color: [226, 232, 240], bold: true })
-        T(`Score: ${s}/100 — Addressing this will have the highest impact on your overall maturity.`, margin + 36, y + 13, { size: 7.5, color: [148, 163, 184] })
-        T(`${s}`, pageW - margin - 4, y + 12, { size: 13, color: borderColor, bold: true, align: 'right' })
-        y += 23
+        checkPage(26)
+        const gapBg = s < 30 ? [80, 18, 18] : s < 50 ? [75, 35, 8] : [50, 45, 5]
+        const borderC = s < 30 ? [239, 68, 68] : s < 50 ? [245, 158, 11] : [234, 179, 8]
+        const priorityLabel = idx === 0 ? 'CRITICAL PRIORITY' : idx === 1 ? 'HIGH PRIORITY' : idx === 2 ? 'MEDIUM PRIORITY' : 'LOW PRIORITY'
+        const gapCost = s < 30 ? 'GBP 3,000-8,000/yr' : s < 50 ? 'GBP 1,500-4,000/yr' : 'GBP 500-2,000/yr'
+        R(margin, y, contentW, 22, gapBg, 2)
+        doc.setDrawColor(...borderC); doc.setLineWidth(0.4)
+        doc.roundedRect(margin, y, contentW, 22, 2, 2, 'S')
+        R(margin + 3, y + 3, 34, 6, [...borderC.map(v => Math.round(v * 0.35))], 1)
+        T(priorityLabel, margin + 20, y + 7.5, { size: 5.5, color: borderC, bold: true, align: 'center' })
+        T(title, margin + 40, y + 7, { size: 9, color: [226, 232, 240], bold: true })
+        T(`Score: ${s}/100`, margin + 40, y + 13, { size: 7.5, color: [148, 163, 184] })
+        T(`Est. impact: ${gapCost}`, pageW - margin - 4, y + 7, { size: 7, color: borderC, bold: true, align: 'right' })
+        T(`${s}`, pageW - margin - 4, y + 14, { size: 12, color: borderC, bold: true, align: 'right' })
+        y += 25
       })
 
-      // ── RECOMMENDATIONS ─────────────────────────────────────────────
-      addPage()
-      R(0, 0, pageW, 14, [15, 23, 42], 0)
-      T('COVENTRY ANALYTICS', margin, 9, { size: 7, color: [96, 165, 250], bold: true })
-      T('Recommendations', pageW - margin, 9, { size: 7, color: [71, 85, 105], align: 'right' })
-      y = 22
-
-      y = sectionLabel('PRIORITISED ACTION PLAN', y)
-      y = wrapText('The following recommendations are ordered by priority. Focus on Critical items first — they unlock the most value and are typically the fastest path to measurable ROI.', margin, y, contentW, 5, { size: 9, color: [100, 116, 139] })
       y += 6
 
+      // Service Bridge
+      checkPage(90)
+      y = sectionLabel('HOW COVENTRY ANALYTICS CAN HELP', y)
+      const services = [
+        { price: 'Free', title: '30-Minute Strategy Call', desc: 'Honest expert review of your results. No pitch, no obligation. Book at coventryanalytics.co.uk/book', color: [34, 197, 94] },
+        { price: 'GBP 499', title: 'Analytics Workshop (2 Days)', desc: 'Deep-dive into your top 3 gaps. We build your 90-day improvement roadmap and surface the quick wins.', color: [59, 130, 246] },
+        { price: 'GBP 2,500', title: 'Analytics System Build', desc: 'Full implementation: live dashboard, KPI framework, and automated reporting. Typically live in 4-6 weeks.', color: [96, 165, 250] },
+        { price: 'GBP 750/mo', title: 'Ongoing Analytics Partnership', desc: 'Monthly retainer for continuous improvement, new dashboards, and executive reporting support.', color: [167, 139, 250] },
+      ]
+      services.forEach((svc) => {
+        checkPage(22)
+        R(margin, y, contentW, 18, [15, 23, 42], 2)
+        doc.setDrawColor(37, 99, 235); doc.setLineWidth(0.3)
+        doc.roundedRect(margin, y, contentW, 18, 2, 2, 'S')
+        R(margin + 3, y + 4, 24, 10, [...svc.color.map(v => Math.round(v * 0.2))], 1)
+        T(svc.price, margin + 15, y + 10, { size: 6.5, color: svc.color, bold: true, align: 'center' })
+        T(svc.title, margin + 30, y + 8, { size: 8.5, color: [226, 232, 240], bold: true })
+        doc.setFontSize(7); doc.setTextColor(100, 116, 139); doc.setFont('helvetica', 'normal')
+        const svcLines = doc.splitTextToSize(svc.desc, contentW - 34)
+        doc.text(svcLines, margin + 30, y + 13)
+        y += 21
+      })
+
+      // ── PAGE 4: RECOMMENDATIONS + NEXT STEPS + CTA ─────────────────
+      addPage()
+
+      y = sectionLabel('PRIORITISED ACTION PLAN', y)
+      y = wrapText('The following recommendations are ordered by priority. Address Critical items first — they deliver the fastest ROI and unblock the most value.', margin, y, contentW, 5, { size: 9, color: [100, 116, 139] })
+      y += 6
+
+      // Plain text priority labels — no emoji (jsPDF Helvetica is Latin-1 only)
       const priorityMeta = {
-        Critical: { color: [239, 68, 68], bg: [80, 20, 20], border: [239, 68, 68], label: '⚡ CRITICAL' },
-        High: { color: [249, 115, 22], bg: [70, 30, 10], border: [249, 115, 22], label: '▲ HIGH' },
-        Medium: { color: [234, 179, 8], bg: [60, 50, 5], border: [234, 179, 8], label: '● MEDIUM' },
-        Opportunity: { color: [96, 165, 250], bg: [15, 35, 65], border: [96, 165, 250], label: '★ OPPORTUNITY' },
+        Critical: { color: [239, 68, 68], bg: [80, 20, 20], border: [239, 68, 68], label: 'CRITICAL' },
+        High: { color: [249, 115, 22], bg: [70, 30, 10], border: [249, 115, 22], label: 'HIGH' },
+        Medium: { color: [234, 179, 8], bg: [60, 50, 5], border: [234, 179, 8], label: 'MEDIUM' },
+        Opportunity: { color: [96, 165, 250], bg: [15, 35, 65], border: [96, 165, 250], label: 'OPPORTUNITY' },
       }
 
       recommendations.forEach((rec, i) => {
         const pm = priorityMeta[rec.priority] || priorityMeta.Opportunity
-        // Estimate card height
-        const descH = doc.splitTextToSize(rec.description, contentW - 10).length * 4.5
-        const cardH = 14 + descH + 12
+        doc.setFontSize(8.5)
+        const dLines = doc.splitTextToSize(rec.description, contentW - 10)
+        const cardH = 20 + dLines.length * 4.5 + 10
         checkPage(cardH + 4)
-
         R(margin, y, contentW, cardH, pm.bg, 3)
         doc.setDrawColor(...pm.border); doc.setLineWidth(0.4)
         doc.roundedRect(margin, y, contentW, cardH, 3, 3, 'S')
-
-        // Number bubble
         R(margin + 3, y + 3, 8, 8, pm.color, 1)
         T(`${i + 1}`, margin + 7, y + 8.5, { size: 7, color: [255, 255, 255], bold: true, align: 'center' })
-
-        // Priority badge
         const badgeW = 28
         R(margin + contentW - badgeW - 3, y + 3, badgeW, 7, [...pm.color.map(v => Math.round(v * 0.25))], 1)
-        T(pm.label, margin + contentW - badgeW / 2 - 3, y + 7.5, { size: 6, color: pm.color, bold: true, align: 'center' })
-
-        // Title
+        T(pm.label, margin + contentW - badgeW / 2 - 3, y + 7.5, { size: 5.5, color: pm.color, bold: true, align: 'center' })
         T(rec.title, margin + 14, y + 8, { size: 9, color: [226, 232, 240], bold: true })
         if (rec.dimension) T(`Dimension: ${rec.dimension}`, margin + 14, y + 13, { size: 7, color: [100, 116, 139] })
-
-        // Divider
         doc.setDrawColor(...pm.border.map(v => Math.round(v * 0.4))); doc.setLineWidth(0.2)
         doc.line(margin + 3, y + 16, margin + contentW - 3, y + 16)
-
-        // Description — full, not truncated
         doc.setFontSize(8.5); doc.setTextColor(148, 163, 184); doc.setFont('helvetica', 'normal')
-        const dLines = doc.splitTextToSize(rec.description, contentW - 10)
         doc.text(dLines, margin + 5, y + 21)
-        const afterDesc = y + 21 + dLines.length * 4.5
-
-        // Impact
+        const afterDesc = y + 21 + dLines.length * 4.5 + 2
         R(margin + 5, afterDesc, contentW - 10, 7, [...pm.color.map(v => Math.round(v * 0.15))], 1)
         T('Potential Impact:', margin + 8, afterDesc + 4.5, { size: 7, color: [100, 116, 139] })
-        T(rec.impact, margin + 35, afterDesc + 4.5, { size: 7, color: pm.color, bold: true })
-
+        T(rec.impact, margin + 36, afterDesc + 4.5, { size: 7, color: pm.color, bold: true })
         y += cardH + 5
       })
 
-      // ── NEXT STEPS ──────────────────────────────────────────────────
-      checkPage(70)
+      // Next Steps
+      checkPage(58)
+      y += 4
       y = sectionLabel('RECOMMENDED NEXT STEPS', y)
-
-      const steps30 = [
-        'Book a free 30-minute strategy call with Coventry Analytics to review your results',
-        `Identify the single highest-priority gap from your assessment (${weakDims[0]?.title || 'your lowest scoring dimension'})`,
-        'Quantify the cost of that gap: time lost, errors, delayed decisions, or missed revenue',
-        'Agree internally who owns the improvement and what "fixed" looks like in 90 days',
-      ]
-      const steps90 = [
-        'Implement one targeted quick-win (typically 2-4 weeks to deliver, high visibility)',
-        'Document the baseline so you can measure the improvement after 30 days',
-        'Run the assessment again to see your dimension scores move',
-        'Identify your next highest-priority gap and repeat',
-      ]
-
       const halfW = (contentW - 4) / 2
-
-      checkPage(55)
-      R(margin, y, halfW, 48, [15, 23, 42], 2)
+      R(margin, y, halfW, 46, [15, 23, 42], 2)
+      doc.setDrawColor(37, 99, 235); doc.setLineWidth(0.3); doc.roundedRect(margin, y, halfW, 46, 2, 2, 'S')
       T('30 DAYS', margin + 4, y + 7, { size: 8, color: [96, 165, 250], bold: true })
-      steps30.forEach((s, i) => {
+      ;[
+        'Book a free strategy call to review your results with an expert',
+        `Identify your highest-priority gap (${weakDims[0]?.title || 'your lowest scoring area'})`,
+        'Quantify the cost: time lost, errors, or missed decisions per month',
+        'Assign a named internal owner for each improvement',
+      ].forEach((s, i) => {
         doc.setFontSize(7); doc.setTextColor(148, 163, 184); doc.setFont('helvetica', 'normal')
-        const ln = doc.splitTextToSize(`${i + 1}. ${s}`, halfW - 8)
-        doc.text(ln, margin + 4, y + 13 + i * 10)
+        doc.text(doc.splitTextToSize(`${i + 1}. ${s}`, halfW - 8), margin + 4, y + 14 + i * 9)
       })
-
-      R(margin + halfW + 4, y, halfW, 48, [15, 23, 42], 2)
+      R(margin + halfW + 4, y, halfW, 46, [15, 23, 42], 2)
+      doc.setDrawColor(37, 99, 235); doc.setLineWidth(0.3); doc.roundedRect(margin + halfW + 4, y, halfW, 46, 2, 2, 'S')
       T('90 DAYS', margin + halfW + 8, y + 7, { size: 8, color: [96, 165, 250], bold: true })
-      steps90.forEach((s, i) => {
+      ;[
+        'Implement one targeted quick-win in your lowest-scoring dimension',
+        'Document your baseline metrics to measure the improvement',
+        'Run this assessment again to see your dimension scores move',
+        'Identify your next gap and repeat the cycle',
+      ].forEach((s, i) => {
         doc.setFontSize(7); doc.setTextColor(148, 163, 184); doc.setFont('helvetica', 'normal')
-        const ln = doc.splitTextToSize(`${i + 1}. ${s}`, halfW - 8)
-        doc.text(ln, margin + halfW + 8, y + 13 + i * 10)
+        doc.text(doc.splitTextToSize(`${i + 1}. ${s}`, halfW - 8), margin + halfW + 8, y + 14 + i * 9)
       })
-      y += 52
+      y += 50
 
-      // ── CTA ─────────────────────────────────────────────────────────
-      checkPage(28)
-      R(margin, y, contentW, 26, [37, 99, 235], 3)
-      T('Ready to act on these insights?', pageW / 2, y + 9, { size: 12, color: [255, 255, 255], bold: true, align: 'center' })
-      T('Book a free 30-minute strategy call — no pitch, no obligation, just honest advice.', pageW / 2, y + 16, { size: 8, color: [191, 219, 254], align: 'center' })
-      T('coventryanalytics.co.uk/book', pageW / 2, y + 22, { size: 9, color: [147, 197, 253], bold: true, align: 'center' })
+      // CTA banner
+      checkPage(30)
+      R(margin, y, contentW, 28, [37, 99, 235], 3)
+      T('Ready to act on these insights?', pageW / 2, y + 10, { size: 12, color: [255, 255, 255], bold: true, align: 'center' })
+      T('Book your free 30-minute strategy call - no pitch, no obligation.', pageW / 2, y + 17, { size: 8, color: [191, 219, 254], align: 'center' })
+      T('coventryanalytics.co.uk/book', pageW / 2, y + 23, { size: 9, color: [147, 197, 253], bold: true, align: 'center' })
 
       doc.save(pdfFilename || `coventry-analytics-report-${overallScore}.pdf`)
     } catch (err) {
